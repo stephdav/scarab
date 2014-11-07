@@ -15,8 +15,33 @@
 
 <body>
 
-	<div class="container-fluid">
-	<h1>Scarab</h1>
+	<div class="container">
+
+		<h1>Scarab</h1>
+
+		<div style="border-left:3px solid black; padding-left:10px;">
+			<h2>Create a user story</h2>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label for="form-createUS-title" class="col-sm-2 control-label">title</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="form-createUS-title">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="form-createUS-description" class="col-sm-2 control-label">description</label>
+					<div class="col-sm-10">
+						<textarea id="form-createUS-description" class="form-control" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default">Create</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
 	</div>
 	
 	<!-- Placed at the end of the document so the pages load faster -->
