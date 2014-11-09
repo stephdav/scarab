@@ -1,8 +1,10 @@
 package org.kik.scarab.controller;
 
-import org.kik.scarab.model.rest.US;
+import org.kik.scarab.model.UserStory;
+import org.kik.scarab.service.UserStoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,12 @@ public class RestController {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(RestController.class);
 
+	@Autowired
+	UserStoryService svcUS;
+
 	@RequestMapping(value = "us", method = RequestMethod.POST)
-	public @ResponseBody US createUS(@RequestBody US us) {
-		LOG.info("createUS({}, {})", us.getTitle(), us.getDescription());
-		return new US();
+	public @ResponseBody UserStory createUS(@RequestBody UserStory us) {
+		LOG.info("createUserStory({}, {})", us.getTitle(), us.getDescription());
+		return svcUS.createUserStory(us);
 	}
 }

@@ -11,6 +11,8 @@
 
 	<!-- <context:annotation-config /> -->
 	<context:component-scan base-package="org.kik.scarab.controller" />
+	<context:component-scan base-package="org.kik.scarab.service" />
+	<context:component-scan base-package="org.kik.scarab.dao" />
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
