@@ -21,11 +21,11 @@
 
 		<div style="border-left:3px solid black; padding-left:10px;">
 			<h2>Create a user story</h2>
-			<form class="form-horizontal" role="form">
+			<form id="form-createUS" class="form-horizontal" role="form">
 				<div class="form-group">
 					<label for="form-createUS-title" class="col-sm-2 control-label">title</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="form-createUS-title">
+						<input type="text" class="form-control" id="form-createUS-title" required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -47,6 +47,37 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${pageContext.request.contextPath}/resources/js/libs/jquery-1.11.0.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+
+	$(document).ready(function() {
+		initPage();
+	});
+
+	function initPage() {
+		$('#form-createUS').on('submit', function(e) {
+			e.preventDefault();
+			createUS();
+        });	
+	}
+	
+	function createUS() {
+		var title = $("#form-createUS-title").val();
+		var desc = $("#form-createUS-description").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		$.ajax({
+			url: '${pageContext.request.contextPath}/rest/us',
+			type: 'POST',
+			data: '{"title": "' + title + '", "description": "' + desc + '"}',
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success: function(html) {
+				$('#form-createUS-title').val("");
+				$('#form-createUS-description').val("");
+			}
+		});
+	}
+
+	</script>
 
 </body>
 </html>
