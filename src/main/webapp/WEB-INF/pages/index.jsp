@@ -15,20 +15,36 @@
 
 <body>
 
-	<div class="container">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar-links">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Scarab</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="navbar-links">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Backlog</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-		<h1>Scarab</h1>
+	<div class="container-fluid">
 
 		<div  class="col-md-7" style="border-left:3px solid black; padding-left:10px;">
 			<h2>User stories</h2>
+			<div class="row" style="padding-left:10px;">
+				<div class="col-sm-4">title</div>
+		    	<div class="col-sm-8">description</div>
+		    </div>
 			<ul id="list-allUS" class="list-group"></ul>
-			<div class="table-responsive">
-				<table id="table-allUS" class="table">
-				<thead>
-					<tr><td>col1</td><td>col2</td></tr>
-				</thead>
-				</table>
-			</div>
 		</div>
 		
 		<div class="col-md-5" style="border-left:3px solid black; padding-left:10px;">
@@ -94,19 +110,16 @@
 	    $.getJSON('${pageContext.request.contextPath}/rest/us',
 			function(data) {
 				$("#list-allUS").empty();
-				$("#table-allUS").empty();
 		    	if (data.length > 0) {
-		    		var elt, elt2;
+		    		var elt = "";
 		    		$.each(data, function(i, us) {
-		    			elt += '<li class="list-group-item">'
-		    			  + '<h4 class="list-group-item-heading">' + us.title + '</h4>'
-		    			  + '<p class="list-group-item-text">' + us.description + '</p>'
-		    			  + '</li>';
-
-		    			elt2 += '<tr><td>' + us.title + '</td><td>' + us.description + '</td></tr>';
+		    			elt += '<li class="list-group-item"><div class="row">'
+		    			  + '<div class="col-sm-4">' + us.title + '</div>'
+		    			  + '<div class="col-sm-8">' + us.description + '</div>'
+		    			  + '</div></li>';
 		    		});
-	    			//$("#list-allUS").append(elt);
-		    		$("#table-allUS").append(elt2);
+		    		
+	    			$("#list-allUS").append(elt);
 		    	}
 			});
 	}
