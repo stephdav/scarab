@@ -19,7 +19,19 @@
 
 		<h1>Scarab</h1>
 
-		<div style="border-left:3px solid black; padding-left:10px;">
+		<div  class="col-md-7" style="border-left:3px solid black; padding-left:10px;">
+			<h2>User stories</h2>
+			<ul id="list-allUS" class="list-group"></ul>
+			<div class="table-responsive">
+				<table id="table-allUS" class="table">
+				<thead>
+					<tr><td>col1</td><td>col2</td></tr>
+				</thead>
+				</table>
+			</div>
+		</div>
+		
+		<div class="col-md-5" style="border-left:3px solid black; padding-left:10px;">
 			<h2>Create a user story</h2>
 			<form id="form-createUS" class="form-horizontal" role="form">
 				<div class="form-group">
@@ -55,6 +67,7 @@
 	});
 
 	function initPage() {
+		displayUS();
 		$('#form-createUS').on('submit', function(e) {
 			e.preventDefault();
 			createUS();
@@ -75,6 +88,27 @@
 				$('#form-createUS-description').val("");
 			}
 		});
+	}
+	
+	function displayUS() {
+	    $.getJSON('${pageContext.request.contextPath}/rest/us',
+			function(data) {
+				$("#list-allUS").empty();
+				$("#table-allUS").empty();
+		    	if (data.length > 0) {
+		    		var elt, elt2;
+		    		$.each(data, function(i, us) {
+		    			elt += '<li class="list-group-item">'
+		    			  + '<h4 class="list-group-item-heading">' + us.title + '</h4>'
+		    			  + '<p class="list-group-item-text">' + us.description + '</p>'
+		    			  + '</li>';
+
+		    			elt2 += '<tr><td>' + us.title + '</td><td>' + us.description + '</td></tr>';
+		    		});
+	    			//$("#list-allUS").append(elt);
+		    		$("#table-allUS").append(elt2);
+		    	}
+			});
 	}
 
 	</script>

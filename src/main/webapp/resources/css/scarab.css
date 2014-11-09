@@ -1,2 +1,7 @@
 body {
+	
+}
+
+li.list-group-item:HOVER {
+	background-color: #eee;
 }

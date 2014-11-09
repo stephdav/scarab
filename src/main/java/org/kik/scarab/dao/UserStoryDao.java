@@ -1,5 +1,6 @@
 package org.kik.scarab.dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.kik.scarab.model.UserStory;
@@ -20,6 +21,10 @@ public class UserStoryDao {
 		us.setId(UUID.randomUUID().toString());
 		mongoTemplate.insert(us);
 		return us;
+	}
+
+	public List<UserStory> findAllUserStories() {
+		return mongoTemplate.findAll(UserStory.class);
 	}
 
 }

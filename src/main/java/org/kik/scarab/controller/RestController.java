@@ -1,5 +1,7 @@
 package org.kik.scarab.controller;
 
+import java.util.List;
+
 import org.kik.scarab.model.UserStory;
 import org.kik.scarab.service.UserStoryService;
 import org.slf4j.Logger;
@@ -20,6 +22,16 @@ public class RestController {
 
 	@Autowired
 	UserStoryService svcUS;
+
+	// === User Story ========================================================
+
+	@RequestMapping(value = "us", method = RequestMethod.GET)
+	public @ResponseBody List<UserStory> getUS() {
+		LOG.info("getUS()");
+		List<UserStory> l = svcUS.getUserStories();
+		LOG.info("getUS() : {} results", l.size());
+		return l;
+	}
 
 	@RequestMapping(value = "us", method = RequestMethod.POST)
 	public @ResponseBody UserStory createUS(@RequestBody UserStory us) {
