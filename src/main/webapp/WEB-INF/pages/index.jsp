@@ -93,6 +93,29 @@
 			</div> <!-- /.modal-dialog -->
 		</div> <!-- /.modal -->
 
+		<div id="modal-removeUS" class="modal fade">
+			<div class="modal-dialog" role="dialog" aria-labelledby="modal-removeUS-title" aria-hidden="true">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 id="modal-removeUS-title" class="modal-title">Remove User Story</h4>
+					</div>
+					<div class="modal-body">
+						<form id="form-removeUS" role="form">
+							<div class="form-group">
+								<p>Are you sure you want to remove user story "<span class="us-title"></span>" ?</p>
+							</div>
+							<div class="form-group clearfix">
+								<div class="col-xs-12 text-right">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+									<button type="submit" class="btn btn-danger">Remove</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div> <!-- /.modal-content -->
+			</div> <!-- /.modal-dialog -->
+		</div> <!-- /.modal -->
+
 	</div>
 	
 	<!-- Placed at the end of the document so the pages load faster -->
@@ -115,27 +138,39 @@
 			var usId = $(this).closest("li").data("usId");
 			editUS(usId);
 		});
+		$('#modal-removeUS').on('hidden.bs.modal', function (e) {
+			console.log("hidden.bs.modal");
+			$('#form-removeUS').off();
+		});
 		$("#list-allUS").on("click", ".btn-us-remove", function() {
 			var usId = $(this).closest("li").data("usId");
-			removeUS(usId);
+			var usTxt = $(this).closest("li").find(".list-group-item-heading").text();
+			removeUS(usId, usTxt);
 		});
-
 	}
 	
 	function editUS(usId) {
 		alert("Edit US " + usId);		
 	}
 
-	function removeUS(usId) {
-		$.ajax({
-			url: '${pageContext.request.contextPath}/rest/us/' + usId,
-			type: 'DELETE',
-			dataType : 'json',
-			contentType : "application/json; charset=utf-8",
-			complete: function(html) {
-				displayUS();
-			}
-		});
+	function removeUS(usId, usTxt) {
+		
+		$('#modal-removeUS .us-title').text(usTxt);
+		$('#modal-removeUS').modal('show');
+		$('#form-removeUS').on('submit', function(e) {
+			e.preventDefault();
+			console.log("delete us "+ usId);
+			$.ajax({
+				url: '${pageContext.request.contextPath}/rest/us/' + usId,
+				type: 'DELETE',
+				dataType : 'json',
+				contentType : "application/json; charset=utf-8",
+				complete: function(html) {
+					$('#modal-removeUS').modal('hide');
+					displayUS();
+				}
+			});
+        });
 	}
 
 	function createUS() {
@@ -180,16 +215,16 @@
 		    			 elt += '[' + us.code + '] ';
 		   			 }
 		   			 elt += us.title 
-		   			 	+ '  </div>'
-		   			 	+ '  <div class="list-group-item-text">' + us.description + '</div>'
+		   			 	+   '</div>'
+		   			 	+   '<div class="list-group-item-text">' + us.description + '</div>'
 		   			 	+ '</div>'
 		   			 	+ '<div class="col-sm-4 list-table-cell">' + us.accCrit + '</div>'
 		   			 	+ '<div class="col-sm-4 list-table-cell">' + us.accTest + '</div>'
 		   				+ '<div class="col-sm-1 clearfix">'
-		   				+ '  <div class="btn-group pull-right">'
-		   				+ '    <button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
-		   				+ '    <button type="button" class="btn btn-default btn-sm btn-us-remove" title="delete user story"><span class="glyphicon glyphicon-trash"></span></button>'
-		   				+ '  </div>'
+		   				+   '<div class="btn-group pull-right">'
+		   				+     '<button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
+		   				+     '<button type="button" class="btn btn-default btn-sm btn-us-remove" title="delete user story"><span class="glyphicon glyphicon-trash"></span></button>'
+		   				+   '</div>'
 		   				+ '</div>'
 		   			 	+ '</div></li>';
 
