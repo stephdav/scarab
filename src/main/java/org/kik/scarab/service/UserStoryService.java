@@ -30,6 +30,10 @@ public class UserStoryService {
 		return dao.createUserStory(us);
 	}
 
+	public void deleteUserStory(String id) {
+		dao.deleteUserStory(id);
+	}
+
 	public List<UserStory> getUserStories() {
 		return dao.findAllUserStories();
 	}

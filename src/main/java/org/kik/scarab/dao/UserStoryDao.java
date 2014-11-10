@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.kik.scarab.model.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,4 +28,8 @@ public class UserStoryDao {
 		return mongoTemplate.findAll(UserStory.class);
 	}
 
+	public void deleteUserStory(String id) {
+		BasicQuery query = new BasicQuery("{ id : '" + id + "' }");
+		mongoTemplate.remove(query, UserStory.class);
+	}
 }

@@ -18,6 +18,7 @@ body {
 li.list-group-item:FIRST-CHILD {
 	font-weight: bold;
 	background-color: #ddd;
+	font-size: 14px;
 }
 
 li.list-group-item .list-table-cell {

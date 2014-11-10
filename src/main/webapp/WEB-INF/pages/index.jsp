@@ -117,7 +117,7 @@
 		});
 		$("#list-allUS").on("click", ".btn-us-remove", function() {
 			var usId = $(this).closest("li").data("usId");
-			editUS(usId);
+			removeUS(usId);
 		});
 
 	}
@@ -127,7 +127,15 @@
 	}
 
 	function removeUS(usId) {
-		alert("Remove US " + usId);		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/rest/us/' + usId,
+			type: 'DELETE',
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			complete: function(html) {
+				displayUS();
+			}
+		});
 	}
 
 	function createUS() {
@@ -153,43 +161,43 @@
 	}
 	
 	function displayUS() {
-	    $.getJSON('${pageContext.request.contextPath}/rest/us',
-			function(data) {
-				$("#list-allUS").empty();
-		    	if (data.length > 0) {
-		    		var elt = '<li class="list-group-item"><div class="row">'
-    				+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description</div>'
-    			 	+ '<div class="col-sm-4 list-table-cell">acceptance criteria</div>'
-    			 	+ '<div class="col-sm-4 list-table-cell">acceptance tests</div>'
-    			 	+ '<div class="col-sm-1 list-table-cell">action</div>'
-    			 	+ '</div></li>';
+	    $.getJSON('${pageContext.request.contextPath}/rest/us',	function(data) {
+			$("#list-allUS").empty();
+		   	if (data.length > 0) {
 
-		    		$.each(data, function(i, us) {
-		    			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="row">'
-		    				+ '<div class="col-sm-3 list-table-cell">'
-		    				+   '<div class="list-group-item-heading">';
-		    			 if (typeof(us.code) != 'undefined' && us.code != '') {
-			    			 elt += '[' + us.code + '] ';
-		    			 }
-		    			 elt += us.title 
-		    			 	+ '  </div>'
-		    			 	+ '  <div class="list-group-item-text">' + us.description + '</div>'
-		    			 	+ '</div>'
-		    			 	+ '<div class="col-sm-4 list-table-cell">' + us.accCrit + '</div>'
-		    			 	+ '<div class="col-sm-4 list-table-cell">' + us.accTest + '</div>'
-		    				+ '<div class="col-sm-1 clearfix">'
-		    				+ '  <div class="btn-group pull-right">'
-		    				+ '    <button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
-		    				+ '    <button type="button" class="btn btn-default btn-sm btn-us-remove" title="delete user story"><span class="glyphicon glyphicon-trash"></span></button>'
-		    				+ '  </div>'
-		    				+ '</div>'
-		    			 	+ '</div></li>';
+		   		var elt = '<li class="list-group-item"><div class="row">'
+    			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description</div>'
+    		 	+ '<div class="col-sm-4 list-table-cell">acceptance criteria</div>'
+    		 	+ '<div class="col-sm-4 list-table-cell">acceptance tests</div>'
+    		 	+ '<div class="col-sm-1 list-table-cell">action</div>'
+    		 	+ '</div></li>';
 
-		    		});
-		    		
-	    			$("#list-allUS").append(elt);
-		    	}
-			});
+		   		$.each(data, function(i, us) {
+		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="row">'
+		   				+ '<div class="col-sm-3 list-table-cell">'
+		   				+   '<div class="list-group-item-heading">';
+		   			 if (typeof(us.code) != 'undefined' && us.code != '') {
+		    			 elt += '[' + us.code + '] ';
+		   			 }
+		   			 elt += us.title 
+		   			 	+ '  </div>'
+		   			 	+ '  <div class="list-group-item-text">' + us.description + '</div>'
+		   			 	+ '</div>'
+		   			 	+ '<div class="col-sm-4 list-table-cell">' + us.accCrit + '</div>'
+		   			 	+ '<div class="col-sm-4 list-table-cell">' + us.accTest + '</div>'
+		   				+ '<div class="col-sm-1 clearfix">'
+		   				+ '  <div class="btn-group pull-right">'
+		   				+ '    <button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
+		   				+ '    <button type="button" class="btn btn-default btn-sm btn-us-remove" title="delete user story"><span class="glyphicon glyphicon-trash"></span></button>'
+		   				+ '  </div>'
+		   				+ '</div>'
+		   			 	+ '</div></li>';
+
+		   		});
+		   		
+	    		$("#list-allUS").append(elt);
+		   	}
+		});
 	}
 
 	</script>
