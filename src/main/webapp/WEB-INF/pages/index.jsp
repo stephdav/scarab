@@ -38,37 +38,68 @@
 
 	<div class="container-fluid">
 
-		<div  class="col-md-7" style="border-left:3px solid black; padding-left:10px;">
-			<h2>User stories</h2>
+		<div style="border-left:3px solid black; padding-left:10px;">
+			<div class="clearfix">
+				<span class="list-group-title">User stories</span>
+				<div class="pull-right"><button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modal-createUS"><span class="glyphicon glyphicon-plus"></span></button></div>
+			</div>
 			<div class="row" style="padding-left:10px;">
-				<div class="col-sm-4">title</div>
-		    	<div class="col-sm-8">description</div>
+				<div class="col-sm-4 list-group-header">[id] title &amp; description</div>
+		    	<div class="col-sm-4 list-group-header">acceptance criteria</div>
+		    	<div class="col-sm-4 list-group-header">acceptance tests</div>
 		    </div>
 			<ul id="list-allUS" class="list-group"></ul>
 		</div>
-		
-		<div class="col-md-5" style="border-left:3px solid black; padding-left:10px;">
-			<h2>Create a user story</h2>
-			<form id="form-createUS" class="form-horizontal" role="form">
-				<div class="form-group">
-					<label for="form-createUS-title" class="col-sm-2 control-label">title</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="form-createUS-title" required>
+
+		<div id="modal-createUS" class="modal fade">
+			<div class="modal-dialog modal-lg" role="dialog" aria-labelledby="modal-createUS-title" aria-hidden="true">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 id="modal-createUS-title" class="modal-title">Create a user story</h4>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="form-createUS-description" class="col-sm-2 control-label">description</label>
-					<div class="col-sm-10">
-						<textarea id="form-createUS-description" class="form-control" rows="3"></textarea>
+					<div class="modal-body">
+						<form id="form-createUS" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="form-createUS-identifier" class="col-sm-3 control-label">identifier</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="form-createUS-identifier">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="form-createUS-title" class="col-sm-3 control-label">title</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="form-createUS-title" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="form-createUS-description" class="col-sm-3 control-label">description</label>
+								<div class="col-sm-9">
+									<textarea id="form-createUS-description" class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="form-createUS-criteria" class="col-sm-3 control-label">acceptance criteria</label>
+								<div class="col-sm-9">
+									<textarea id="form-createUS-criteria" class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="form-createUS-test" class="col-sm-3 control-label">acceptance tests</label>
+								<div class="col-sm-9">
+									<textarea id="form-createUS-test" class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+									<button type="submit" class="btn btn-primary">Create</button>
+								</div>
+							</div>
+						</form>
 					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-default">Create</button>
-					</div>
-				</div>
-			</form>
-		</div>
+				</div> <!-- /.modal-content -->
+			</div> <!-- /.modal-dialog -->
+		</div> <!-- /.modal -->
 
 	</div>
 	
@@ -87,21 +118,27 @@
 		$('#form-createUS').on('submit', function(e) {
 			e.preventDefault();
 			createUS();
-        });	
+        });
 	}
 	
 	function createUS() {
+		var usid = $("#form-createUS-identifier").val();
 		var title = $("#form-createUS-title").val();
 		var desc = $("#form-createUS-description").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		var crit = $("#form-createUS-criteria").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		var test = $("#form-createUS-test").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
 		$.ajax({
 			url: '${pageContext.request.contextPath}/rest/us',
 			type: 'POST',
-			data: '{"title": "' + title + '", "description": "' + desc + '"}',
+			data: '{"code": "' + usid + '", "title": "' + title + '", "description": "' + desc + '", "accCrit": "' + crit + '", "accTest": "' + test + '"}',
 			dataType : 'json',
 			contentType : "application/json; charset=utf-8",
 			success: function(html) {
 				$('#form-createUS-title').val("");
 				$('#form-createUS-description').val("");
+				$('#modal-createUS').modal('hide');
+				$('#form-createUS')[0].reset();
+				displayUS();
 			}
 		});
 	}
@@ -114,9 +151,18 @@
 		    		var elt = "";
 		    		$.each(data, function(i, us) {
 		    			elt += '<li class="list-group-item"><div class="row">'
-		    			  + '<div class="col-sm-4">' + us.title + '</div>'
-		    			  + '<div class="col-sm-8">' + us.description + '</div>'
-		    			  + '</div></li>';
+		    				+ '<div class="col-sm-4">'
+		    				+ '<div class="list-group-item-heading">';
+		    			 if (typeof(us.code) != 'undefined' && us.code != '') {
+			    			 elt += '[' + us.code + '] ';
+		    			 }
+		    			 elt += us.title 
+		    			 	+ '</div>'
+		    			 	+ '<div class="list-group-item-text">' + us.description + '</div>'
+		    			 	+ '</div>'
+		    			 	+ '<div class="col-sm-4">' + us.accCrit + '</div>'
+		    			 	+ '<div class="col-sm-4">' + us.accTest + '</div>'
+		    			 	+ '</div></li>';
 		    		});
 		    		
 	    			$("#list-allUS").append(elt);

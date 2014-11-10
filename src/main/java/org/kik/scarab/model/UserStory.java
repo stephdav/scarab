@@ -10,8 +10,11 @@ public class UserStory {
 
 	@Id
 	private String id;
+	private String code;
 	private String title;
 	private String description;
+	private String accCrit;
+	private String accTest;
 
 	public UserStory() {
 		// Empty constructor
@@ -23,6 +26,14 @@ public class UserStory {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getTitle() {
@@ -39,6 +50,22 @@ public class UserStory {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAccCrit() {
+		return accCrit;
+	}
+
+	public void setAccCrit(String accCrit) {
+		this.accCrit = accCrit;
+	}
+
+	public String getAccTest() {
+		return accTest;
+	}
+
+	public void setAccTest(String accTest) {
+		this.accTest = accTest;
 	}
 
 }

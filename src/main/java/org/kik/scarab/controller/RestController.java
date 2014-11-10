@@ -28,14 +28,12 @@ public class RestController {
 	@RequestMapping(value = "us", method = RequestMethod.GET)
 	public @ResponseBody List<UserStory> getUS() {
 		LOG.info("getUS()");
-		List<UserStory> l = svcUS.getUserStories();
-		LOG.info("getUS() : {} results", l.size());
-		return l;
+		return svcUS.getUserStories();
 	}
 
 	@RequestMapping(value = "us", method = RequestMethod.POST)
 	public @ResponseBody UserStory createUS(@RequestBody UserStory us) {
-		LOG.info("createUserStory({}, {})", us.getTitle(), us.getDescription());
+		LOG.info("createUserStory({})", us.getTitle());
 		return svcUS.createUserStory(us);
 	}
 }
