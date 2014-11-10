@@ -2,6 +2,9 @@ body {
 	padding-top: 70px;
 }
 
+/** ==========================================================================
+	list table 
+	========================================================================== */
 li.list-group-item:HOVER {
 	background-color: #eee;
 }
@@ -14,3 +17,20 @@ li.list-group-item:HOVER {
 .list-group-header {
 	font-weight: bold;
 }
+
+.list-table-cell {
+	border-left: 1px solid #ddd;
+}
+
+.list-table-cell:FIRST-CHILD, li.list-group-item:HOVER .list-table-cell:FIRST-CHILD
+	{
+	border-left: none;
+}
+
+li.list-group-item:HOVER .list-table-cell {
+	border-left: 1px solid #fff;
+}
+
+/** ==========================================================================
+	 
+	========================================================================== */

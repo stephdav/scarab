@@ -19,11 +19,8 @@
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar-links">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-links">
+					<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">Scarab</a>
 			</div>
@@ -41,12 +38,13 @@
 		<div style="border-left:3px solid black; padding-left:10px;">
 			<div class="clearfix">
 				<span class="list-group-title">User stories</span>
-				<div class="pull-right"><button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modal-createUS"><span class="glyphicon glyphicon-plus"></span></button></div>
+				<div class="pull-right"><button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modal-createUS" title="create new user story"><span class="glyphicon glyphicon-plus"></span></button></div>
 			</div>
-			<div class="row" style="padding-left:10px;">
-				<div class="col-sm-4 list-group-header">[id] title &amp; description</div>
+			<div class="row" style="padding: 0 10px;">
+				<div class="col-sm-3 list-group-header">[code] title &amp; description</div>
 		    	<div class="col-sm-4 list-group-header">acceptance criteria</div>
 		    	<div class="col-sm-4 list-group-header">acceptance tests</div>
+		    	<div class="col-sm-1 list-group-header">action</div>
 		    </div>
 			<ul id="list-allUS" class="list-group"></ul>
 		</div>
@@ -119,8 +117,25 @@
 			e.preventDefault();
 			createUS();
         });
+		$("#list-allUS").on("click", ".btn-us-edit", function() {
+			var usId = $(this).closest("li").data("usId");
+			editUS(usId);
+		});
+		$("#list-allUS").on("click", ".btn-us-remove", function() {
+			var usId = $(this).closest("li").data("usId");
+			editUS(usId);
+		});
+
 	}
 	
+	function editUS(usId) {
+		alert("Edit US " + usId);		
+	}
+
+	function removeUS(usId) {
+		alert("Remove US " + usId);		
+	}
+
 	function createUS() {
 		var usid = $("#form-createUS-identifier").val();
 		var title = $("#form-createUS-title").val();
@@ -150,19 +165,26 @@
 		    	if (data.length > 0) {
 		    		var elt = "";
 		    		$.each(data, function(i, us) {
-		    			elt += '<li class="list-group-item"><div class="row">'
-		    				+ '<div class="col-sm-4">'
-		    				+ '<div class="list-group-item-heading">';
+		    			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="row">'
+		    				+ '<div class="col-sm-3 list-table-cell">'
+		    				+   '<div class="list-group-item-heading">';
 		    			 if (typeof(us.code) != 'undefined' && us.code != '') {
 			    			 elt += '[' + us.code + '] ';
 		    			 }
 		    			 elt += us.title 
+		    			 	+ '  </div>'
+		    			 	+ '  <div class="list-group-item-text">' + us.description + '</div>'
 		    			 	+ '</div>'
-		    			 	+ '<div class="list-group-item-text">' + us.description + '</div>'
-		    			 	+ '</div>'
-		    			 	+ '<div class="col-sm-4">' + us.accCrit + '</div>'
-		    			 	+ '<div class="col-sm-4">' + us.accTest + '</div>'
+		    			 	+ '<div class="col-sm-4 list-table-cell">' + us.accCrit + '</div>'
+		    			 	+ '<div class="col-sm-4 list-table-cell">' + us.accTest + '</div>'
+		    				+ '<div class="col-sm-1 clearfix">'
+		    				+ '  <div class="btn-group pull-right">'
+		    				+ '    <button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
+		    				+ '    <button type="button" class="btn btn-default btn-sm btn-us-remove" title="delete user story"><span class="glyphicon glyphicon-trash"></span></button>'
+		    				+ '  </div>'
+		    				+ '</div>'
 		    			 	+ '</div></li>';
+
 		    		});
 		    		
 	    			$("#list-allUS").append(elt);
