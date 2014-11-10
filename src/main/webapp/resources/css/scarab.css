@@ -5,30 +5,48 @@ body {
 /** ==========================================================================
 	list table 
 	========================================================================== */
-li.list-group-item:HOVER {
-	background-color: #eee;
-}
-
 .list-group-title {
 	font-size: 16px;
 	font-weight: bold;
 }
 
-.list-group-header {
-	font-weight: bold;
+#list-allUS {
+	font-size: 12px;
+	margin-top: 10px;
 }
 
-.list-table-cell {
+li.list-group-item:FIRST-CHILD {
+	font-weight: bold;
+	background-color: #ddd;
+}
+
+li.list-group-item .list-table-cell {
 	border-left: 1px solid #ddd;
 }
 
-.list-table-cell:FIRST-CHILD, li.list-group-item:HOVER .list-table-cell:FIRST-CHILD
-	{
-	border-left: none;
+li.list-group-item:HOVER {
+	background-color: #eee;
+}
+
+li.list-group-item:FIRST-CHILD:HOVER {
+	background-color: #ddd;
+}
+
+li.list-group-item:FIRST-CHILD .list-table-cell {
+	border-left: 1px solid #fff;
 }
 
 li.list-group-item:HOVER .list-table-cell {
 	border-left: 1px solid #fff;
+}
+
+li.list-group-item .list-table-cell:FIRST-CHILD, li.list-group-item:HOVER .list-table-cell:FIRST-CHILD
+	{
+	border-left: none;
+}
+
+.list-group-item-heading {
+	font-weight: bold;
 }
 
 /** ==========================================================================

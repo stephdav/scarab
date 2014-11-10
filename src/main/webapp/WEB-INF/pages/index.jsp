@@ -35,17 +35,11 @@
 
 	<div class="container-fluid">
 
-		<div style="border-left:3px solid black; padding-left:10px;">
+		<div style="padding-left:10px;">
 			<div class="clearfix">
 				<span class="list-group-title">User stories</span>
 				<div class="pull-right"><button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modal-createUS" title="create new user story"><span class="glyphicon glyphicon-plus"></span></button></div>
 			</div>
-			<div class="row" style="padding: 0 10px;">
-				<div class="col-sm-3 list-group-header">[code] title &amp; description</div>
-		    	<div class="col-sm-4 list-group-header">acceptance criteria</div>
-		    	<div class="col-sm-4 list-group-header">acceptance tests</div>
-		    	<div class="col-sm-1 list-group-header">action</div>
-		    </div>
 			<ul id="list-allUS" class="list-group"></ul>
 		</div>
 
@@ -163,7 +157,13 @@
 			function(data) {
 				$("#list-allUS").empty();
 		    	if (data.length > 0) {
-		    		var elt = "";
+		    		var elt = '<li class="list-group-item"><div class="row">'
+    				+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description</div>'
+    			 	+ '<div class="col-sm-4 list-table-cell">acceptance criteria</div>'
+    			 	+ '<div class="col-sm-4 list-table-cell">acceptance tests</div>'
+    			 	+ '<div class="col-sm-1 list-table-cell">action</div>'
+    			 	+ '</div></li>';
+
 		    		$.each(data, function(i, us) {
 		    			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="row">'
 		    				+ '<div class="col-sm-3 list-table-cell">'
