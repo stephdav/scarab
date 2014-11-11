@@ -38,7 +38,15 @@
 		<div style="padding-left:10px;">
 			<div class="clearfix">
 				<span class="list-group-title">User stories</span>
-				<div class="pull-right"><button id="btn-us-create" type="button" class="btn btn-xs btn-default" title="create new user story"><span class="glyphicon glyphicon-plus"></span></button></div>
+				<div class="pull-right">
+					<div class="pull-right" style="margin-left:20px;"><button id="btn-us-create" type="button" class="btn btn-sm btn-default" title="create new user story">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button></div>
+      				<div class="pull-right" style="margin-left:20px;"><div class="input-group input-group-sm">
+						<input type="text" id="us-input-search" class="form-control">
+						<span class="input-group-addon" style="width: auto;"><span class="glyphicon glyphicon-search"></span></span>
+					</div></div>
+				</div>
 			</div>
 			<ul id="list-allUS" class="list-group"></ul>
 		</div>
@@ -163,6 +171,22 @@
 			// remove event handlers
 			$('#form-removeUS').off();
 		});
+
+		// filter
+		$('#us-input-search').on('keyup', function() {
+			filterUS($(this).val());
+		});
+
+	}
+	
+	function filterUS(exp) {
+      	var rex = new RegExp(exp, 'i');
+        $('#list-allUS').find('li').hide();
+        $('#list-allUS').find('li:first-child').show();
+        $('#list-allUS').find('li').filter(function() {
+            return rex.test($(this).text());
+        }).show();
+
 	}
 	
 	function editUSForm(usId) {
@@ -277,6 +301,7 @@
 		   		});
 		   		
 	    		$("#list-allUS").append(elt);
+	    		filterUS($('#us-input-search').val());
 		   	}
 		});
 	}
