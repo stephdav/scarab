@@ -28,6 +28,16 @@ public class UserStoryDao {
 		return mongoTemplate.findAll(UserStory.class);
 	}
 
+	public UserStory getUserStory(String id) {
+		BasicQuery query = new BasicQuery("{ id : '" + id + "' }");
+		return mongoTemplate.findOne(query, UserStory.class);
+	}
+
+	public UserStory updateUserStory(UserStory us) {
+		mongoTemplate.save(us);
+		return us;
+	}
+
 	public void deleteUserStory(String id) {
 		BasicQuery query = new BasicQuery("{ id : '" + id + "' }");
 		mongoTemplate.remove(query, UserStory.class);

@@ -32,10 +32,21 @@ public class RestController {
 		return svcUS.getUserStories();
 	}
 
+	@RequestMapping(value = "us/{id}", method = RequestMethod.GET)
+	public @ResponseBody UserStory getSession(@PathVariable String id) {
+		return svcUS.getUserStory(id);
+	}
+
 	@RequestMapping(value = "us", method = RequestMethod.POST)
 	public @ResponseBody UserStory createUS(@RequestBody UserStory us) {
 		LOG.info("createUS '{}'", us.getTitle());
 		return svcUS.createUserStory(us);
+	}
+
+	@RequestMapping(value = "us", method = RequestMethod.PUT)
+	public @ResponseBody UserStory updateSession(@RequestBody UserStory us) {
+		LOG.info("update US '{}'", us.getId());
+		return svcUS.updateUserStory(us);
 	}
 
 	@RequestMapping(value = "us/{id}", method = RequestMethod.DELETE)

@@ -22,12 +22,20 @@ public class UserStoryService {
 	 * 
 	 * @param dao
 	 */
-	public UserStoryService(UserStoryDao dao) {
+	public UserStoryService(final UserStoryDao dao) {
 		this.dao = dao;
 	}
 
-	public UserStory createUserStory(UserStory us) {
+	public UserStory createUserStory(final UserStory us) {
 		return dao.createUserStory(us);
+	}
+
+	public UserStory getUserStory(String id) {
+		return dao.getUserStory(id);
+	}
+
+	public UserStory updateUserStory(final UserStory us) {
+		return dao.updateUserStory(us);
 	}
 
 	public void deleteUserStory(String id) {

@@ -38,53 +38,54 @@
 		<div style="padding-left:10px;">
 			<div class="clearfix">
 				<span class="list-group-title">User stories</span>
-				<div class="pull-right"><button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modal-createUS" title="create new user story"><span class="glyphicon glyphicon-plus"></span></button></div>
+				<div class="pull-right"><button id="btn-us-create" type="button" class="btn btn-xs btn-default" title="create new user story"><span class="glyphicon glyphicon-plus"></span></button></div>
 			</div>
 			<ul id="list-allUS" class="list-group"></ul>
 		</div>
 
-		<div id="modal-createUS" class="modal fade">
-			<div class="modal-dialog modal-lg" role="dialog" aria-labelledby="modal-createUS-title" aria-hidden="true">
+		<div id="modal-us" class="modal fade">
+			<div class="modal-dialog modal-lg" role="dialog" aria-labelledby="modal-us-title" aria-hidden="true">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 id="modal-createUS-title" class="modal-title">Create a user story</h4>
+						<h4 id="modal-us-title" class="modal-title">Create a user story</h4>
 					</div>
 					<div class="modal-body">
-						<form id="form-createUS" class="form-horizontal" role="form">
+						<form id="form-us" class="form-horizontal" role="form">
+							<span id="form-us-id" class="hidden"></span>
 							<div class="form-group">
-								<label for="form-createUS-identifier" class="col-sm-3 control-label">identifier</label>
+								<label for="form-us-code" class="col-sm-3 control-label">identifier</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="form-createUS-identifier">
+									<input type="text" class="form-control" id="form-us-code">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="form-createUS-title" class="col-sm-3 control-label">title</label>
+								<label for="form-us-title" class="col-sm-3 control-label">title</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="form-createUS-title" required>
+									<input type="text" class="form-control" id="form-us-title" required>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="form-createUS-description" class="col-sm-3 control-label">description</label>
+								<label for="form-us-description" class="col-sm-3 control-label">description</label>
 								<div class="col-sm-9">
-									<textarea id="form-createUS-description" class="form-control" rows="3"></textarea>
+									<textarea id="form-us-description" class="form-control" rows="3"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="form-createUS-criteria" class="col-sm-3 control-label">acceptance criteria</label>
+								<label for="form-us-criteria" class="col-sm-3 control-label">acceptance criteria</label>
 								<div class="col-sm-9">
-									<textarea id="form-createUS-criteria" class="form-control" rows="3"></textarea>
+									<textarea id="form-us-criteria" class="form-control" rows="3"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="form-createUS-test" class="col-sm-3 control-label">acceptance tests</label>
+								<label for="form-us-test" class="col-sm-3 control-label">acceptance tests</label>
 								<div class="col-sm-9">
-									<textarea id="form-createUS-test" class="form-control" rows="3"></textarea>
+									<textarea id="form-us-test" class="form-control" rows="3"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-9">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-									<button type="submit" class="btn btn-primary">Create</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+									<button type="submit" class="btn btn-primary"></button>
 								</div>
 							</div>
 						</form>
@@ -106,8 +107,8 @@
 							</div>
 							<div class="form-group clearfix">
 								<div class="col-xs-12 text-right">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-									<button type="submit" class="btn btn-danger">Remove</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+									<button type="submit" class="btn btn-danger">remove</button>
 								</div>
 							</div>
 						</form>
@@ -124,42 +125,68 @@
 
 	<script type="text/javascript">
 
+	var usAction = 'create';
+
 	$(document).ready(function() {
 		initPage();
 	});
 
 	function initPage() {
 		displayUS();
-		$('#form-createUS').on('submit', function(e) {
+		$("#btn-us-create").on("click", function() {
+			usAction = 'create';
+			$('#form-us button[type="submit"]').text('create');
+			$('#modal-us').modal('show');
+		});
+		$('#form-us').on('submit', function(e) {
 			e.preventDefault();
-			createUS();
+			if (usAction == 'create') {
+				createUS();
+			} else if (usAction == 'update') {
+				editUS();
+			} else {
+				$('#modal-us').modal('hide');
+			}
         });
+
 		$("#list-allUS").on("click", ".btn-us-edit", function() {
 			var usId = $(this).closest("li").data("usId");
-			editUS(usId);
-		});
-		$('#modal-removeUS').on('hidden.bs.modal', function (e) {
-			console.log("hidden.bs.modal");
-			$('#form-removeUS').off();
+			editUSForm(usId);
 		});
 		$("#list-allUS").on("click", ".btn-us-remove", function() {
 			var usId = $(this).closest("li").data("usId");
 			var usTxt = $(this).closest("li").find(".list-group-item-heading").text();
 			removeUS(usId, usTxt);
 		});
+
+		$('#modal-removeUS').on('hidden.bs.modal', function (e) {
+			// remove event handlers
+			$('#form-removeUS').off();
+		});
 	}
 	
-	function editUS(usId) {
-		alert("Edit US " + usId);		
+	function editUSForm(usId) {
+		$('#form-us')[0].reset();
+	    $.getJSON('${pageContext.request.contextPath}/rest/us/' + usId,	function(data) {
+	    	if (typeof(data) != 'undefined') {
+	    		$("#form-us-id").text(data.id);
+	    		$("#form-us-code").val(data.code);
+	    		$("#form-us-title").val(data.title);
+	    		$("#form-us-description").text(data.description.replace(/<br>/g, '\n'));
+	    		$("#form-us-criteria").text(data.accCrit.replace(/<br>/g, '\n'));
+	    		$("#form-us-test").text(data.accTest.replace(/<br>/g, '\n'));
+	    	}
+			usAction = 'update';
+			$('#form-us button[type="submit"]').text('update');
+			$('#modal-us').modal('show');
+		});
 	}
 
 	function removeUS(usId, usTxt) {
-		
 		$('#modal-removeUS .us-title').text(usTxt);
 		$('#modal-removeUS').modal('show');
 		$('#form-removeUS').on('submit', function(e) {
 			e.preventDefault();
-			console.log("delete us "+ usId);
 			$.ajax({
 				url: '${pageContext.request.contextPath}/rest/us/' + usId,
 				type: 'DELETE',
@@ -174,11 +201,11 @@
 	}
 
 	function createUS() {
-		var usid = $("#form-createUS-identifier").val();
-		var title = $("#form-createUS-title").val();
-		var desc = $("#form-createUS-description").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		var crit = $("#form-createUS-criteria").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		var test = $("#form-createUS-test").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		var usid = $("#form-us-code").val();
+		var title = $("#form-us-title").val();
+		var desc = $("#form-us-description").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		var crit = $("#form-us-criteria").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		var test = $("#form-us-test").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
 		$.ajax({
 			url: '${pageContext.request.contextPath}/rest/us',
 			type: 'POST',
@@ -186,10 +213,29 @@
 			dataType : 'json',
 			contentType : "application/json; charset=utf-8",
 			success: function(html) {
-				$('#form-createUS-title').val("");
-				$('#form-createUS-description').val("");
-				$('#modal-createUS').modal('hide');
-				$('#form-createUS')[0].reset();
+				$('#modal-us').modal('hide');
+				$('#form-us')[0].reset();
+				displayUS();
+			}
+		});
+	}
+	
+	function editUS() {
+		var _id = $("#form-us-id").text();
+		var usid = $("#form-us-code").val();
+		var title = $("#form-us-title").val();
+		var desc = $("#form-us-description").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		var crit = $("#form-us-criteria").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		var test = $("#form-us-test").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
+		$.ajax({
+			url: '${pageContext.request.contextPath}/rest/us',
+			type: 'PUT',
+			data: '{"id": "' + _id + '", "code": "' + usid + '", "title": "' + title + '", "description": "' + desc + '", "accCrit": "' + crit + '", "accTest": "' + test + '"}',
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success: function(html) {
+				$('#modal-us').modal('hide');
+				$('#form-us')[0].reset();
 				displayUS();
 			}
 		});
@@ -204,7 +250,7 @@
     			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description</div>'
     		 	+ '<div class="col-sm-4 list-table-cell">acceptance criteria</div>'
     		 	+ '<div class="col-sm-4 list-table-cell">acceptance tests</div>'
-    		 	+ '<div class="col-sm-1 list-table-cell">action</div>'
+    		 	+ '<div class="col-sm-1 text-right">action</div>'
     		 	+ '</div></li>';
 
 		   		$.each(data, function(i, us) {
