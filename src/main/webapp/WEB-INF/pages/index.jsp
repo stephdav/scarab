@@ -27,7 +27,10 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="navbar-links">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Backlog</a></li>
+					<li class="active"><a href="#">backlog</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-question-sign"></span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -130,12 +133,16 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${pageContext.request.contextPath}/resources/js/libs/jquery-1.11.0.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/filter.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/userStory.js"></script>
 
 	<script type="text/javascript">
 
 	var usAction = 'create';
 
 	$(document).ready(function() {
+		setAjaxPath('${pageContext.request.contextPath}');
 		initPage();
 	});
 
@@ -174,18 +181,8 @@
 
 		// filter
 		$('#us-input-search').on('keyup', function() {
-			filterUS($(this).val());
+			filterUS('#list-allUS', $(this).val());
 		});
-
-	}
-	
-	function filterUS(exp) {
-      	var rex = new RegExp(exp, 'i');
-        $('#list-allUS').find('li').hide();
-        $('#list-allUS').find('li:first-child').show();
-        $('#list-allUS').find('li').filter(function() {
-            return rex.test($(this).text());
-        }).show();
 
 	}
 	
@@ -196,9 +193,9 @@
 	    		$("#form-us-id").text(data.id);
 	    		$("#form-us-code").val(data.code);
 	    		$("#form-us-title").val(data.title);
-	    		$("#form-us-description").text(data.description.replace(/<br>/g, '\n'));
-	    		$("#form-us-criteria").text(data.accCrit.replace(/<br>/g, '\n'));
-	    		$("#form-us-test").text(data.accTest.replace(/<br>/g, '\n'));
+	    		setTextAreaValue('#form-us-description', data.description);
+	    		setTextAreaValue('#form-us-criteria', data.accCrit);
+	    		setTextAreaValue('#form-us-test', data.accTest);
 	    	}
 			usAction = 'update';
 			$('#form-us button[type="submit"]').text('update');
@@ -225,44 +222,38 @@
 	}
 
 	function createUS() {
-		var usid = $("#form-us-code").val();
-		var title = $("#form-us-title").val();
-		var desc = $("#form-us-description").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		var crit = $("#form-us-criteria").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		var test = $("#form-us-test").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		$.ajax({
-			url: '${pageContext.request.contextPath}/rest/us',
-			type: 'POST',
-			data: '{"code": "' + usid + '", "title": "' + title + '", "description": "' + desc + '", "accCrit": "' + crit + '", "accTest": "' + test + '"}',
-			dataType : 'json',
-			contentType : "application/json; charset=utf-8",
-			success: function(html) {
-				$('#modal-us').modal('hide');
-				$('#form-us')[0].reset();
-				displayUS();
-			}
+		
+		 var us= {
+			 code: $("#form-us-code").val(),
+			 title: $("#form-us-title").val(),
+			 desc: getTextAreaValue('#form-us-description'),
+			 crit: getTextAreaValue('#form-us-criteria'),
+			 test: getTextAreaValue('#form-us-test')
+		};
+
+		usCreate(us, function(html) {
+			$('#modal-us').modal('hide');
+			$('#form-us')[0].reset();
+			displayUS();
 		});
 	}
 	
 	function editUS() {
-		var _id = $("#form-us-id").text();
-		var usid = $("#form-us-code").val();
-		var title = $("#form-us-title").val();
-		var desc = $("#form-us-description").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		var crit = $("#form-us-criteria").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		var test = $("#form-us-test").val().replace(/(\r\n|\n\r|\r|\n)/g, '<br>');     
-		$.ajax({
-			url: '${pageContext.request.contextPath}/rest/us',
-			type: 'PUT',
-			data: '{"id": "' + _id + '", "code": "' + usid + '", "title": "' + title + '", "description": "' + desc + '", "accCrit": "' + crit + '", "accTest": "' + test + '"}',
-			dataType : 'json',
-			contentType : "application/json; charset=utf-8",
-			success: function(html) {
+		
+		 var us= {
+				 id: $("#form-us-id").text(),
+				 code: $("#form-us-code").val(),
+				 title: $("#form-us-title").val(),
+				 desc: getTextAreaValue('#form-us-description'),
+				 crit: getTextAreaValue('#form-us-criteria'),
+				 test: getTextAreaValue('#form-us-test')
+			};
+
+		 usUpdate(us, function(html) {
 				$('#modal-us').modal('hide');
 				$('#form-us')[0].reset();
 				displayUS();
-			}
-		});
+			});
 	}
 	
 	function displayUS() {
@@ -301,7 +292,7 @@
 		   		});
 		   		
 	    		$("#list-allUS").append(elt);
-	    		filterUS($('#us-input-search').val());
+	    		filterUS('#list-allUS', $('#us-input-search').val());
 		   	}
 		});
 	}
