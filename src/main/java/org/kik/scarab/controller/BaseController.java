@@ -10,9 +10,31 @@ public class BaseController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welcome(ModelMap model) {
-		model.addAttribute("message",
-				"Maven Web Project + Spring 3 MVC - welcome()");
 		return "index";
 	}
 
+	@RequestMapping(value = "/backlog", method = RequestMethod.GET)
+	public String backlog(ModelMap model) {
+		return "backlog";
+	}
+
+	@RequestMapping(value = "/sprint", method = RequestMethod.GET)
+	public String sprint(ModelMap model) {
+		return "sprint";
+	}
+
+	@RequestMapping(value = "/daily", method = RequestMethod.GET)
+	public String daily(ModelMap model) {
+		return "daily";
+	}
+
+	@RequestMapping(value = "/review", method = RequestMethod.GET)
+	public String review(ModelMap model) {
+		return "review";
+	}
+
+	@RequestMapping(value = "/retro", method = RequestMethod.GET)
+	public String retro(ModelMap model) {
+		return "retro";
+	}
 }

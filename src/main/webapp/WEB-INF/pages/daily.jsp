@@ -11,7 +11,6 @@
 <title>scarab</title>
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/scarab.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/home.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,7 +32,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="${pageContext.request.contextPath}/backlog">product backlog</a></li>
 					<li><a href="${pageContext.request.contextPath}/sprint">sprint planning</a></li>
-					<li><a href="${pageContext.request.contextPath}/daily">daily scrum</a></li>
+					<li class="active"><a href="${pageContext.request.contextPath}/daily">daily scrum</a></li>
 					<li><a href="${pageContext.request.contextPath}/review">sprint review</a></li>
 					<li><a href="${pageContext.request.contextPath}/retro">sprint retrospective</a></li>
 				</ul>
@@ -42,55 +41,8 @@
 	</nav>
 
 	<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-lg-4">
-            <div class="box">
-                <div class="icon">
-                    <div class="image"><span class="glyphicon glyphicon-list-alt btn-lg white"></span></div>
-                    <div class="info">
-                        <h3 class="title">product backlog</h3>
-                        <p>5 user stories</p>
-                        <div class="more">
-                            <a href="${pageContext.request.contextPath}/backlog" title="product backlog"><i class="glyphicon glyphicon-plus"></i> Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="space"></div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4">
-            <div class="box">
-                <div class="icon">
-                    <div class="image"><span class="glyphicon glyphicon-map-marker btn-lg white"></span></div>
-                    <div class="info">
-                        <h3 class="title">sprint</h3>
-                        <p>no active sprint</p>
-                        <div class="more">
-                            <a href="${pageContext.request.contextPath}/sprint" title="sprint"><i class="glyphicon glyphicon-plus"></i> Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="space"></div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-4">
-            <div class="box">
-                <div class="icon">
-                    <div class="image"><span class="glyphicon glyphicon-user btn-lg white"></span></div>
-                    <div class="info">
-                        <h3 class="title">team</h3>
-                        <p>6 members</p>
-                        <div class="more">
-                            <a href="#" title="team"><i class="glyphicon glyphicon-plus"></i> Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="space"></div>
-            </div>
-        </div>
-    </div>
-    
-    </div> <!-- /.container-fluid -->
+		<h1>daily scrum</h1>
+	</div> <!-- /.container-fluid -->
 
 	
 	<!-- Placed at the end of the document so the pages load faster -->
