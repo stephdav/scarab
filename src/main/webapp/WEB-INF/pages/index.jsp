@@ -30,7 +30,7 @@
 					<li class="active"><a href="#">backlog</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+					<li><a data-toggle="modal" data-target="#aboutScarab"><span class="glyphicon glyphicon-question-sign"></span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -54,85 +54,87 @@
 			<ul id="list-allUS" class="list-group"></ul>
 		</div>
 
-		<div id="modal-us" class="modal fade">
-			<div class="modal-dialog modal-lg" role="dialog" aria-labelledby="modal-us-title" aria-hidden="true">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 id="modal-us-title" class="modal-title">Create a user story</h4>
-					</div>
-					<div class="modal-body">
-						<form id="form-us" class="form-horizontal" role="form">
-							<span id="form-us-id" class="hidden"></span>
-							<div class="form-group">
-								<label for="form-us-code" class="col-sm-3 control-label">identifier</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="form-us-code">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="form-us-title" class="col-sm-3 control-label">title</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="form-us-title" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="form-us-description" class="col-sm-3 control-label">description</label>
-								<div class="col-sm-9">
-									<textarea id="form-us-description" class="form-control" rows="3"></textarea>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="form-us-criteria" class="col-sm-3 control-label">acceptance criteria</label>
-								<div class="col-sm-9">
-									<textarea id="form-us-criteria" class="form-control" rows="3"></textarea>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="form-us-test" class="col-sm-3 control-label">acceptance tests</label>
-								<div class="col-sm-9">
-									<textarea id="form-us-test" class="form-control" rows="3"></textarea>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-9">
-									<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-									<button type="submit" class="btn btn-primary"></button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div> <!-- /.modal-content -->
-			</div> <!-- /.modal-dialog -->
-		</div> <!-- /.modal -->
+	</div> <!-- /.container-fluid -->
 
-		<div id="modal-removeUS" class="modal fade">
-			<div class="modal-dialog" role="dialog" aria-labelledby="modal-removeUS-title" aria-hidden="true">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 id="modal-removeUS-title" class="modal-title">Remove User Story</h4>
-					</div>
-					<div class="modal-body">
-						<form id="form-removeUS" role="form">
-							<div class="form-group">
-								<p>Are you sure you want to remove user story "<span class="us-title"></span>" ?</p>
+	<div id="modal-us" class="modal fade">
+		<div class="modal-dialog modal-lg" role="dialog" aria-labelledby="modal-us-title" aria-hidden="true">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="modal-us-title" class="modal-title">Create a user story</h4>
+				</div>
+				<div class="modal-body">
+					<form id="form-us" class="form-horizontal" role="form">
+						<span id="form-us-id" class="hidden"></span>
+						<div class="form-group">
+							<label for="form-us-code" class="col-sm-3 control-label">identifier</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="form-us-code">
 							</div>
-							<div class="form-group clearfix">
-								<div class="col-xs-12 text-right">
-									<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-									<button type="submit" class="btn btn-danger">remove</button>
-								</div>
+						</div>
+						<div class="form-group">
+							<label for="form-us-title" class="col-sm-3 control-label">title</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="form-us-title" required>
 							</div>
-						</form>
-					</div>
-				</div> <!-- /.modal-content -->
-			</div> <!-- /.modal-dialog -->
-		</div> <!-- /.modal -->
+						</div>
+						<div class="form-group">
+							<label for="form-us-description" class="col-sm-3 control-label">description</label>
+							<div class="col-sm-9">
+								<textarea id="form-us-description" class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="form-us-criteria" class="col-sm-3 control-label">acceptance criteria</label>
+							<div class="col-sm-9">
+								<textarea id="form-us-criteria" class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="form-us-test" class="col-sm-3 control-label">acceptance tests</label>
+							<div class="col-sm-9">
+								<textarea id="form-us-test" class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+								<button type="submit" class="btn btn-primary"></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div> <!-- /.modal-content -->
+		</div> <!-- /.modal-dialog -->
+	</div> <!-- /.modal -->
 
-	</div>
-	
+	<div id="modal-removeUS" class="modal fade">
+		<div class="modal-dialog" role="dialog" aria-labelledby="modal-removeUS-title" aria-hidden="true">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="modal-removeUS-title" class="modal-title">Remove User Story</h4>
+				</div>
+				<div class="modal-body">
+					<form id="form-removeUS" role="form">
+						<div class="form-group">
+							<p>Are you sure you want to remove user story "<span class="us-title"></span>" ?</p>
+						</div>
+						<div class="form-group clearfix">
+							<div class="col-xs-12 text-right">
+								<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+								<button type="submit" class="btn btn-danger">remove</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div> <!-- /.modal-content -->
+		</div> <!-- /.modal-dialog -->
+	</div> <!-- /.modal -->
+
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${pageContext.request.contextPath}/resources/js/libs/jquery-1.11.0.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap.min.js"></script>
+
+	<script src="${pageContext.request.contextPath}/resources/js/about.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/filter.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/userStory.js"></script>
@@ -147,6 +149,7 @@
 	});
 
 	function initPage() {
+		addAboutScarab();
 		displayUS();
 		$("#btn-us-create").on("click", function() {
 			usAction = 'create';
@@ -208,22 +211,16 @@
 		$('#modal-removeUS').modal('show');
 		$('#form-removeUS').on('submit', function(e) {
 			e.preventDefault();
-			$.ajax({
-				url: '${pageContext.request.contextPath}/rest/us/' + usId,
-				type: 'DELETE',
-				dataType : 'json',
-				contentType : "application/json; charset=utf-8",
-				complete: function(html) {
-					$('#modal-removeUS').modal('hide');
-					displayUS();
-				}
+			var us= { id: usId };
+			usDelete(us, function(html) {
+				$('#modal-removeUS').modal('hide');
+				displayUS();
 			});
         });
 	}
 
 	function createUS() {
-		
-		 var us= {
+		var us= {
 			 code: $("#form-us-code").val(),
 			 title: $("#form-us-title").val(),
 			 desc: getTextAreaValue('#form-us-description'),
@@ -239,7 +236,6 @@
 	}
 	
 	function editUS() {
-		
 		 var us= {
 				 id: $("#form-us-id").text(),
 				 code: $("#form-us-code").val(),
