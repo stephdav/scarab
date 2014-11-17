@@ -28,6 +28,10 @@ public class UserStoryDao {
 		return mongoTemplate.findAll(UserStory.class);
 	}
 
+	public long getUserStoryCount() {
+		return mongoTemplate.count(null, UserStory.class);
+	}
+
 	public UserStory getUserStory(String id) {
 		BasicQuery query = new BasicQuery("{ id : '" + id + "' }");
 		return mongoTemplate.findOne(query, UserStory.class);

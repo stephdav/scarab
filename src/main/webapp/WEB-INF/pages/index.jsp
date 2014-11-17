@@ -49,7 +49,7 @@
                     <div class="image"><span class="glyphicon glyphicon-list-alt btn-lg white"></span></div>
                     <div class="info">
                         <h3 class="title">product backlog</h3>
-                        <p>5 user stories</p>
+                        <p id="usCount"></p>
                         <div class="more">
                             <a href="${pageContext.request.contextPath}/backlog" title="product backlog"><i class="glyphicon glyphicon-plus"></i> Details</a>
                         </div>
@@ -79,7 +79,7 @@
                     <div class="image"><span class="glyphicon glyphicon-user btn-lg white"></span></div>
                     <div class="info">
                         <h3 class="title">team</h3>
-                        <p>6 members</p>
+                        <p id="teamCount"></p>
                         <div class="more">
                             <a href="#" title="team"><i class="glyphicon glyphicon-plus"></i> Details</a>
                         </div>
@@ -102,7 +102,15 @@
 	<script type="text/javascript">
 
 	$(document).ready(function() {
+		initPage();
 	});
+	
+	function initPage() {
+	    $.getJSON('${pageContext.request.contextPath}/rest/summary', function(data) {
+	    	$('#usCount').html('<strong>' + data.usCount + '</strong> user stories');
+	    	$('#teamCount').html('<strong>' + data.teamCount + '</strong> members');
+		});
+	}
 
 	</script>
 

@@ -2,7 +2,9 @@ package org.kik.scarab.controller;
 
 import java.util.List;
 
+import org.kik.scarab.model.DashboardSummary;
 import org.kik.scarab.model.UserStory;
+import org.kik.scarab.service.DashboardService;
 import org.kik.scarab.service.UserStoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,33 +26,49 @@ public class RestController {
 	@Autowired
 	UserStoryService svcUS;
 
+	@Autowired
+	DashboardService svcDashboard;
+
+	// === Dashboard =========================================================
+
+	@RequestMapping(value = "summary", method = RequestMethod.GET)
+	public @ResponseBody
+	DashboardSummary getSummary() {
+		return svcDashboard.getSummary();
+	}
+
 	// === User Story ========================================================
 
 	@RequestMapping(value = "us", method = RequestMethod.GET)
-	public @ResponseBody List<UserStory> getUS() {
+	public @ResponseBody
+	List<UserStory> getUS() {
 		LOG.info("getUS()");
 		return svcUS.getUserStories();
 	}
 
 	@RequestMapping(value = "us/{id}", method = RequestMethod.GET)
-	public @ResponseBody UserStory getSession(@PathVariable String id) {
+	public @ResponseBody
+	UserStory getSession(@PathVariable String id) {
 		return svcUS.getUserStory(id);
 	}
 
 	@RequestMapping(value = "us", method = RequestMethod.POST)
-	public @ResponseBody UserStory createUS(@RequestBody UserStory us) {
+	public @ResponseBody
+	UserStory createUS(@RequestBody UserStory us) {
 		LOG.info("createUS '{}'", us.getTitle());
 		return svcUS.createUserStory(us);
 	}
 
 	@RequestMapping(value = "us", method = RequestMethod.PUT)
-	public @ResponseBody UserStory updateSession(@RequestBody UserStory us) {
+	public @ResponseBody
+	UserStory updateSession(@RequestBody UserStory us) {
 		LOG.info("update US '{}'", us.getId());
 		return svcUS.updateUserStory(us);
 	}
 
 	@RequestMapping(value = "us/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody void deleteUS(@PathVariable String id) {
+	public @ResponseBody
+	void deleteUS(@PathVariable String id) {
 		LOG.info("delete US '{}'", id);
 		svcUS.deleteUserStory(id);
 	}
