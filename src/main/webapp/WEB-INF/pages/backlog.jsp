@@ -44,7 +44,7 @@
 
 		<div style="padding-left:10px;">
 			<div class="clearfix">
-				<span class="list-group-title">User stories</span>
+				<span class="list-group-title">product backlog <a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a></span>
 				<div class="pull-right">
 					<div class="pull-right" style="margin-left:20px;"><button id="btn-us-create" type="button" class="btn btn-sm btn-default" title="create new user story">
 						<span class="glyphicon glyphicon-plus"></span>
@@ -99,7 +99,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-9">
+							<div class="col-sm-offset-3 col-sm-9 text-right">
 								<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
 								<button type="submit" class="btn btn-primary"></button>
 							</div>
@@ -132,7 +132,24 @@
 			</div> <!-- /.modal-content -->
 		</div> <!-- /.modal-dialog -->
 	</div> <!-- /.modal -->
-	
+
+	<div id="aboutProductBacklog" class="modal fade">
+		<div class="modal-dialog modal-lg" role="dialog" aria-labelledby="modal-productBacklog-title" aria-hidden="true">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="modal-productBacklog-title" class="modal-title">About product backlog</h4>
+				</div>
+				<div class="modal-body">
+					<blockquote>
+					<p>The Product Backlog is an ordered list of everything that might be needed in the product and is the single source of requirements for any changes to be made to the product. The Product Owner is responsible for the Product Backlog, including its content, availability, and ordering.</p>
+					<p></p>
+					<footer>The Scrum Guide</footer>
+					</blockquote>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${pageContext.request.contextPath}/resources/js/libs/jquery-1.11.0.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap.min.js"></script>
