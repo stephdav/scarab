@@ -1,0 +1,11 @@
+#myTable {
+	font-size: 12px;
+}
+
+#myTable th {
+	background-color: #ddd;
+}
+
+#myTable .th-inner {
+	font-size: 14px;
+}
