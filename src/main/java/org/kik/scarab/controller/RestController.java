@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -41,9 +42,12 @@ public class RestController {
 
 	@RequestMapping(value = "us", method = RequestMethod.GET)
 	public @ResponseBody
-	List<UserStory> getUS() {
-		LOG.info("getUS()");
-		return svcUS.getUserStories();
+	List<UserStory> getUS(@RequestParam("sort") String sort) {
+		LOG.info("getUS({})", sort);
+		if (sort == null) {
+			sort = "ASC";
+		}
+		return svcUS.getSortedUserStories(sort);
 	}
 
 	@RequestMapping(value = "us/{id}", method = RequestMethod.GET)

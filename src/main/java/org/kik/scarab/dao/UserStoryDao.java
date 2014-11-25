@@ -5,8 +5,10 @@ import java.util.UUID;
 
 import org.kik.scarab.model.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +28,16 @@ public class UserStoryDao {
 
 	public List<UserStory> findAllUserStories() {
 		return mongoTemplate.findAll(UserStory.class);
+	}
+
+	public List<UserStory> findAllUserStoriesSorted(final String order) {
+		Query query = new Query();
+		if ("ASC".equals(order)) {
+			query.with(new Sort(Sort.Direction.ASC, "code"));
+		} else {
+			query.with(new Sort(Sort.Direction.DESC, "code"));
+		}
+		return mongoTemplate.find(query, UserStory.class);
 	}
 
 	public long getUserStoryCount() {

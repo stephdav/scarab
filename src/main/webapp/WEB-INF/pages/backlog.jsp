@@ -11,6 +11,7 @@
 <title>scarab</title>
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/scarab.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/backlog.css" rel="stylesheet">
 </head>
 
 <body>
@@ -205,6 +206,10 @@
 			filterUS('#list-allUS', $(this).val());
 		});
 
+		$("#list-allUS").on("click", "#sortCode", function() {
+			sortUsByCode();
+		});
+
 	}
 	
 	function createUSForm() {
@@ -280,13 +285,26 @@
 		});
 	}
 	
+	var sortOrder='ASC';
+	var sortOrderClass="";
+	function sortUsByCode() {
+		if (sortOrder == 'ASC') {
+			sortOrder="DESC";
+			sortOrderClass="dropup";
+		} else {
+			sortOrder='ASC';
+			sortOrderClass="";
+		}
+		displayUS();
+	}
+	
 	function displayUS() {
-	    $.getJSON('${pageContext.request.contextPath}/rest/us',	function(data) {
+	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=' + sortOrder,	function(data) {
 			$("#list-allUS").empty();
 		   	if (data.length > 0) {
 
 		   		var elt = '<li class="list-group-item"><div class="row">'
-    			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description</div>'
+    			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description<span id="sortCode" class="' + sortOrderClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
     		 	+ '<div class="col-sm-4 list-table-cell">acceptance criteria</div>'
     		 	+ '<div class="col-sm-4 list-table-cell">acceptance tests</div>'
     		 	+ '<div class="col-sm-1 text-right">action</div>'
