@@ -34,8 +34,10 @@ public class UserStoryDao {
 		Query query = new Query();
 		if ("ASC".equals(order)) {
 			query.with(new Sort(Sort.Direction.ASC, "code"));
+			query.with(new Sort(Sort.Direction.ASC, "title"));
 		} else {
 			query.with(new Sort(Sort.Direction.DESC, "code"));
+			query.with(new Sort(Sort.Direction.DESC, "title"));
 		}
 		return mongoTemplate.find(query, UserStory.class);
 	}
