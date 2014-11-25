@@ -1,5 +1,6 @@
 package org.kik.scarab.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class UserStoryDao {
 			mongoTemplate.createCollection(UserStory.class);
 		}
 		us.setId(UUID.randomUUID().toString());
+		us.setCreationDate(new Date());
 		mongoTemplate.insert(us);
 		return us;
 	}

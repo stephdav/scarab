@@ -1,5 +1,7 @@
 package org.kik.scarab.model;
 
+import java.util.Date;
+
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,6 +17,7 @@ public class UserStory {
 	private String description;
 	private String accCrit;
 	private String accTest;
+	private Date creationDate;
 
 	public UserStory() {
 		// Empty constructor
@@ -66,6 +69,14 @@ public class UserStory {
 
 	public void setAccTest(String accTest) {
 		this.accTest = accTest;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 }
