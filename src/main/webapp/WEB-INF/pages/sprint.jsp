@@ -49,8 +49,10 @@
     <thead>
         <tr>
             <th data-field="code" class="col-md-3" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
-            <th data-field="accCrit" class="col-md-4">acceptance criteria</th>
-            <th data-field="accTest" class="col-md-4">acceptance tests</th>
+            <th data-field="accCrit" class="col-md-3">acceptance criteria</th>
+            <th data-field="accTest" class="col-md-3">acceptance tests</th>
+            <th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true">creation date</th>
+            <th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true">modification date</th>
             <th data-formatter="actionFormatter" class="col-md-1">action</th>
         </tr>
     </thead>
@@ -80,13 +82,22 @@
 		}
         return content;
     }
+	function dateFormatter(value, row, index) {
+		var content = "";
+		if (typeof(value) != 'undefined' && value != ''){
+			var d = new Date(value);
+			content = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+		} else {
+			content = '-';
+		}
+        return content;
+    }
 	
 	function actionFormatter(value, row, index) {
 		var content = '<div class="btn-group pull-right">'
 		+     '<button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
 		+     '<button type="button" class="btn btn-default btn-sm btn-us-remove" title="delete user story"><span class="glyphicon glyphicon-trash"></span></button>'
 		+   '</div>';
-;
         return content;
     }
 

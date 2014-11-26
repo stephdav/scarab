@@ -24,6 +24,7 @@ public class UserStoryDao {
 		}
 		us.setId(UUID.randomUUID().toString());
 		us.setCreationDate(new Date());
+		us.setModificationDate(new Date());
 		mongoTemplate.insert(us);
 		return us;
 	}
@@ -54,6 +55,7 @@ public class UserStoryDao {
 	}
 
 	public UserStory updateUserStory(UserStory us) {
+		us.setModificationDate(new Date());
 		mongoTemplate.save(us);
 		return us;
 	}

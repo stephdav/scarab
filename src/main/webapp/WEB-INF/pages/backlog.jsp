@@ -305,17 +305,23 @@
 
 		   		var elt = '<li class="list-group-item"><div class="row">'
     			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description<span id="sortCode" class="' + sortOrderClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
-    		 	+ '<div class="col-sm-4 list-table-cell">acceptance criteria</div>'
+    		 	+ '<div class="col-sm-3 list-table-cell">acceptance criteria</div>'
     		 	+ '<div class="col-sm-3 list-table-cell">acceptance tests</div>'
-    		 	+ '<div class="col-sm-1">creation date</div>'
+    		 	+ '<div class="col-sm-1 list-table-cell">creation date</div>'
+    		 	+ '<div class="col-sm-1 list-table-cell">modification date</div>'
     		 	+ '<div class="col-sm-1 text-right">action</div>'
     		 	+ '</div></li>';
 
 		   		$.each(data, function(i, us) {
-		   			var sDate = "-";
+		   			var sCreDat = "-";
 	   				if (typeof(us.creationDate) != 'undefined') {
 	   					var d = new Date(us.creationDate);
-	   					sDate = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+	   					sCreDat = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+		   			}
+		   			var sModDat = "-";
+	   				if (typeof(us.modificationDate) != 'undefined') {
+	   					var d = new Date(us.modificationDate);
+	   					sModDat = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
 		   			}
 		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="row">'
 		   				+ '<div class="col-sm-3 list-table-cell">'
@@ -327,9 +333,10 @@
 		   			 	+   '</div>'
 		   			 	+   '<div class="list-group-item-text">' + us.description + '</div>'
 		   			 	+ '</div>'
-		   			 	+ '<div class="col-sm-4 list-table-cell">' + us.accCrit + '</div>'
+		   			 	+ '<div class="col-sm-3 list-table-cell">' + us.accCrit + '</div>'
 		   			 	+ '<div class="col-sm-3 list-table-cell">' + us.accTest + '</div>'
-		   			 	+ '<div class="col-sm-1 list-table-cell">' + sDate + '</div>'
+		   			 	+ '<div class="col-sm-1 list-table-cell">' + sCreDat + '</div>'
+		   			 	+ '<div class="col-sm-1 list-table-cell">' + sModDat + '</div>'
 		   				+ '<div class="col-sm-1 clearfix">'
 		   				+   '<div class="btn-group pull-right">'
 		   				+     '<button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
