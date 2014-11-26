@@ -58,6 +58,7 @@
 			</div>
 			<ul id="list-allUS" class="list-group"></ul>
 		</div>
+
 	</div> <!-- /.container-fluid -->
 
 	<div id="modal-us" class="modal fade">
@@ -286,7 +287,10 @@
 	}
 	
 	var sortOrder='ASC';
-	var sortOrderClass="";
+	var sortField='code';
+	var sortCodeClass="";
+	var sortModClass="";
+
 	function sortUsByCode() {
 		if (sortOrder == 'ASC') {
 			sortOrder="DESC";
@@ -299,16 +303,16 @@
 	}
 	
 	function displayUS() {
-	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=' + sortOrder,	function(data) {
+	    $.getJSON('${pageContext.request.contextPath}/rest/us?sortBy=' + sortField + '&sortDir=' + sortOrder,	function(data) {
 			$("#list-allUS").empty();
 		   	if (data.length > 0) {
 
 		   		var elt = '<li class="list-group-item"><div class="row">'
-    			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description<span id="sortCode" class="' + sortOrderClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
+    			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description<span id="sortCode" class="' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
     		 	+ '<div class="col-sm-3 list-table-cell">acceptance criteria</div>'
     		 	+ '<div class="col-sm-3 list-table-cell">acceptance tests</div>'
     		 	+ '<div class="col-sm-1 list-table-cell">creation date</div>'
-    		 	+ '<div class="col-sm-1 list-table-cell">modification date</div>'
+    		 	+ '<div class="col-sm-1 list-table-cell">modification date<span id="sortCode" class="' + sortModClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
     		 	+ '<div class="col-sm-1 text-right">action</div>'
     		 	+ '</div></li>';
 

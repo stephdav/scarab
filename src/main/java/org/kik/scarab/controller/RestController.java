@@ -42,12 +42,15 @@ public class RestController {
 
 	@RequestMapping(value = "us", method = RequestMethod.GET)
 	public @ResponseBody
-	List<UserStory> getUS(@RequestParam("sort") String sort) {
-		LOG.info("getUS({})", sort);
-		if (sort == null) {
-			sort = "ASC";
+	List<UserStory> getUS(@RequestParam("sortBy") String sortBy, @RequestParam("sortDir") String sortDir) {
+		LOG.info("getUS({}, {})", sortBy, sortDir);
+		if (sortBy == null) {
+			sortBy = "code";
 		}
-		return svcUS.getSortedUserStories(sort);
+		if (sortDir == null) {
+			sortDir = "ASC";
+		}
+		return svcUS.getSortedUserStories(sortDir);
 	}
 
 	@RequestMapping(value = "us/{id}", method = RequestMethod.GET)

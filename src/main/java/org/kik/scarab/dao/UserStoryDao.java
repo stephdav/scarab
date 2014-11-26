@@ -33,9 +33,9 @@ public class UserStoryDao {
 		return mongoTemplate.findAll(UserStory.class);
 	}
 
-	public List<UserStory> findAllUserStoriesSorted(final String order) {
+	public List<UserStory> findAllUserStoriesSorted(final String dir) {
 		Query query = new Query();
-		if ("ASC".equals(order)) {
+		if ("ASC".equals(dir)) {
 			query.with(new Sort(Sort.Direction.ASC, "code"));
 			query.with(new Sort(Sort.Direction.ASC, "title"));
 		} else {
