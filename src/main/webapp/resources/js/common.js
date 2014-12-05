@@ -25,3 +25,30 @@ function setTextAreaValue(selector, text) {
 	var val = text.replace(/<br>/g, '\n');
 	$(selector).text(val);
 }
+
+/**
+ * Convert a timestamp in a readable date dd/MM/yyyy
+ * 
+ * @param selector
+ *            DOM selector
+ * @param timeInMillis
+ *            timestamp
+ */
+function setDateValue(selector, timeInMillis) {
+	var d = new Date(timeInMillis);
+	var val = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+	$(selector).text(val);
+}
+
+/**
+ * Convert a timestamp in a readable date dd/MM/yyyy HH:MI
+ * 
+ * @param selector
+ *            DOM selector
+ * @param timeInMillis
+ *            timestamp
+ */
+function setDateTimeValue(selector, timeInMillis) {
+	var val = new Date(timeInMillis).toLocaleString();
+	$(selector).text(val);
+}

@@ -46,7 +46,8 @@ public class UserStoryService {
 		return dao.findAllUserStories();
 	}
 
-	public List<UserStory> getSortedUserStories(final String order) {
-		return dao.findAllUserStoriesSorted(order);
+	public List<UserStory> getSortedUserStories(final String sortBy,
+			final String sortDir) {
+		return dao.findAllUserStoriesSorted(sortBy, sortDir);
 	}
 }

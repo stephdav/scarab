@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.kik.scarab.model.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
@@ -33,15 +34,25 @@ public class UserStoryDao {
 		return mongoTemplate.findAll(UserStory.class);
 	}
 
-	public List<UserStory> findAllUserStoriesSorted(final String dir) {
+	public List<UserStory> findAllUserStoriesSorted(final String sortBy,
+			final String sortDir) {
+
 		Query query = new Query();
-		if ("ASC".equals(dir)) {
-			query.with(new Sort(Sort.Direction.ASC, "code"));
-			query.with(new Sort(Sort.Direction.ASC, "title"));
-		} else {
-			query.with(new Sort(Sort.Direction.DESC, "code"));
-			query.with(new Sort(Sort.Direction.DESC, "title"));
+
+		Direction sortDirection = Sort.Direction.ASC;
+		if (!"ASC".equals(sortDir)) {
+			sortDirection = Sort.Direction.DESC;
 		}
+
+		// sort by ...
+		query.with(new Sort(sortDirection, sortBy));
+		// ... then by code ...
+		if (!"code".equals(sortBy)) {
+			query.with(new Sort(sortDirection, "code"));
+		}
+		// ... then by title
+		query.with(new Sort(sortDirection, "title"));
+
 		return mongoTemplate.find(query, UserStory.class);
 	}
 

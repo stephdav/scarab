@@ -101,6 +101,18 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-3 control-label">creation date</label>
+							<div class="col-sm-9">
+								<p id="form-us-creDate" class="form-control-static"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">modification date</label>
+							<div class="col-sm-9">
+								<p id="form-us-modDate" class="form-control-static"></p>
+							</div>
+						</div>
+						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-9 text-right">
 								<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
 								<button type="submit" class="btn btn-primary"></button>
@@ -207,19 +219,28 @@
 			filterUS('#list-allUS', $(this).val());
 		});
 
-		$("#list-allUS").on("click", "#sortCode", function() {
+		$("#list-allUS").on("click", "#sortByCode", function() {
 			sortUsByCode();
+		});
+		$("#list-allUS").on("click", "#sortByDate", function() {
+			sortUsByDate();
 		});
 
 	}
 	
 	function createUSForm() {
+		$('#form-us-creDate').text("");
+		$('#form-us-creDate').closest(".form-group").hide();
+		$('#form-us-modDate').text("");
+		$('#form-us-modDate').closest(".form-group").hide();
 		initUSForm('create', 'create an user story', 'create');
 		$('#modal-us').modal('show');
 	}
 
 	function editUSForm(usId) {
 		$('#form-us')[0].reset();
+		$('#form-us-creDate').closest(".form-group").show();
+		$('#form-us-modDate').closest(".form-group").show();
 	    $.getJSON('${pageContext.request.contextPath}/rest/us/' + usId,	function(data) {
 	    	if (typeof(data) != 'undefined') {
 	    		$("#form-us-id").text(data.id);
@@ -228,6 +249,8 @@
 	    		setTextAreaValue('#form-us-description', data.description);
 	    		setTextAreaValue('#form-us-criteria', data.accCrit);
 	    		setTextAreaValue('#form-us-test', data.accTest);
+	    		setDateTimeValue('#form-us-creDate', data.creationDate);
+	    		setDateTimeValue('#form-us-modDate', data.modificationDate);
 	    	}
 			initUSForm('update', 'edit user story', 'update');
 			$('#modal-us').modal('show');
@@ -286,18 +309,43 @@
 		});
 	}
 	
-	var sortOrder='ASC';
 	var sortField='code';
-	var sortCodeClass="";
-	var sortModClass="";
+	var sortOrder='ASC';
+	var sortOrderClass='';
+
+	var sortCodeClass="showCaret";
+	var sortModClass="hideCaret";
 
 	function sortUsByCode() {
+		if (sortField != 'code') {
+			sortField='code';
+			sortOrder="DESC";
+			sortModClass="hideCaret";
+		}
+		sortCodeClass="showCaret";
 		if (sortOrder == 'ASC') {
 			sortOrder="DESC";
 			sortOrderClass="dropup";
 		} else {
 			sortOrder='ASC';
-			sortOrderClass="";
+			sortOrderClass='';
+		}
+		displayUS();
+	}
+
+	function sortUsByDate() {
+		if (sortField != 'modificationDate') {
+			sortField='modificationDate';
+			sortOrder="DESC";
+			sortCodeClass="hideCaret";
+		}
+		sortModClass="showCaret";
+		if (sortOrder == 'ASC') {
+			sortOrder="DESC";
+			sortOrderClass="dropup";
+		} else {
+			sortOrder='ASC';
+			sortOrderClass='';
 		}
 		displayUS();
 	}
@@ -308,24 +356,22 @@
 		   	if (data.length > 0) {
 
 		   		var elt = '<li class="list-group-item"><div class="row">'
-    			+ '<div class="col-sm-3 list-table-cell">[code] title &amp; description<span id="sortCode" class="' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
+    			+ '<div id="sortByCode" class="col-sm-3 list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
     		 	+ '<div class="col-sm-3 list-table-cell">acceptance criteria</div>'
     		 	+ '<div class="col-sm-3 list-table-cell">acceptance tests</div>'
     		 	+ '<div class="col-sm-1 list-table-cell">creation date</div>'
-    		 	+ '<div class="col-sm-1 list-table-cell">modification date<span id="sortCode" class="' + sortModClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
+    		 	+ '<div id="sortByDate" class="col-sm-1 list-table-cell">modification date<span id="sortCode" class="' + sortOrderClass + ' ' + sortModClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
     		 	+ '<div class="col-sm-1 text-right">action</div>'
     		 	+ '</div></li>';
 
 		   		$.each(data, function(i, us) {
 		   			var sCreDat = "-";
 	   				if (typeof(us.creationDate) != 'undefined') {
-	   					var d = new Date(us.creationDate);
-	   					sCreDat = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+	   					sCreDat = new Date(us.creationDate).toLocaleDateString();
 		   			}
 		   			var sModDat = "-";
 	   				if (typeof(us.modificationDate) != 'undefined') {
-	   					var d = new Date(us.modificationDate);
-	   					sModDat = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+	   					sModDat = new Date(us.modificationDate).toLocaleString();
 		   			}
 		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="row">'
 		   				+ '<div class="col-sm-3 list-table-cell">'

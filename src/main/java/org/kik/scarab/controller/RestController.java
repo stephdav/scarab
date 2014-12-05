@@ -42,7 +42,8 @@ public class RestController {
 
 	@RequestMapping(value = "us", method = RequestMethod.GET)
 	public @ResponseBody
-	List<UserStory> getUS(@RequestParam("sortBy") String sortBy, @RequestParam("sortDir") String sortDir) {
+	List<UserStory> getUS(@RequestParam("sortBy") String sortBy,
+			@RequestParam("sortDir") String sortDir) {
 		LOG.info("getUS({}, {})", sortBy, sortDir);
 		if (sortBy == null) {
 			sortBy = "code";
@@ -50,7 +51,7 @@ public class RestController {
 		if (sortDir == null) {
 			sortDir = "ASC";
 		}
-		return svcUS.getSortedUserStories(sortDir);
+		return svcUS.getSortedUserStories(sortBy, sortDir);
 	}
 
 	@RequestMapping(value = "us/{id}", method = RequestMethod.GET)

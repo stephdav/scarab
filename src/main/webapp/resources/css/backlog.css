@@ -1,3 +1,11 @@
-#sortCode {
+#sortByCode,#sortByDate {
 	cursor: pointer;
+}
+
+.hideCaret {
+	display: none;
+}
+
+.showCaret {
+	display: inline;
 }
