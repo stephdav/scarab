@@ -310,7 +310,7 @@
 	}
 	
 	var sortField='code';
-	var sortOrder='ASC';
+	var sortOrder='asc';
 	var sortOrderClass='';
 
 	var sortCodeClass="showCaret";
@@ -319,15 +319,15 @@
 	function sortUsByCode() {
 		if (sortField != 'code') {
 			sortField='code';
-			sortOrder="DESC";
+			sortOrder="desc";
 			sortModClass="hideCaret";
 		}
 		sortCodeClass="showCaret";
-		if (sortOrder == 'ASC') {
-			sortOrder="DESC";
+		if (sortOrder == 'asc') {
+			sortOrder="desc";
 			sortOrderClass="dropup";
 		} else {
-			sortOrder='ASC';
+			sortOrder='asc';
 			sortOrderClass='';
 		}
 		displayUS();
@@ -340,18 +340,18 @@
 			sortCodeClass="hideCaret";
 		}
 		sortModClass="showCaret";
-		if (sortOrder == 'ASC') {
-			sortOrder="DESC";
+		if (sortOrder == 'asc') {
+			sortOrder="desc";
 			sortOrderClass="dropup";
 		} else {
-			sortOrder='ASC';
+			sortOrder='asc';
 			sortOrderClass='';
 		}
 		displayUS();
 	}
 	
 	function displayUS() {
-	    $.getJSON('${pageContext.request.contextPath}/rest/us?sortBy=' + sortField + '&sortDir=' + sortOrder,	function(data) {
+	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=' + sortField + '&order=' + sortOrder,	function(data) {
 			$("#list-allUS").empty();
 		   	if (data.length > 0) {
 
@@ -359,8 +359,7 @@
     			+ '<div id="sortByCode" class="col-sm-3 list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
     		 	+ '<div class="col-sm-3 list-table-cell">acceptance criteria</div>'
     		 	+ '<div class="col-sm-3 list-table-cell">acceptance tests</div>'
-    		 	+ '<div class="col-sm-1 list-table-cell">creation date</div>'
-    		 	+ '<div id="sortByDate" class="col-sm-1 list-table-cell">modification date<span id="sortCode" class="' + sortOrderClass + ' ' + sortModClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
+    		 	+ '<div id="sortByDate" class="col-sm-2 list-table-cell">modification date<span id="sortCode" class="' + sortOrderClass + ' ' + sortModClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
     		 	+ '<div class="col-sm-1 text-right">action</div>'
     		 	+ '</div></li>';
 
@@ -385,8 +384,7 @@
 		   			 	+ '</div>'
 		   			 	+ '<div class="col-sm-3 list-table-cell">' + us.accCrit + '</div>'
 		   			 	+ '<div class="col-sm-3 list-table-cell">' + us.accTest + '</div>'
-		   			 	+ '<div class="col-sm-1 list-table-cell">' + sCreDat + '</div>'
-		   			 	+ '<div class="col-sm-1 list-table-cell">' + sModDat + '</div>'
+		   			 	+ '<div class="col-sm-2 list-table-cell">' + sModDat + '</div>'
 		   				+ '<div class="col-sm-1 clearfix">'
 		   				+   '<div class="btn-group pull-right">'
 		   				+     '<button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'

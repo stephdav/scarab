@@ -40,7 +40,7 @@ public class UserStoryDao {
 		Query query = new Query();
 
 		Direction sortDirection = Sort.Direction.ASC;
-		if (!"ASC".equals(sortDir)) {
+		if (!"asc".equals(sortDir)) {
 			sortDirection = Sort.Direction.DESC;
 		}
 
