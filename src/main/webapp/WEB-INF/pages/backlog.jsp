@@ -44,27 +44,25 @@
 
 	<div class="container-fluid">
 
-		<div style="padding-left:10px;">
-			<div id="custom-toolbar" class="bsTableToolbar">
-				<button id="btn-us-create" type="button" class="btn btn-sm btn-default" title="create new user story">
-					<span class="glyphicon glyphicon-plus"></span>
-				</button>
-				<span class="title">product backlog <a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a></span>
+		<div id="backlogTable-toolbar" class="bsTableToolbar">
+			<span class="title">product backlog</span>
+			<a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a>
+			<div class="btn-group">
+				<button id="btn-us-create" type="button" class="btn btn-default">create new user story</button>
 			</div>
-			<table id="backlogTable" class="bsTable table table-hover table-condensed" data-toggle="table" data-url="rest/us" data-cache="false" data-toolbar="#custom-toolbar" data-sort-name="code" data-sort-order="asc" data-search="true" data-show-refresh="true" data-show-columns="true">
-				<thead>
-					<tr>
-						<th data-field="code" class="col-md-3" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
-						<th data-field="accCrit" class="col-md-3">acceptance criteria</th>
-						<th data-field="accTest" class="col-md-3">acceptance tests</th>
-						<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
-						<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">modification date</th>
-						<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
-					</tr>
-				</thead>
-			</table>
-
 		</div>
+		<table id="backlogTable" class="bsTable table table-hover table-condensed" data-toggle="table" data-url="rest/us" data-cache="false" data-toolbar="#backlogTable-toolbar" data-sort-name="code" data-sort-order="asc" data-search="true" data-show-refresh="true" data-show-columns="true">
+			<thead>
+				<tr>
+					<th data-field="code" class="col-md-3" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
+					<th data-field="accCrit" class="col-md-3">acceptance criteria</th>
+					<th data-field="accTest" class="col-md-3">acceptance tests</th>
+					<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
+					<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">modification date</th>
+					<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
+				</tr>
+			</thead>
+		</table>
 
 	</div> <!-- /.container-fluid -->
 
