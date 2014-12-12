@@ -18,51 +18,28 @@ a.scrum-info:hover {
 }
 
 /** ==========================================================================
-	list table 
+	 bootstrap-tables
 	========================================================================== */
-.list-group-title {
+.bsTableToolbar .title {
 	font-size: 16px;
 	font-weight: bold;
 }
 
-#list-allUS {
+.bsTable {
 	font-size: 12px;
-	margin-top: 10px;
 }
 
-li.list-group-item:FIRST-CHILD {
-	font-weight: bold;
+.bsTable th {
 	background-color: #ddd;
+}
+
+.bsTable .th-inner {
 	font-size: 14px;
 }
 
-li.list-group-item .list-table-cell {
-	border-left: 1px solid #ddd;
-}
-
-li.list-group-item:HOVER {
-	background-color: #eee;
-}
-
-li.list-group-item:FIRST-CHILD:HOVER {
-	background-color: #ddd;
-}
-
-li.list-group-item:FIRST-CHILD .list-table-cell {
-	border-left: 1px solid #fff;
-}
-
-li.list-group-item:HOVER .list-table-cell {
-	border-left: 1px solid #fff;
-}
-
-li.list-group-item .list-table-cell:FIRST-CHILD, li.list-group-item:HOVER .list-table-cell:FIRST-CHILD
+.bsTable.table-hover tbody tr:hover td,.bsTable.table-hover tbody tr:hover th
 	{
-	border-left: none;
-}
-
-.list-group-item-heading {
-	font-weight: bold;
+	background-color: #eee;
 }
 
 /** ==========================================================================

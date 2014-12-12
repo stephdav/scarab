@@ -3,6 +3,11 @@
  */
 
 /**
+ * 	<div class="input-group input-group-sm">
+ * 		<input type="text" id="us-input-search" class="form-control">
+ * 		<span class="input-group-addon" style="width: auto;"><span class="glyphicon glyphicon-search"></span></span>
+ * 	</div>
+ * 	$('#us-input-search').on('keyup', function() { filterUS('#list-allUS', $(this).val()); });
  * 
  * @param exp ul selector
  */

@@ -10,6 +10,7 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico">
 <title>scarab</title>
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap-table.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/scarab.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/backlog.css" rel="stylesheet">
 </head>
@@ -44,19 +45,25 @@
 	<div class="container-fluid">
 
 		<div style="padding-left:10px;">
-			<div class="clearfix">
-				<span class="list-group-title">product backlog <a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a></span>
-				<div class="pull-right">
-					<div class="pull-right" style="margin-left:20px;"><button id="btn-us-create" type="button" class="btn btn-sm btn-default" title="create new user story">
-						<span class="glyphicon glyphicon-plus"></span>
-					</button></div>
-      				<div class="pull-right" style="margin-left:20px;"><div class="input-group input-group-sm">
-						<input type="text" id="us-input-search" class="form-control">
-						<span class="input-group-addon" style="width: auto;"><span class="glyphicon glyphicon-search"></span></span>
-					</div></div>
-				</div>
+			<div id="custom-toolbar" class="bsTableToolbar">
+				<button id="btn-us-create" type="button" class="btn btn-sm btn-default" title="create new user story">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+				<span class="title">product backlog <a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a></span>
 			</div>
-			<ul id="list-allUS" class="list-group"></ul>
+			<table id="backlogTable" class="bsTable table table-hover table-condensed" data-toggle="table" data-url="rest/us" data-cache="false" data-toolbar="#custom-toolbar" data-sort-name="code" data-sort-order="asc" data-search="true" data-show-refresh="true" data-show-columns="true">
+				<thead>
+					<tr>
+						<th data-field="code" class="col-md-3" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
+						<th data-field="accCrit" class="col-md-3">acceptance criteria</th>
+						<th data-field="accTest" class="col-md-3">acceptance tests</th>
+						<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
+						<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">modification date</th>
+						<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
+					</tr>
+				</thead>
+			</table>
+
 		</div>
 
 	</div> <!-- /.container-fluid -->
@@ -170,8 +177,10 @@
 
 	<script src="${pageContext.request.contextPath}/resources/js/about.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/filter.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/userStory.js"></script>
+
+	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap-table.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/backlogTable.js"></script>
 
 	<script type="text/javascript">
 
@@ -183,7 +192,7 @@
 	});
 
 	function initPage() {
-		displayUS();
+
 		$("#btn-us-create").on("click", function() {
 			createUSForm();
 		});
@@ -199,31 +208,19 @@
 			}
         });
 
-		$("#list-allUS").on("click", ".btn-us-edit", function() {
-			var usId = $(this).closest("li").data("usId");
+		$("#backlogTable").on("click", ".btn-us-edit", function() {
+			var usId = $(this).closest(".btn-group").data("usId");
 			editUSForm(usId);
 		});
-		$("#list-allUS").on("click", ".btn-us-remove", function() {
-			var usId = $(this).closest("li").data("usId");
-			var usTxt = $(this).closest("li").find(".list-group-item-heading").text();
+		$("#backlogTable").on("click", ".btn-us-remove", function() {
+			var usId = $(this).closest(".btn-group").data("usId");
+			var usTxt = $(this).closest("tr").find(".codeAndTitle").text();
 			removeUS(usId, usTxt);
 		});
 
 		$('#modal-removeUS').on('hidden.bs.modal', function (e) {
 			// remove event handlers
 			$('#form-removeUS').off();
-		});
-
-		// filter
-		$('#us-input-search').on('keyup', function() {
-			filterUS('#list-allUS', $(this).val());
-		});
-
-		$("#list-allUS").on("click", "#sortByCode", function() {
-			sortUsByCode();
-		});
-		$("#list-allUS").on("click", "#sortByDate", function() {
-			sortUsByDate();
 		});
 
 	}
@@ -271,7 +268,7 @@
 			var us= { id: usId };
 			usDelete(us, function(html) {
 				$('#modal-removeUS').modal('hide');
-				displayUS();
+				$('#backlogTable').bootstrapTable('refresh', {silent: true});
 			});
         });
 	}
@@ -288,7 +285,7 @@
 		usCreate(us, function(html) {
 			$('#form-us')[0].reset();
 			$('#modal-us').modal('hide');
-			displayUS();
+			$('#backlogTable').bootstrapTable('refresh', {silent: true});
 		});
 	}
 	
@@ -305,99 +302,7 @@
 		usUpdate(us, function(html) {
 			$('#form-us')[0].reset();
 			$('#modal-us').modal('hide');
-			displayUS();
-		});
-	}
-	
-	var sortField='code';
-	var sortOrder='asc';
-	var sortOrderClass='';
-
-	var sortCodeClass="showCaret";
-	var sortModClass="hideCaret";
-
-	function sortUsByCode() {
-		if (sortField != 'code') {
-			sortField='code';
-			sortOrder="desc";
-			sortModClass="hideCaret";
-		}
-		sortCodeClass="showCaret";
-		if (sortOrder == 'asc') {
-			sortOrder="desc";
-			sortOrderClass="dropup";
-		} else {
-			sortOrder='asc';
-			sortOrderClass='';
-		}
-		displayUS();
-	}
-
-	function sortUsByDate() {
-		if (sortField != 'modificationDate') {
-			sortField='modificationDate';
-			sortOrder="DESC";
-			sortCodeClass="hideCaret";
-		}
-		sortModClass="showCaret";
-		if (sortOrder == 'asc') {
-			sortOrder="desc";
-			sortOrderClass="dropup";
-		} else {
-			sortOrder='asc';
-			sortOrderClass='';
-		}
-		displayUS();
-	}
-	
-	function displayUS() {
-	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=' + sortField + '&order=' + sortOrder,	function(data) {
-			$("#list-allUS").empty();
-		   	if (data.length > 0) {
-
-		   		var elt = '<li class="list-group-item"><div class="row">'
-    			+ '<div id="sortByCode" class="col-sm-3 list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
-    		 	+ '<div class="col-sm-3 list-table-cell">acceptance criteria</div>'
-    		 	+ '<div class="col-sm-3 list-table-cell">acceptance tests</div>'
-    		 	+ '<div id="sortByDate" class="col-sm-2 list-table-cell">modification date<span id="sortCode" class="' + sortOrderClass + ' ' + sortModClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div>'
-    		 	+ '<div class="col-sm-1 text-right">action</div>'
-    		 	+ '</div></li>';
-
-		   		$.each(data, function(i, us) {
-		   			var sCreDat = "-";
-	   				if (typeof(us.creationDate) != 'undefined') {
-	   					sCreDat = new Date(us.creationDate).toLocaleDateString();
-		   			}
-		   			var sModDat = "-";
-	   				if (typeof(us.modificationDate) != 'undefined') {
-	   					sModDat = new Date(us.modificationDate).toLocaleString();
-		   			}
-		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="row">'
-		   				+ '<div class="col-sm-3 list-table-cell">'
-		   				+   '<div class="list-group-item-heading">';
-		   			 if (typeof(us.code) != 'undefined' && us.code != '') {
-		    			 elt += '[' + us.code + '] ';
-		   			 }
-		   			 elt += us.title 
-		   			 	+   '</div>'
-		   			 	+   '<div class="list-group-item-text">' + us.description + '</div>'
-		   			 	+ '</div>'
-		   			 	+ '<div class="col-sm-3 list-table-cell">' + us.accCrit + '</div>'
-		   			 	+ '<div class="col-sm-3 list-table-cell">' + us.accTest + '</div>'
-		   			 	+ '<div class="col-sm-2 list-table-cell">' + sModDat + '</div>'
-		   				+ '<div class="col-sm-1 clearfix">'
-		   				+   '<div class="btn-group pull-right">'
-		   				+     '<button type="button" class="btn btn-default btn-sm btn-us-edit" title="edit user story"><span class="glyphicon glyphicon-edit"></span></button>'
-		   				+     '<button type="button" class="btn btn-default btn-sm btn-us-remove" title="delete user story"><span class="glyphicon glyphicon-trash"></span></button>'
-		   				+   '</div>'
-		   				+ '</div>'
-		   			 	+ '</div></li>';
-
-		   		});
-		   		
-	    		$("#list-allUS").append(elt);
-	    		filterUS('#list-allUS', $('#us-input-search').val());
-		   	}
+			$('#backlogTable').bootstrapTable('refresh', {silent: true});
 		});
 	}
 
