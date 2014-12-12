@@ -20,7 +20,7 @@ db.userStory.insert ([
 	"_id" : "5c4cc63a-2a02-4e0f-9ba2-1da790dc630a",
 	"_class" : "org.kik.scarab.model.UserStory",
 	"code" : "US-2",
-	"title" : "US List",
+	"title" : "US list",
 	"description" : "Patrick wants to view all existing US, so that he knows what US are not yet created.",
 	"accCrit" : "US are shown in a simple list.",
 	"accTest" : "N.A.",
