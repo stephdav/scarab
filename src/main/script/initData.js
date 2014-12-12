@@ -71,6 +71,18 @@ db.userStory.insert ([
 	"creationDate" : ISODate("2014-11-23T11:00:00.000Z"),
 	"modificationDate" : ISODate("2014-11-24T11:00:00.000Z")
 }
+,
+{
+	"_id" : "19639ee0-d6a9-4656-b532-e0d8d1362b8f",
+	"_class" : "org.kik.scarab.model.UserStory",
+	"code" : "US-7",
+	"title" : "Backlog refinement view",
+	"description" : "Sarah wants a Backlog refinement view, so that she has support for discussions with Patrick and the team.",
+	"accCrit" : "- Possibility to switch standard/refinement view <br>- US in a simple list (code/title) on the left side<br>- A click to edit US details on the right part<br>- New user stories are not created in a popin",
+	"accTest" : "N.A.",
+	"creationDate" : ISODate("2014-12-12T17:11:04.135Z"),
+	"modificationDate" : ISODate("2014-12-12T17:11:04.135Z")
+}
 ]);
 
 // === End of File ===
