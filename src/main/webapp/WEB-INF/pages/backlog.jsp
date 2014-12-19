@@ -60,7 +60,7 @@
 						<th data-field="accCrit" class="col-md-3">acceptance criteria</th>
 						<th data-field="accTest" class="col-md-3">acceptance tests</th>
 						<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
-						<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">modification date</th>
+						<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">last update</th>
 						<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
 					</tr>
 				</thead>
@@ -135,17 +135,18 @@
 				<textarea id="form-us-test" class="form-control" rows="3"></textarea>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">creation date</label>
+		<div class="form-group hiddenInCreation">
+			<label class="col-sm-3 control-label">dates</label>
 			<div class="col-sm-9">
-				<p id="form-us-creDate" class="form-control-static"></p>
-				<input type="hidden" id="form-us-timestamp-creDate">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">modification date</label>
-			<div class="col-sm-9">
-				<p id="form-us-modDate" class="form-control-static"></p>
+				<label class="col-sm-3 control-label">creation</label>
+				<div class="col-sm-9">
+					<p id="form-us-creDate" class="form-control-static"></p>
+					<input type="hidden" id="form-us-timestamp-creDate">
+				</div>
+				<label class="col-sm-3 control-label">last update</label>
+				<div class="col-sm-9">
+					<p id="form-us-modDate" class="form-control-static"></p>
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
@@ -297,8 +298,7 @@
 	}
 	
 	function createUSForm() {
-		$('#form-us-creDate').closest(".form-group").hide();
-		$('#form-us-modDate').closest(".form-group").hide();
+		$('#form-us').find('.hiddenInCreation').hide();
 		initUSForm('create', 'create an user story', 'create');
 		if (backlogView == 'full') {
 			$('#modal-us').modal('show');
@@ -308,8 +308,7 @@
 	}
 
 	function editUSForm(usId) {
-		$('#form-us-creDate').closest(".form-group").show();
-		$('#form-us-modDate').closest(".form-group").show();
+		$('#form-us').find('.hiddenInCreation').show();
 	    $.getJSON('${pageContext.request.contextPath}/rest/us/' + usId,	function(data) {
 			initUSForm('update', 'edit user story', 'update');
 	    	if (typeof(data) != 'undefined') {
