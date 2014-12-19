@@ -150,7 +150,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9 text-right">
-				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+				<button type="button" class="cancel-form-us btn btn-default">cancel</button>
 				<button type="submit" class="btn btn-primary"></button>
 			</div>
 		</div>
@@ -188,7 +188,6 @@
 				<div class="modal-body">
 					<blockquote>
 					<p>The Product Backlog is an ordered list of everything that might be needed in the product and is the single source of requirements for any changes to be made to the product. The Product Owner is responsible for the Product Backlog, including its content, availability, and ordering.</p>
-					<p></p>
 					<footer>The Scrum Guide</footer>
 					</blockquote>
 				</div>
@@ -229,8 +228,15 @@
 				createUS();
 			} else if (usAction == 'update') {
 				editUS();
-			} else {
+			}
+        });
+
+		$('.cancel-form-us').on("click", function(e) {
+			if (backlogView == 'full') {
 				$('#modal-us').modal('hide');
+				$('#backlogTable').bootstrapTable('refresh', {silent: true});
+			} else {
+				displayUS();				
 			}
         });
 
@@ -325,8 +331,13 @@
 		});
 	}
 
-	function initUSForm(action, title, btn) {
+	function initUSForm(action, title, btn, nbRows) {
 		usAction = action;
+		if (backlogView == 'full') {
+			$('#form-us textarea').attr("rows", 3);
+		} else {
+			$('#form-us textarea').attr("rows", 7);
+		}
 		$('#modal-us-title').text(title);
 		$('#form-us button[type="submit"]').text(btn);
 		$("#form-us-id").val("");

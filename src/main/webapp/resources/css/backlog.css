@@ -2,9 +2,9 @@
 	font-weight: bold;
 }
 
-
-
-
+#form-us textarea {
+	resize: vertical;
+}
 
 #sortByCode {
 	cursor: pointer;
