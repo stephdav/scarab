@@ -44,25 +44,51 @@
 
 	<div class="container-fluid">
 
-		<div id="backlogTable-toolbar" class="bsTableToolbar">
-			<span class="title">product backlog</span>
-			<a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a>
-			<div class="btn-group">
-				<button id="btn-us-create" type="button" class="btn btn-default">create new user story</button>
+		<div id="fullView">
+			<div id="backlogTable-toolbar" class="bsTableToolbar">
+				<span class="title">product backlog</span>
+				<a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a>
+				<div class="btn-group">
+					<button type="button" class="switchView btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;refinement view</button>
+					<button type="button" class="btn-us-create btn btn-primary">create new user story</button>
+				</div>
+			</div>
+			<table id="backlogTable" class="bsTable table table-hover table-condensed" data-toggle="table" data-url="rest/us" data-cache="false" data-toolbar="#backlogTable-toolbar" data-sort-name="code" data-sort-order="asc" data-search="true" data-show-refresh="true" data-show-columns="true">
+				<thead>
+					<tr>
+						<th data-field="code" class="col-md-3" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
+						<th data-field="accCrit" class="col-md-3">acceptance criteria</th>
+						<th data-field="accTest" class="col-md-3">acceptance tests</th>
+						<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
+						<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">modification date</th>
+						<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+
+		<div id="refinementView">
+			<div class="fixed-table-toolbar">
+				<div class="bars pull-left">
+					<div class="bsTableToolbar">
+						<span class="title">product backlog</span>
+						<a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a>
+						<div class="btn-group">
+							<button type="button" class="switchView btn btn-default"><span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>&nbsp;full view</button>
+							<button type="button" class="btn-us-create btn btn-primary">create new user story</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="clear:both;">
+				<div class="col-md-3">
+					<ul id="list-allUS" class="list-group"></ul>
+				</div>
+				<div class="col-md-6">
+					<div id="inlineView"></div>
+				</div>
 			</div>
 		</div>
-		<table id="backlogTable" class="bsTable table table-hover table-condensed" data-toggle="table" data-url="rest/us" data-cache="false" data-toolbar="#backlogTable-toolbar" data-sort-name="code" data-sort-order="asc" data-search="true" data-show-refresh="true" data-show-columns="true">
-			<thead>
-				<tr>
-					<th data-field="code" class="col-md-3" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
-					<th data-field="accCrit" class="col-md-3">acceptance criteria</th>
-					<th data-field="accTest" class="col-md-3">acceptance tests</th>
-					<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
-					<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">modification date</th>
-					<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
-				</tr>
-			</thead>
-		</table>
 
 	</div> <!-- /.container-fluid -->
 
@@ -72,63 +98,63 @@
 				<div class="modal-header">
 					<h4 id="modal-us-title" class="modal-title"></h4>
 				</div>
-				<div class="modal-body">
-					<form id="form-us" class="form-horizontal" role="form">
-						<span id="form-us-id" class="hidden"></span>
-						<div class="form-group">
-							<label for="form-us-code" class="col-sm-3 control-label">code</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" id="form-us-code">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="form-us-title" class="col-sm-3 control-label">title</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" id="form-us-title" required>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="form-us-description" class="col-sm-3 control-label">description</label>
-							<div class="col-sm-9">
-								<textarea id="form-us-description" class="form-control" rows="3"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="form-us-criteria" class="col-sm-3 control-label">acceptance criteria</label>
-							<div class="col-sm-9">
-								<textarea id="form-us-criteria" class="form-control" rows="3"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="form-us-test" class="col-sm-3 control-label">acceptance tests</label>
-							<div class="col-sm-9">
-								<textarea id="form-us-test" class="form-control" rows="3"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">creation date</label>
-							<div class="col-sm-9">
-								<p id="form-us-creDate" class="form-control-static"></p>
-								<input type="hidden" id="form-us-timestamp-creDate">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">modification date</label>
-							<div class="col-sm-9">
-								<p id="form-us-modDate" class="form-control-static"></p>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-9 text-right">
-								<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-								<button type="submit" class="btn btn-primary"></button>
-							</div>
-						</div>
-					</form>
-				</div>
+				<div class="modal-body"></div>
 			</div> <!-- /.modal-content -->
 		</div> <!-- /.modal-dialog -->
 	</div> <!-- /.modal -->
+
+	<form id="form-us" class="form-horizontal" role="form">
+		<span id="form-us-id" class="hidden"></span>
+		<div class="form-group">
+			<label for="form-us-code" class="col-sm-3 control-label">code</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" id="form-us-code">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="form-us-title" class="col-sm-3 control-label">title</label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control" id="form-us-title" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="form-us-description" class="col-sm-3 control-label">description</label>
+			<div class="col-sm-9">
+				<textarea id="form-us-description" class="form-control" rows="3"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="form-us-criteria" class="col-sm-3 control-label">acceptance criteria</label>
+			<div class="col-sm-9">
+				<textarea id="form-us-criteria" class="form-control" rows="3"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="form-us-test" class="col-sm-3 control-label">acceptance tests</label>
+			<div class="col-sm-9">
+				<textarea id="form-us-test" class="form-control" rows="3"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">creation date</label>
+			<div class="col-sm-9">
+				<p id="form-us-creDate" class="form-control-static"></p>
+				<input type="hidden" id="form-us-timestamp-creDate">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">modification date</label>
+			<div class="col-sm-9">
+				<p id="form-us-modDate" class="form-control-static"></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-9 text-right">
+				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+				<button type="submit" class="btn btn-primary"></button>
+			</div>
+		</div>
+	</form>
 
 	<div id="modal-removeUS" class="modal fade">
 		<div class="modal-dialog" role="dialog" aria-labelledby="modal-removeUS-title" aria-hidden="true">
@@ -184,6 +210,7 @@
 	<script type="text/javascript">
 
 	var usAction = 'create';
+	var backlogView = 'full';
 
 	$(document).ready(function() {
 		setAjaxPath('${pageContext.request.contextPath}');
@@ -192,7 +219,7 @@
 
 	function initPage() {
 
-		$("#btn-us-create").on("click", function() {
+		$(".btn-us-create").on("click", function() {
 			createUSForm();
 		});
 
@@ -221,23 +248,64 @@
 			// remove event handlers
 			$('#form-removeUS').off();
 		});
+	
+		$("#list-allUS").on("click", "#sortByCode", function() {
+			sortUsByCode();
+		});
+		$("#list-allUS").on("click", "li", function() {
+			$("#list-allUS").find("li").removeClass("active");
+			$(this).addClass("active");
+			var usId = $(this).data("usId");
+			editUSForm(usId);
+		});
+		
+		$(".switchView").on("click",  function() {
+			switchView();
+		});
+		 
+		showView();
+	}
+	
+	function switchView() {
+		if (backlogView == 'full') {
+			backlogView = 'refinement';
+		} else {
+			backlogView = 'full';
+		}
+		showView();
+	}
 
+	function showView() {
+		if (backlogView == 'full') {
+			$("#modal-us .modal-body").append($("#form-us"));
+			$('#backlogTable').bootstrapTable('refresh', {silent: true});
+			$('#refinementView').hide();
+			$('#fullView').show();
+		} else {
+			$("#inlineView").append($("#form-us"));
+			displayUS();
+			$('#fullView').hide();
+			$('#refinementView').show();
+			$("#inlineView").hide();
+		}
 	}
 	
 	function createUSForm() {
-		$('#form-us-creDate').text("");
 		$('#form-us-creDate').closest(".form-group").hide();
-		$('#form-us-modDate').text("");
 		$('#form-us-modDate').closest(".form-group").hide();
 		initUSForm('create', 'create an user story', 'create');
-		$('#modal-us').modal('show');
+		if (backlogView == 'full') {
+			$('#modal-us').modal('show');
+		} else {
+			$("#inlineView").show();
+		}
 	}
 
 	function editUSForm(usId) {
-		$('#form-us')[0].reset();
 		$('#form-us-creDate').closest(".form-group").show();
 		$('#form-us-modDate').closest(".form-group").show();
 	    $.getJSON('${pageContext.request.contextPath}/rest/us/' + usId,	function(data) {
+			initUSForm('update', 'edit user story', 'update');
 	    	if (typeof(data) != 'undefined') {
 	    		$("#form-us-id").text(data.id);
 	    		$("#form-us-code").val(data.code);
@@ -249,8 +317,11 @@
 	    		setDateTimeValue('#form-us-creDate', data.creationDate);
 	    		setDateTimeValue('#form-us-modDate', data.modificationDate);
 	    	}
-			initUSForm('update', 'edit user story', 'update');
-			$('#modal-us').modal('show');
+			if (backlogView == 'full') {
+				$('#modal-us').modal('show');
+			} else {
+				$("#inlineView").show();
+			}
 		});
 	}
 
@@ -258,6 +329,14 @@
 		usAction = action;
 		$('#modal-us-title').text(title);
 		$('#form-us button[type="submit"]').text(btn);
+		$("#form-us-id").val("");
+		$("#form-us-code").val("");
+		$("#form-us-title").val("");
+		$('#form-us-description').text("");;
+		$('#form-us-criteria').text("");;
+		$('#form-us-test').text("");;
+		$('#form-us-creDate').text("");
+		$('#form-us-modDate').text("");
 	}
 
 	function removeUS(usId, usTxt) {
@@ -276,16 +355,20 @@
 	function createUS() {
 		var us= {
 			code: $("#form-us-code").val(),
-			 title: $("#form-us-title").val(),
-			 desc: getTextAreaValue('#form-us-description'),
-			 crit: getTextAreaValue('#form-us-criteria'),
-			 test: getTextAreaValue('#form-us-test')
+			title: $("#form-us-title").val(),
+			desc: getTextAreaValue('#form-us-description'),
+			crit: getTextAreaValue('#form-us-criteria'),
+			test: getTextAreaValue('#form-us-test')
 		};
 
 		usCreate(us, function(html) {
 			$('#form-us')[0].reset();
-			$('#modal-us').modal('hide');
-			$('#backlogTable').bootstrapTable('refresh', {silent: true});
+			if (backlogView == 'full') {
+				$('#modal-us').modal('hide');
+				$('#backlogTable').bootstrapTable('refresh', {silent: true});
+			} else {
+				displayUS();
+			}
 		});
 	}
 	
@@ -302,11 +385,54 @@
 
 		usUpdate(us, function(html) {
 			$('#form-us')[0].reset();
-			$('#modal-us').modal('hide');
-			$('#backlogTable').bootstrapTable('refresh', {silent: true});
+			if (backlogView == 'full') {
+				$('#modal-us').modal('hide');
+				$('#backlogTable').bootstrapTable('refresh', {silent: true});
+			} else {
+				displayUS();
+			}
 		});
 	}
 
+	var sortOrder='asc';
+	var sortOrderClass='';
+
+	var sortCodeClass="showCaret";
+	var sortModClass="hideCaret";
+
+	function sortUsByCode() {
+		sortCodeClass="showCaret";
+		if (sortOrder == 'asc') {
+			sortOrder="desc";
+			sortOrderClass="dropup";
+		} else {
+			sortOrder='asc';
+			sortOrderClass='';
+		}
+		displayUS();
+	}
+
+	function displayUS() {
+	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=code&order=' + sortOrder,	function(data) {
+			$("#list-allUS").empty();
+		   	if (data.length > 0) {
+		   		var elt = '<li class="list-group-item"><div id="sortByCode" class="list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div></li>';
+		   		$.each(data, function(i, us) {
+		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="list-table-cell">'
+		   				+   '<div class="list-group-item-heading">';
+		   			 if (typeof(us.code) != 'undefined' && us.code != '') {
+		    			 elt += '[' + us.code + '] ';
+		   			 }
+		   			 elt += us.title
+		   			 	+   '</div>'
+		   			 	+   '<div class="list-group-item-text">' + us.description + '</div>'
+		   			 	+ '</div></li>';
+		   		});
+	    		$("#list-allUS").append(elt);
+		   	}
+			$("#inlineView").hide();
+	    });
+	}
 	</script>
 
 </body>

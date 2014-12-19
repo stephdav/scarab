@@ -49,3 +49,54 @@ a.scrum-info:hover {
 /** ==========================================================================
 	 
 	========================================================================== */
+.list-group-title {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#list-allUS {
+	font-size: 12px;
+}
+
+li.list-group-item:FIRST-CHILD {
+	font-weight: bold;
+	background-color: #ddd;
+	font-size: 14px;
+}
+
+li.list-group-item .list-table-cell {
+	border-left: 1px solid #ddd;
+}
+
+li.list-group-item:HOVER {
+	background-color: #eee;
+}
+
+li.list-group-item:FIRST-CHILD:HOVER {
+	background-color: #ddd;
+}
+
+li.list-group-item:FIRST-CHILD .list-table-cell {
+	border-left: 1px solid #fff;
+}
+
+li.list-group-item:HOVER .list-table-cell {
+	border-left: 1px solid #fff;
+}
+
+li.list-group-item .list-table-cell:FIRST-CHILD,li.list-group-item:HOVER .list-table-cell:FIRST-CHILD
+	{
+	border-left: none;
+}
+
+li.list-group-item.active,li.list-group-item.active:hover,li.list-group-item.active:focus
+	{
+	z-index: 2;
+	color: #fff;
+	background-color: #428bca;
+	border-color: #428bca;
+}
+
+.list-group-item-heading {
+	font-weight: bold;
+}

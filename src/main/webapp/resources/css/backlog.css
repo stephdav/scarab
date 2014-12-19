@@ -1,3 +1,19 @@
 .codeAndTitle {
 	font-weight: bold;
 }
+
+
+
+
+
+#sortByCode {
+	cursor: pointer;
+}
+
+.hideCaret {
+	display: none;
+}
+
+.showCaret {
+	display: inline;
+}
