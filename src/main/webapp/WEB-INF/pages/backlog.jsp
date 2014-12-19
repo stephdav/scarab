@@ -114,7 +114,7 @@
 			<div class="col-sm-2">
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></span>
-					<input type="text" class="form-control" id="form-us-value">
+					<input type="number" min="1" class="form-control" id="form-us-value">
 				</div>
 			</div>
 			<div class="col-sm-2">
