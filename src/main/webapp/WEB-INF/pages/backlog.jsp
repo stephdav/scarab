@@ -109,6 +109,7 @@
 							<label class="col-sm-3 control-label">creation date</label>
 							<div class="col-sm-9">
 								<p id="form-us-creDate" class="form-control-static"></p>
+								<input type="hidden" id="form-us-timestamp-creDate">
 							</div>
 						</div>
 						<div class="form-group">
@@ -241,6 +242,7 @@
 	    		$("#form-us-id").text(data.id);
 	    		$("#form-us-code").val(data.code);
 	    		$("#form-us-title").val(data.title);
+	    		$("#form-us-timestamp-creDate").val(data.creationDate);
 	    		setTextAreaValue('#form-us-description', data.description);
 	    		setTextAreaValue('#form-us-criteria', data.accCrit);
 	    		setTextAreaValue('#form-us-test', data.accTest);
@@ -294,7 +296,8 @@
 			title: $("#form-us-title").val(),
 			desc: getTextAreaValue('#form-us-description'),
 			crit: getTextAreaValue('#form-us-criteria'),
-			test: getTextAreaValue('#form-us-test')	
+			test: getTextAreaValue('#form-us-test'),
+			creDate: $("#form-us-timestamp-creDate").val()
 		};
 
 		usUpdate(us, function(html) {

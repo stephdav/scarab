@@ -48,8 +48,11 @@ function usAjaxData(us) {
 		+ '"title": "' + us.title + '", '
 		+ '"description": "' + us.desc + '", '
 		+ '"accCrit": "' + us.crit + '", '
-		+ '"accTest": "' + us.test + '"'
-		+ '}';
+		+ '"accTest": "' + us.test + '"';
+	if (typeof(us.creDate) != 'undefined') {
+		data += ', "creationDate": ' + us.creDate;		
+	}
+	data += '}';
 	return data;
 }
 
