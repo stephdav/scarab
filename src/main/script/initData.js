@@ -82,6 +82,28 @@ db.userStory.insert ([
 	"accTest" : "N.A.",
 	"creationDate" : ISODate("2014-12-12T17:11:04.135Z"),
 	"modificationDate" : ISODate("2014-12-12T17:11:04.135Z")
+},
+{
+    "_id" : "9c53a61a-5dc3-4ab5-8c3d-2b88efa9e9b5",
+    "_class" : "org.kik.scarab.model.UserStory",
+    "code" : "US-8",
+    "title" : "US estimate & value",
+    "description" : "Sarah wants the US to have an estimate and a value indicator, so that these values helps to sort the user stories",
+    "accCrit" : "- Estimate are based on adjusted fibonacci values (0, 1, 2,3, 5, 8, 13, 20, 50, 100)<br>- A numeric value can be set to represent functional benefit<br>",
+    "accTest" : "N.A.",
+    "creationDate" : ISODate("2014-12-19T17:22:25.604Z"),
+    "modificationDate" : ISODate("2014-12-19T17:22:25.604Z")
+},
+{
+    "_id" : "c99ee31e-e6f5-4ab0-bcac-a475d97c9f1e",
+    "_class" : "org.kik.scarab.model.UserStory",
+    "code" : "US-9",
+    "title" : "Estimate tool",
+    "description" : "Sarah needs a tool during the backlog refinement, so that she can easily determine the team's estimate and to compare the user storie swith other one that have same estimate.",
+    "accCrit" : "- a table allows to record voting with single click<br>- the 3 most recent stories with same voting are displayed automatically in a list",
+    "accTest" : "N.A.",
+    "creationDate" : ISODate("2014-12-19T17:26:25.761Z"),
+    "modificationDate" : ISODate("2014-12-19T17:26:25.761Z")
 }
 ]);
 
