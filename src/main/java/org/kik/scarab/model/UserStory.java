@@ -19,6 +19,7 @@ public class UserStory {
 	private String accTest;
 	private Date creationDate;
 	private Date modificationDate;
+	private Integer value;
 
 	public UserStory() {
 		// Empty constructor
@@ -86,6 +87,14 @@ public class UserStory {
 
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
+	}
+
+	public Integer getValue() {
+		return value;
+	}
+
+	public void setValue(Integer value) {
+		this.value = value;
 	}
 
 }

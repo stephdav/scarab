@@ -56,9 +56,10 @@
 			<table id="backlogTable" class="bsTable table table-hover table-condensed" data-toggle="table" data-url="rest/us" data-cache="false" data-toolbar="#backlogTable-toolbar" data-sort-name="code" data-sort-order="asc" data-search="true" data-show-refresh="true" data-show-columns="true">
 				<thead>
 					<tr>
-						<th data-field="code" class="col-md-3" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
-						<th data-field="accCrit" class="col-md-3">acceptance criteria</th>
-						<th data-field="accTest" class="col-md-3">acceptance tests</th>
+						<th data-field="code" class="col-md-2" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
+						<th data-field="value" class="col-md-1" data-sortable="true" data-halign="center" data-align="center">value</th>
+						<th data-field="accCrit" class="col-md-2">acceptance criteria</th>
+						<th data-field="accTest" class="col-md-2">acceptance tests</th>
 						<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
 						<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">last update</th>
 						<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
@@ -107,8 +108,20 @@
 		<span id="form-us-id" class="hidden"></span>
 		<div class="form-group">
 			<label for="form-us-code" class="col-sm-3 control-label">code</label>
-			<div class="col-sm-9">
+			<div class="col-sm-5">
 				<input type="text" class="form-control" id="form-us-code">
+			</div>
+			<div class="col-sm-2">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></span>
+					<input type="text" class="form-control" id="form-us-value">
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></span>
+					<input type="text" class="form-control" id="form-us-estimate">
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
@@ -210,7 +223,7 @@
 	<script type="text/javascript">
 
 	var usAction = 'create';
-	var backlogView = 'full';
+	var backlogView = 'refinement';
 
 	$(document).ready(function() {
 		setAjaxPath('${pageContext.request.contextPath}');
@@ -315,6 +328,7 @@
 	    		$("#form-us-id").text(data.id);
 	    		$("#form-us-code").val(data.code);
 	    		$("#form-us-title").val(data.title);
+	    		$("#form-us-value").val(data.value);
 	    		$("#form-us-timestamp-creDate").val(data.creationDate);
 	    		setTextAreaValue('#form-us-description', data.description);
 	    		setTextAreaValue('#form-us-criteria', data.accCrit);
@@ -342,6 +356,7 @@
 		$("#form-us-id").val("");
 		$("#form-us-code").val("");
 		$("#form-us-title").val("");
+		$("#form-us-value").val("");
 		$('#form-us-description').text("");;
 		$('#form-us-criteria').text("");;
 		$('#form-us-test').text("");;
@@ -368,7 +383,8 @@
 			title: $("#form-us-title").val(),
 			desc: getTextAreaValue('#form-us-description'),
 			crit: getTextAreaValue('#form-us-criteria'),
-			test: getTextAreaValue('#form-us-test')
+			test: getTextAreaValue('#form-us-test'),
+			value: $("#form-us-value").val()
 		};
 
 		usCreate(us, function(html) {
@@ -390,7 +406,8 @@
 			desc: getTextAreaValue('#form-us-description'),
 			crit: getTextAreaValue('#form-us-criteria'),
 			test: getTextAreaValue('#form-us-test'),
-			creDate: $("#form-us-timestamp-creDate").val()
+			creDate: $("#form-us-timestamp-creDate").val(),
+			value: $("#form-us-value").val()
 		};
 
 		usUpdate(us, function(html) {
