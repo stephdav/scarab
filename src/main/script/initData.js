@@ -89,7 +89,7 @@ db.userStory.insert ([
     "code" : "US-8",
     "title" : "US estimate & value",
     "description" : "Sarah wants the US to have an estimate and a value indicator, so that these values helps to sort the user stories",
-    "accCrit" : "- Estimate are based on adjusted fibonacci values (0, 1, 2, 3, 5, 8, 13, 20, 50, 100)<br>- A numeric value can be set to represent functional benefit<br>",
+    "accCrit" : "- Estimate are based on adjusted fibonacci values (0, 1, 2, 3, 5, 8, 13, 21, 50, 100)<br>- A numeric value can be set to represent functional benefit<br>",
     "accTest" : "N.A.",
     "creationDate" : ISODate("2014-12-19T17:22:25.604Z"),
     "modificationDate" : ISODate("2014-12-19T17:22:25.604Z")

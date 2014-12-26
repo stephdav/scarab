@@ -123,7 +123,19 @@
 			<div class="col-sm-3">
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-cog" title="estimate" aria-hidden="true"></span></span>
-					<input type="number" min="0" class="form-control" id="form-us-estimate">
+					<select class="form-control" id="form-us-estimate">
+						<option value="">-</option>
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="5">5</option>
+						<option value="8">8</option>
+						<option value="13">13</option>
+						<option value="21">21</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
 				</div>
 			</div>
 		</div>
