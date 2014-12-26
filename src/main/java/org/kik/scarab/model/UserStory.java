@@ -20,6 +20,7 @@ public class UserStory {
 	private Date creationDate;
 	private Date modificationDate;
 	private Integer value;
+	private Integer estimate;
 
 	public UserStory() {
 		// Empty constructor
@@ -95,6 +96,14 @@ public class UserStory {
 
 	public void setValue(Integer value) {
 		this.value = value;
+	}
+
+	public Integer getEstimate() {
+		return estimate;
+	}
+
+	public void setEstimate(Integer estimate) {
+		this.estimate = estimate;
 	}
 
 }

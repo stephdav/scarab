@@ -58,6 +58,7 @@
 					<tr>
 						<th data-field="code" class="col-md-2" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
 						<th data-field="value" class="col-md-1" data-sortable="true" data-halign="center" data-align="center">value</th>
+						<th data-field="estimate" class="col-md-1" data-sortable="true" data-halign="center" data-align="center">estimate</th>
 						<th data-field="accCrit" class="col-md-2">acceptance criteria</th>
 						<th data-field="accTest" class="col-md-2">acceptance tests</th>
 						<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
@@ -107,50 +108,52 @@
 	<form id="form-us" class="form-horizontal" role="form">
 		<span id="form-us-id" class="hidden"></span>
 		<div class="form-group">
-			<label for="form-us-code" class="col-sm-3 control-label">code</label>
-			<div class="col-sm-5">
-				<input type="text" class="form-control" id="form-us-code">
-			</div>
-			<div class="col-sm-2">
+			<div class="col-sm-offset-2 col-sm-4">
 				<div class="input-group">
-					<span class="input-group-addon"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-tag" title="code" aria-hidden="true"></span></span>
+					<input type="text" class="form-control" id="form-us-code">
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-usd" title="value" aria-hidden="true"></span></span>
 					<input type="number" min="1" class="form-control" id="form-us-value">
 				</div>
 			</div>
-			<div class="col-sm-2">
+			<div class="col-sm-3">
 				<div class="input-group">
-					<span class="input-group-addon"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></span>
-					<input type="text" class="form-control" id="form-us-estimate">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-cog" title="estimate" aria-hidden="true"></span></span>
+					<input type="number" min="0" class="form-control" id="form-us-estimate">
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="form-us-title" class="col-sm-3 control-label">title</label>
-			<div class="col-sm-9">
+			<label for="form-us-title" class="col-sm-2 control-label">title</label>
+			<div class="col-sm-10">
 				<input type="text" class="form-control" id="form-us-title" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="form-us-description" class="col-sm-3 control-label">description</label>
-			<div class="col-sm-9">
+			<label for="form-us-description" class="col-sm-2 control-label">description</label>
+			<div class="col-sm-10">
 				<textarea id="form-us-description" class="form-control" rows="3"></textarea>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="form-us-criteria" class="col-sm-3 control-label">acceptance criteria</label>
-			<div class="col-sm-9">
+			<label for="form-us-criteria" class="col-sm-2 control-label">acceptance criteria</label>
+			<div class="col-sm-10">
 				<textarea id="form-us-criteria" class="form-control" rows="3"></textarea>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="form-us-test" class="col-sm-3 control-label">acceptance tests</label>
-			<div class="col-sm-9">
+			<label for="form-us-test" class="col-sm-2 control-label">acceptance tests</label>
+			<div class="col-sm-10">
 				<textarea id="form-us-test" class="form-control" rows="3"></textarea>
 			</div>
 		</div>
 		<div class="form-group hiddenInCreation">
-			<label class="col-sm-3 control-label">dates</label>
-			<div class="col-sm-9">
+			<label class="col-sm-2 control-label">dates</label>
+			<div class="col-sm-10">
 				<label class="col-sm-3 control-label">creation</label>
 				<div class="col-sm-9">
 					<p id="form-us-creDate" class="form-control-static"></p>
@@ -227,6 +230,7 @@
 
 	$(document).ready(function() {
 		setAjaxPath('${pageContext.request.contextPath}');
+		useLoader('${pageContext.request.contextPath}');
 		initPage();
 	});
 
@@ -322,6 +326,7 @@
 
 	function editUSForm(usId) {
 		$('#form-us').find('.hiddenInCreation').show();
+		startLoading();
 	    $.getJSON('${pageContext.request.contextPath}/rest/us/' + usId,	function(data) {
 			initUSForm('update', 'edit user story', 'update');
 	    	if (typeof(data) != 'undefined') {
@@ -329,6 +334,7 @@
 	    		$("#form-us-code").val(data.code);
 	    		$("#form-us-title").val(data.title);
 	    		$("#form-us-value").val(data.value);
+	    		$("#form-us-estimate").val(data.estimate);
 	    		$("#form-us-timestamp-creDate").val(data.creationDate);
 	    		setTextAreaValue('#form-us-description', data.description);
 	    		setTextAreaValue('#form-us-criteria', data.accCrit);
@@ -339,8 +345,10 @@
 			if (backlogView == 'full') {
 				$('#modal-us').modal('show');
 			} else {
+				scrollToTop();
 				$("#inlineView").show();
 			}
+			stopLoading();
 		});
 	}
 
@@ -357,6 +365,7 @@
 		$("#form-us-code").val("");
 		$("#form-us-title").val("");
 		$("#form-us-value").val("");
+		$("#form-us-estimate").val("");
 		$('#form-us-description').text("");;
 		$('#form-us-criteria').text("");;
 		$('#form-us-test').text("");;
@@ -384,7 +393,8 @@
 			desc: getTextAreaValue('#form-us-description'),
 			crit: getTextAreaValue('#form-us-criteria'),
 			test: getTextAreaValue('#form-us-test'),
-			value: $("#form-us-value").val()
+			value: $("#form-us-value").val(),
+			estimate: $("#form-us-estimate").val(),
 		};
 
 		usCreate(us, function(html) {
@@ -407,7 +417,8 @@
 			crit: getTextAreaValue('#form-us-criteria'),
 			test: getTextAreaValue('#form-us-test'),
 			creDate: $("#form-us-timestamp-creDate").val(),
-			value: $("#form-us-value").val()
+			value: $("#form-us-value").val(),
+			estimate: $("#form-us-estimate").val(),
 		};
 
 		usUpdate(us, function(html) {
@@ -440,8 +451,9 @@
 	}
 
 	function displayUS() {
+		$("#list-allUS").empty();
+		startLoading();
 	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=code&order=' + sortOrder,	function(data) {
-			$("#list-allUS").empty();
 		   	if (data.length > 0) {
 		   		var elt = '<li class="list-group-item"><div id="sortByCode" class="list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div></li>';
 		   		$.each(data, function(i, us) {
@@ -458,6 +470,7 @@
 	    		$("#list-allUS").append(elt);
 		   	}
 			$("#inlineView").hide();
+			stopLoading();
 	    });
 	}
 	</script>

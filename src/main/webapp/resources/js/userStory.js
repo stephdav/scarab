@@ -49,7 +49,8 @@ function usAjaxData(us) {
 		+ '"description": "' + us.desc + '", '
 		+ '"accCrit": "' + us.crit + '", '
 		+ '"accTest": "' + us.test + '", '
-		+ '"value": "' + us.value + '"';
+		+ '"value": "' + us.value + '", '
+		+ '"estimate": "' + us.estimate + '"';
 	if (typeof(us.creDate) != 'undefined') {
 		data += ', "creationDate": ' + us.creDate;		
 	}
