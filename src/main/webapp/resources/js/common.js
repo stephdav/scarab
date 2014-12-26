@@ -1,4 +1,27 @@
 /**
+ * Loader utilities
+ */
+
+var loader;
+function useLoader(ajaxPath) {
+	var loaderDOM = '<div id="ajaxLoader">'
+		+ '	<img src="' + ajaxPath + '/resources/images/loader.gif"></img>'
+		+ '</div>';
+	$loaderScarabElt = $('body').find('#ajaxLoader');
+	if ($loaderScarabElt.length == 0) {
+		$('body').append(loaderDOM);
+	}
+}
+function startLoading() {
+	loader=setTimeout('$("#ajaxLoader").show()', 1000);
+}
+
+function stopLoading() {
+	clearTimeout(loader);
+	$("#ajaxLoader").hide();
+}
+
+/**
  * Text utilities
  */
 
