@@ -56,14 +56,14 @@
 			<table id="backlogTable" class="bsTable table table-hover table-condensed" data-toggle="table" data-url="rest/us" data-cache="false" data-toolbar="#backlogTable-toolbar" data-sort-name="code" data-sort-order="asc" data-search="true" data-show-refresh="true" data-show-columns="true">
 				<thead>
 					<tr>
-						<th data-field="code" class="col-md-2" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
-						<th data-field="value" class="col-md-1" data-sortable="true" data-halign="center" data-align="center">value</th>
-						<th data-field="estimate" class="col-md-1" data-sortable="true" data-halign="center" data-align="center">estimate</th>
-						<th data-field="accCrit" class="col-md-2">acceptance criteria</th>
-						<th data-field="accTest" class="col-md-2">acceptance tests</th>
-						<th data-field="creationDate" class="col-md-1" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
-						<th data-field="modificationDate" class="col-md-1" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">last update</th>
-						<th data-formatter="actionFormatter" class="col-md-1" data-halign="center" data-align="center">action</th>
+						<th data-field="code" class="colTab20" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
+						<th data-field="value" class="colTab5" data-sortable="true" data-halign="center" data-align="center"><span class="glyphicon glyphicon-usd" title="value" aria-hidden="true"></span></th>
+						<th data-field="estimate" class="colTab5" data-sortable="true" data-halign="center" data-align="center"><span class="glyphicon glyphicon-cog" title="estimate" aria-hidden="true"></span></th>
+						<th data-field="accCrit" class="colTab20">acceptance criteria</th>
+						<th data-field="accTest" class="colTab20">acceptance tests</th>
+						<th data-field="creationDate" class="colTab10" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
+						<th data-field="modificationDate" class="colTab10" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">last update</th>
+						<th data-formatter="actionFormatter" class="colTab10" data-halign="center" data-align="center">action</th>
 					</tr>
 				</thead>
 			</table>
@@ -238,7 +238,8 @@
 	<script type="text/javascript">
 
 	var usAction = 'create';
-	var backlogView = 'refinement';
+	// var backlogView = 'refinement';
+	var backlogView = 'full';
 
 	$(document).ready(function() {
 		setAjaxPath('${pageContext.request.contextPath}');
@@ -289,16 +290,18 @@
 			sortUsByCode();
 		});
 		$("#list-allUS").on("click", "li", function() {
-			$("#list-allUS").find("li").removeClass("active");
-			$(this).addClass("active");
 			var usId = $(this).data("usId");
-			editUSForm(usId);
+			if (typeof(usId) != 'undefined') {
+				$("#list-allUS").find("li").removeClass("active");
+				$(this).addClass("active");
+				editUSForm(usId);
+			}
 		});
 		
 		$(".switchView").on("click",  function() {
 			switchView();
 		});
-		 
+
 		showView();
 	}
 	
@@ -465,18 +468,18 @@
 	function displayUS() {
 		$("#list-allUS").empty();
 		startLoading();
-	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=code&order=' + sortOrder,	function(data) {
+	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=code&order=' + sortOrder, function(data) {
 		   	if (data.length > 0) {
 		   		var elt = '<li class="list-group-item"><div id="sortByCode" class="list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div></li>';
 		   		$.each(data, function(i, us) {
 		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="list-table-cell">'
-		   				+   '<div class="list-group-item-heading">';
-		   			 if (typeof(us.code) != 'undefined' && us.code != '') {
-		    			 elt += '[' + us.code + '] ';
-		   			 }
-		   			 elt += us.title
-		   			 	+   '</div>'
-		   			 	+   '<div class="list-group-item-text">' + us.description + '</div>'
+		   			//	+   '<div class="list-group-item-heading">';
+		   			if (typeof(us.code) != 'undefined' && us.code != '') {
+		    			elt += '[' + us.code + '] ';
+		   			}
+		   			elt += us.title
+		   			//	+   '</div>'
+		   			//	+   '<div class="list-group-item-text">' + us.description + '</div>'
 		   			 	+ '</div></li>';
 		   		});
 	    		$("#list-allUS").append(elt);

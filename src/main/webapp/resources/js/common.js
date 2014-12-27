@@ -20,6 +20,23 @@ function stopLoading() {
 	$("#ajaxLoader").hide();
 }
 
+function detectLeaveForm() {
+	var eltDOM = '<div id="intercept"></div>';
+	$detectElt = $('body').find('#intercept');
+	if ($detectElt.length == 0) {
+		$('body').append(eltDOM);
+	}
+}
+
+function startDetectLeaveForm() {
+	// $("#intercept").css("z-index", 1050);
+	// $("#refinementView .col-md-6").css("z-index", 1052);
+}
+
+function stopDetectLeaveForm() {
+	// $("#intercept").css("z-index", -1);
+	// $("#refinementView .col-md-6").css("z-index", 'auto');
+}
 /**
  * Navigation utilities
  */
