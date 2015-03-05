@@ -4,6 +4,14 @@ var backlogView = 'refinement';
 
 function initPage() {
 
+	// about
+	$('.scrum-info').on("click", function(){
+		var content = [];
+		content.push('The Product Backlog is an ordered list of everything that might be needed in the product and is the single source of requirements for any changes to be made to the product.');
+		content.push('The Product Owner is responsible for the Product Backlog, including its content, availability, and ordering.');
+		showAboutModal('About product backlog', content, 'The Scrum Guide');
+	});
+	
 	$(".btn-us-create").on("click", function() {
 		createUSForm();
 	});

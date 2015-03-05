@@ -29,7 +29,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="navbar-links">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a data-toggle="modal" data-target="#aboutScarab"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+					<li><a id="about-scarab"><span class="glyphicon glyphicon-question-sign"></span></a></li>
 				</ul>
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="${pageContext.request.contextPath}/backlog">product backlog</a></li>
@@ -47,7 +47,7 @@
 		<div id="fullView">
 			<div id="backlogTable-toolbar" class="bsTableToolbar">
 				<span class="title">product backlog</span>
-				<a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a>
+				<a class="scrum-info"><span class="glyphicon glyphicon-info-sign"></span></a>
 				<div class="btn-group">
 					<button type="button" class="switchView btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;refinement view</button>
 					<button type="button" class="btn-us-create btn btn-primary">create new user story</button>
@@ -74,7 +74,7 @@
 				<div class="bars pull-left">
 					<div class="bsTableToolbar">
 						<span class="title">product backlog</span>
-						<a class="scrum-info" data-toggle="modal" data-target="#aboutProductBacklog"><span class="glyphicon glyphicon-info-sign"></span></a>
+						<a class="scrum-info"><span class="glyphicon glyphicon-info-sign"></span></a>
 						<div class="btn-group">
 							<button type="button" class="switchView btn btn-default"><span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>&nbsp;full view</button>
 							<button type="button" class="btn-us-create btn btn-primary">create new user story</button>
@@ -241,22 +241,6 @@
 			</div> <!-- /.modal-content -->
 		</div> <!-- /.modal-dialog -->
 	</div> <!-- /.modal -->
-
-	<div id="aboutProductBacklog" class="modal fade">
-		<div class="modal-dialog modal-lg" role="dialog" aria-labelledby="modal-productBacklog-title" aria-hidden="true">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 id="modal-productBacklog-title" class="modal-title">About product backlog</h4>
-				</div>
-				<div class="modal-body">
-					<blockquote>
-					<p>The Product Backlog is an ordered list of everything that might be needed in the product and is the single source of requirements for any changes to be made to the product.<br><br>The Product Owner is responsible for the Product Backlog, including its content, availability, and ordering.</p>
-					<footer>The Scrum Guide</footer>
-					</blockquote>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${pageContext.request.contextPath}/resources/js/libs/jquery-1.11.0.min.js"></script>

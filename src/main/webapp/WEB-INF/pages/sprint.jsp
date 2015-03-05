@@ -28,7 +28,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="navbar-links">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a data-toggle="modal" data-target="#aboutScarab"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+					<li><a id="about-scarab"><span class="glyphicon glyphicon-question-sign"></span></a></li>
 				</ul>
 				<ul class="nav navbar-nav">
 					<li><a href="${pageContext.request.contextPath}/backlog">product backlog</a></li>
