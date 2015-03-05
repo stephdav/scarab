@@ -86,8 +86,30 @@
 				<div class="col-md-3">
 					<ul id="list-allUS" class="list-group"></ul>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-7">
 					<div id="inlineView"></div>
+				</div>
+				<div class="col-md-2">
+					<table class="table table-striped table-condensed table-bordered">
+						<thead>
+							<tr>
+								<th style="width:50px">#</th>
+								<th>voting</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td>0</td><td></td></tr>
+							<tr><td>1</td><td></td></tr>
+							<tr><td>2</td><td></td></tr>
+							<tr><td>3</td><td></td></tr>
+							<tr><td>5</td><td></td></tr>
+							<tr><td>8</td><td></td></tr>
+							<tr><td>13</td><td></td></tr>
+							<tr><td>21</td><td></td></tr>
+							<tr><td>50</td><td></td></tr>
+							<tr><td>100</td><td></td></tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -238,8 +260,8 @@
 	<script type="text/javascript">
 
 	var usAction = 'create';
-	// var backlogView = 'refinement';
-	var backlogView = 'full';
+	var backlogView = 'refinement';
+	//var backlogView = 'full';
 
 	$(document).ready(function() {
 		setAjaxPath('${pageContext.request.contextPath}');
