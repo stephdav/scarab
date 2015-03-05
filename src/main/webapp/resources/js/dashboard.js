@@ -1,10 +1,7 @@
 /**
- * User storie utilities
+ * Dashboard utilities
  */
 
-var ajaxPath;
-function setAjaxPath(val) {
-	ajaxPath = val;
-}
+
 
 /** End of file */

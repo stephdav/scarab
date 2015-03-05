@@ -115,11 +115,9 @@
 									</tbody>
 								</table>
 								<div style="margin-top: 15px">
-									<ul class="list-group">
-										<li class="list-group-item"><div>most recent stories with same estimate</div></li>
-										<li class="list-group-item"><div>[US-2] izdjcqqdq</div></li>
-										<li class="list-group-item"><div>[US-2] izdjcqqdq</div></li>
-										<li class="list-group-item"><div>[US-2] izdjcqqdq</div></li>
+									<ul id="voteResult" class="list-group">
+										<li class="list-group-item"><div class="list-table-cell">most recent stories with same estimate</div></li>
+										<li class="list-group-item"><div class="list-table-cell">-</div></li>
 									</ul>
 								</div>
 							</div>
@@ -264,265 +262,22 @@
 	<script src="${pageContext.request.contextPath}/resources/js/libs/jquery-1.11.0.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap.min.js"></script>
 
+	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap-table.min.js"></script>
+
 	<script src="${pageContext.request.contextPath}/resources/js/about.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/userStory.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap-table.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/userStory.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/backlogTable.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/estimateTool.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/backlog.js"></script>
 
 	<script type="text/javascript">
-
-	var usAction = 'create';
-	var backlogView = 'refinement';
-	//var backlogView = 'full';
-
-	$(document).ready(function() {
-		setAjaxPath('${pageContext.request.contextPath}');
-		useLoader('${pageContext.request.contextPath}');
-		initPage();
-	});
-
-	function initPage() {
-
-		$(".btn-us-create").on("click", function() {
-			createUSForm();
+		$(document).ready(function() {
+			setAjaxPath('${pageContext.request.contextPath}');
+			useLoader();
+			initPage();
 		});
-
-		$('#form-us').on('submit', function(e) {
-			e.preventDefault();
-			if (usAction == 'create') {
-				createUS();
-			} else if (usAction == 'update') {
-				editUS();
-			}
-        });
-
-		$('.cancel-form-us').on("click", function(e) {
-			if (backlogView == 'full') {
-				$('#modal-us').modal('hide');
-				$('#backlogTable').bootstrapTable('refresh', {silent: true});
-			} else {
-				displayUS();				
-			}
-        });
-
-		$("#backlogTable").on("click", ".btn-us-edit", function() {
-			var usId = $(this).closest(".btn-group").data("usId");
-			editUSForm(usId);
-		});
-		$("#backlogTable").on("click", ".btn-us-remove", function() {
-			var usId = $(this).closest(".btn-group").data("usId");
-			var usTxt = $(this).closest("tr").find(".codeAndTitle").text();
-			removeUS(usId, usTxt);
-		});
-
-		$('#modal-removeUS').on('hidden.bs.modal', function (e) {
-			// remove event handlers
-			$('#form-removeUS').off();
-		});
-	
-		$("#list-allUS").on("click", "#sortByCode", function() {
-			sortUsByCode();
-		});
-		$("#list-allUS").on("click", "li", function() {
-			var usId = $(this).data("usId");
-			if (typeof(usId) != 'undefined') {
-				$("#list-allUS").find("li").removeClass("active");
-				$(this).addClass("active");
-				editUSForm(usId);
-			}
-		});
-		
-		$(".switchView").on("click",  function() {
-			switchView();
-		});
-
-		showView();
-		
-		activateEstimateTool();
-	}
-	
-	function switchView() {
-		if (backlogView == 'full') {
-			backlogView = 'refinement';
-		} else {
-			backlogView = 'full';
-		}
-		showView();
-	}
-
-	function showView() {
-		if (backlogView == 'full') {
-			$("#modal-us .modal-body").append($("#form-us"));
-			$('#backlogTable').bootstrapTable('refresh', {silent: true});
-			$('#refinementView').hide();
-			$('#fullView').show();
-		} else {
-			$("#inlineView").append($("#form-us"));
-			displayUS();
-			$('#fullView').hide();
-			$('#refinementView').show();
-			$("#inlineView").hide();
-		}
-	}
-	
-	function createUSForm() {
-		$('#form-us').find('.hiddenInCreation').hide();
-		initUSForm('create', 'create an user story', 'create');
-		if (backlogView == 'full') {
-			$('#modal-us').modal('show');
-		} else {
-			$("#inlineView").show();
-		}
-	}
-
-	function editUSForm(usId) {
-		$('#form-us').find('.hiddenInCreation').show();
-		startLoading();
-	    $.getJSON('${pageContext.request.contextPath}/rest/us/' + usId,	function(data) {
-			initUSForm('update', 'edit user story', 'update');
-	    	if (typeof(data) != 'undefined') {
-	    		$("#form-us-id").text(data.id);
-	    		$("#form-us-code").val(data.code);
-	    		$("#form-us-title").val(data.title);
-	    		$("#form-us-value").val(data.value);
-	    		$("#form-us-estimate").val(data.estimate);
-	    		$("#form-us-timestamp-creDate").val(data.creationDate);
-	    		setTextAreaValue('#form-us-description', data.description);
-	    		setTextAreaValue('#form-us-criteria', data.accCrit);
-	    		setTextAreaValue('#form-us-test', data.accTest);
-	    		setDateTimeValue('#form-us-creDate', data.creationDate);
-	    		setDateTimeValue('#form-us-modDate', data.modificationDate);
-	    	}
-			if (backlogView == 'full') {
-				$('#modal-us').modal('show');
-			} else {
-				scrollToTop();
-				$("#inlineView").show();
-			}
-			stopLoading();
-		});
-	}
-
-	function initUSForm(action, title, btn, nbRows) {
-		usAction = action;
-		if (backlogView == 'full') {
-			$('#form-us textarea').attr("rows", 3);
-		} else {
-			$('#form-us textarea').attr("rows", 7);
-		}
-		$('#modal-us-title').text(title);
-		$('#form-us button[type="submit"]').text(btn);
-		$("#form-us-id").val("");
-		$("#form-us-code").val("");
-		$("#form-us-title").val("");
-		$("#form-us-value").val("");
-		$("#form-us-estimate").val("");
-		$('#form-us-description').text("");;
-		$('#form-us-criteria').text("");;
-		$('#form-us-test').text("");;
-		$('#form-us-creDate').text("");
-		$('#form-us-modDate').text("");
-	}
-
-	function removeUS(usId, usTxt) {
-		$('#modal-removeUS .us-title').text(usTxt);
-		$('#modal-removeUS').modal('show');
-		$('#form-removeUS').on('submit', function(e) {
-			e.preventDefault();
-			var us= { id: usId };
-			usDelete(us, function(html) {
-				$('#modal-removeUS').modal('hide');
-				$('#backlogTable').bootstrapTable('refresh', {silent: true});
-			});
-        });
-	}
-
-	function createUS() {
-		var us= {
-			code: $("#form-us-code").val(),
-			title: $("#form-us-title").val(),
-			desc: getTextAreaValue('#form-us-description'),
-			crit: getTextAreaValue('#form-us-criteria'),
-			test: getTextAreaValue('#form-us-test'),
-			value: $("#form-us-value").val(),
-			estimate: $("#form-us-estimate").val(),
-		};
-
-		usCreate(us, function(html) {
-			$('#form-us')[0].reset();
-			if (backlogView == 'full') {
-				$('#modal-us').modal('hide');
-				$('#backlogTable').bootstrapTable('refresh', {silent: true});
-			} else {
-				displayUS();
-			}
-		});
-	}
-	
-	function editUS() {
-		var us= {
-			id: $("#form-us-id").text(),
-			code: $("#form-us-code").val(),
-			title: $("#form-us-title").val(),
-			desc: getTextAreaValue('#form-us-description'),
-			crit: getTextAreaValue('#form-us-criteria'),
-			test: getTextAreaValue('#form-us-test'),
-			creDate: $("#form-us-timestamp-creDate").val(),
-			value: $("#form-us-value").val(),
-			estimate: $("#form-us-estimate").val(),
-		};
-
-		usUpdate(us, function(html) {
-			$('#form-us')[0].reset();
-			if (backlogView == 'full') {
-				$('#modal-us').modal('hide');
-				$('#backlogTable').bootstrapTable('refresh', {silent: true});
-			} else {
-				displayUS();
-			}
-		});
-	}
-
-	var sortOrder='asc';
-	var sortOrderClass='';
-
-	var sortCodeClass="showCaret";
-	var sortModClass="hideCaret";
-
-	function sortUsByCode() {
-		sortCodeClass="showCaret";
-		if (sortOrder == 'asc') {
-			sortOrder="desc";
-			sortOrderClass="dropup";
-		} else {
-			sortOrder='asc';
-			sortOrderClass='';
-		}
-		displayUS();
-	}
-
-	function displayUS() {
-		$("#list-allUS").empty();
-		startLoading();
-	    $.getJSON('${pageContext.request.contextPath}/rest/us?sort=code&order=' + sortOrder, function(data) {
-		   	if (data.length > 0) {
-		   		var elt = '<li class="list-group-item"><div id="sortByCode" class="list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div></li>';
-		   		$.each(data, function(i, us) {
-		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="list-table-cell">'
-		   			if (typeof(us.code) != 'undefined' && us.code != '') {
-		    			elt += '[' + us.code + '] ';
-		   			}
-		   			elt += us.title + '</div></li>';
-		   		});
-	    		$("#list-allUS").append(elt);
-		   	}
-			$("#inlineView").hide();
-			stopLoading();
-	    });
-	}
 	</script>
 
 </body>

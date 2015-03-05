@@ -86,10 +86,6 @@ a.scrum-info:hover {
 	font-weight: bold;
 }
 
-#list-allUS {
-	font-size: 12px;
-}
-
 li.list-group-item:FIRST-CHILD {
 	font-weight: bold;
 	background-color: #ddd;

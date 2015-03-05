@@ -1,9 +1,14 @@
+var ajaxPath;
+function setAjaxPath(val) {
+	ajaxPath = val;
+}
+
 /**
  * Loader utilities
  */
 
 var loader;
-function useLoader(ajaxPath) {
+function useLoader() {
 	var loaderDOM = '<div id="ajaxLoader">' + '	<img src="' + ajaxPath
 			+ '/resources/images/loader.gif"></img>' + '</div>';
 	$loaderScarabElt = $('body').find('#ajaxLoader');

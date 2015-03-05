@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
@@ -75,4 +76,12 @@ public class UserStoryDao {
 		BasicQuery query = new BasicQuery("{ id : '" + id + "' }");
 		mongoTemplate.remove(query, UserStory.class);
 	}
+
+	public List<UserStory> findUserStoriesWithEstimate(int estimate) {
+		Query query = new Query();
+		Criteria criteria = new Criteria("estimate").is(estimate);
+		query.addCriteria(criteria);
+		return mongoTemplate.find(query, UserStory.class);
+	}
+
 }

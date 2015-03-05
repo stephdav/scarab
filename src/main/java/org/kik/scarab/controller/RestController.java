@@ -80,4 +80,11 @@ public class RestController {
 		LOG.info("delete US '{}'", id);
 		svcUS.deleteUserStory(id);
 	}
+	
+	@RequestMapping(value = "us/estimate/{estimate}", method = RequestMethod.GET)
+	public @ResponseBody
+	List<UserStory> findUserStoriesWithEstimate(@PathVariable String estimate) {
+		LOG.info("findUserStoriesWithEstimate({})", estimate);
+		return svcUS.findUserStoriesWithEstimate(Integer.valueOf(estimate));
+	}
 }

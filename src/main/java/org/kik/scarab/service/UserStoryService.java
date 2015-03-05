@@ -50,4 +50,9 @@ public class UserStoryService {
 			final String sortDir) {
 		return dao.findAllUserStoriesSorted(sortBy, sortDir);
 	}
+	
+	public List<UserStory> findUserStoriesWithEstimate(int estimate) {
+		return dao.findUserStoriesWithEstimate(estimate);
+	}
+
 }
