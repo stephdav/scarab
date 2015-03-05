@@ -86,30 +86,45 @@
 				<div class="col-md-3">
 					<ul id="list-allUS" class="list-group"></ul>
 				</div>
-				<div class="col-md-7">
+				<div class="col-md-6">
 					<div id="inlineView"></div>
 				</div>
-				<div class="col-md-2">
-					<table class="table table-striped table-condensed table-bordered">
-						<thead>
-							<tr>
-								<th style="width:50px">#</th>
-								<th>voting</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr><td>0</td><td></td></tr>
-							<tr><td>1</td><td></td></tr>
-							<tr><td>2</td><td></td></tr>
-							<tr><td>3</td><td></td></tr>
-							<tr><td>5</td><td></td></tr>
-							<tr><td>8</td><td></td></tr>
-							<tr><td>13</td><td></td></tr>
-							<tr><td>21</td><td></td></tr>
-							<tr><td>50</td><td></td></tr>
-							<tr><td>100</td><td></td></tr>
-						</tbody>
-					</table>
+				<div class="col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="estimateToolHeading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#estimateTool" aria-expanded="true" aria-controls="estimateTool">estimate tool</a>
+							</h4>
+						</div>
+						<div id="estimateTool" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="estimateToolHeading">
+							<div class="panel-body">
+								<table class="table table-bordered table-condensed">
+									<thead>
+										<tr class="voteTool"><td class="vtEstimate" width="60px">estimate</td><td class="vtEstimate">votes</td></tr>
+									</thead>
+									<tbody>
+										<tr class="voteTool"><td class="vtEstimate">0</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">1</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">2</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">3</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">5</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">8</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">13</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">21</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+										<tr class="voteTool"><td class="vtEstimate">50</td><td><div><div class="vtMinus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></div><div class="vtContent">0</div><div class="vtPlus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div></div></td></tr>
+									</tbody>
+								</table>
+								<div style="margin-top: 15px">
+									<ul class="list-group">
+										<li class="list-group-item"><div>most recent stories with same estimate</div></li>
+										<li class="list-group-item"><div>[US-2] izdjcqqdq</div></li>
+										<li class="list-group-item"><div>[US-2] izdjcqqdq</div></li>
+										<li class="list-group-item"><div>[US-2] izdjcqqdq</div></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -156,7 +171,6 @@
 						<option value="13">13</option>
 						<option value="21">21</option>
 						<option value="50">50</option>
-						<option value="100">100</option>
 					</select>
 				</div>
 			</div>
@@ -238,7 +252,7 @@
 				</div>
 				<div class="modal-body">
 					<blockquote>
-					<p>The Product Backlog is an ordered list of everything that might be needed in the product and is the single source of requirements for any changes to be made to the product. The Product Owner is responsible for the Product Backlog, including its content, availability, and ordering.</p>
+					<p>The Product Backlog is an ordered list of everything that might be needed in the product and is the single source of requirements for any changes to be made to the product.<br><br>The Product Owner is responsible for the Product Backlog, including its content, availability, and ordering.</p>
 					<footer>The Scrum Guide</footer>
 					</blockquote>
 				</div>
@@ -256,6 +270,7 @@
 
 	<script src="${pageContext.request.contextPath}/resources/js/libs/bootstrap-table.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/backlogTable.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/estimateTool.js"></script>
 
 	<script type="text/javascript">
 
@@ -325,6 +340,8 @@
 		});
 
 		showView();
+		
+		activateEstimateTool();
 	}
 	
 	function switchView() {
@@ -495,14 +512,10 @@
 		   		var elt = '<li class="list-group-item"><div id="sortByCode" class="list-table-cell">[code] title &amp; description<span class="' + sortOrderClass + ' ' + sortCodeClass + '"><span class="caret" style="margin:10px 5px;"></span></span></div></li>';
 		   		$.each(data, function(i, us) {
 		   			elt += '<li class="list-group-item" data-us-id="' + us.id + '"><div class="list-table-cell">'
-		   			//	+   '<div class="list-group-item-heading">';
 		   			if (typeof(us.code) != 'undefined' && us.code != '') {
 		    			elt += '[' + us.code + '] ';
 		   			}
-		   			elt += us.title
-		   			//	+   '</div>'
-		   			//	+   '<div class="list-group-item-text">' + us.description + '</div>'
-		   			 	+ '</div></li>';
+		   			elt += us.title + '</div></li>';
 		   		});
 	    		$("#list-allUS").append(elt);
 		   	}
