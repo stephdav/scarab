@@ -46,8 +46,7 @@
 
 		<div id="fullView">
 			<div id="backlogTable-toolbar" class="bsTableToolbar">
-				<span class="title">product backlog</span>
-				<a class="scrum-info"><span class="glyphicon glyphicon-info-sign"></span></a>
+				<span class="title">product backlog</span>&nbsp;<a class="scrum-info"><span class="glyphicon glyphicon-info-sign"></span></a>
 				<div class="btn-group">
 					<button type="button" class="switchView btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;refinement view</button>
 					<button type="button" class="btn-us-create btn btn-primary">create new user story</button>
@@ -57,13 +56,14 @@
 				<thead>
 					<tr>
 						<th data-field="code" class="colTab20" data-formatter="codeTitleFormatter" data-sortable="true">[code] title &amp; description</th>
-						<th data-field="value" class="colTab5" data-sortable="true" data-halign="center" data-align="center"><span class="glyphicon glyphicon-usd" title="value" aria-hidden="true"></span></th>
-						<th data-field="estimate" class="colTab5" data-sortable="true" data-halign="center" data-align="center"><span class="glyphicon glyphicon-cog" title="estimate" aria-hidden="true"></span></th>
 						<th data-field="accCrit" class="colTab20">acceptance criteria</th>
-						<th data-field="accTest" class="colTab20">acceptance tests</th>
-						<th data-field="creationDate" class="colTab10" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
-						<th data-field="modificationDate" class="colTab10" data-formatter="dateFormatter" data-sortable="true" data-halign="center" data-align="center">last update</th>
-						<th data-formatter="actionFormatter" class="colTab10" data-halign="center" data-align="center">action</th>
+						<th data-field="accTest" class="colTab20" data-visible="false" >acceptance tests</th>
+						<th data-field="value" class="colTab50" data-sortable="true" data-halign="center" data-align="center"><span class="glyphicon glyphicon-usd" title="value" aria-hidden="true"></span></th>
+						<th data-field="estimate" class="colTab50" data-sortable="true" data-halign="center" data-align="center"><span class="glyphicon glyphicon-cog" title="estimate" aria-hidden="true"></span></th>
+						<th data-field="status" class="colTab20" data-formatter="statusFormatter" data-sortable="true" data-halign="center" data-align="center">status</th>
+						<th data-field="creationDate" class="colTab125" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">creation date</th>
+						<th data-field="modificationDate" class="colTab125" data-formatter="dateFormatter" data-visible="false" data-sortable="true" data-halign="center" data-align="center">last update</th>
+						<th data-formatter="actionFormatter" class="colTab100" data-halign="center" data-align="center">action</th>
 					</tr>
 				</thead>
 			</table>
@@ -73,31 +73,26 @@
 			<div class="fixed-table-toolbar">
 				<div class="bars pull-left">
 					<div class="bsTableToolbar">
-						<span class="title">product backlog</span>
-						<a class="scrum-info"><span class="glyphicon glyphicon-info-sign"></span></a>
+						<span class="title">product backlog</span>&nbsp;<a class="scrum-info"><span class="glyphicon glyphicon-info-sign"></span></a>
 						<div class="btn-group">
 							<button type="button" class="switchView btn btn-default"><span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>&nbsp;full view</button>
 							<button type="button" class="btn-us-create btn btn-primary">create new user story</button>
 						</div>
 					</div>
 				</div>
+				<div class="bars btn-group pull-right">
+					<button type="button" class="btn-estimate-tool btn btn-default" title="estimate tool"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
+				</div>
 			</div>
 			<div class="row" style="clear:both;">
 				<div class="col-md-3">
 					<ul id="list-allUS" class="list-group"></ul>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-7">
 					<div id="inlineView"></div>
 				</div>
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="estimateToolHeading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#estimateTool" aria-expanded="true" aria-controls="estimateTool">estimate tool</a>
-							</h4>
-						</div>
-						<div id="estimateTool" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="estimateToolHeading">
-							<div class="panel-body">
+				<div class="col-md-2">
+					<div id="estimateTool" style="display:none;">
 								<table class="table table-bordered table-condensed">
 									<thead>
 										<tr class="voteTool"><td class="vtEstimate" width="60px">estimate</td><td class="vtEstimate">votes</td></tr>
@@ -116,12 +111,10 @@
 								</table>
 								<div style="margin-top: 15px">
 									<ul id="voteResult" class="list-group">
-										<li class="list-group-item"><div class="list-table-cell">most recent stories with same estimate</div></li>
+										<li class="list-group-item"><div class="list-table-cell">recent stories with same estimate</div></li>
 										<li class="list-group-item"><div class="list-table-cell">-</div></li>
 									</ul>
 								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -143,7 +136,7 @@
 	<form id="form-us" class="form-horizontal" role="form">
 		<span id="form-us-id" class="hidden"></span>
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-4">
+			<div class="col-sm-3">
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-tag" title="code" aria-hidden="true"></span></span>
 					<input type="text" class="form-control" id="form-us-code">
@@ -169,6 +162,17 @@
 						<option value="13">13</option>
 						<option value="21">21</option>
 						<option value="50">50</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-cog" title="status" aria-hidden="true"></span></span>
+					<select class="form-control" id="form-us-status">
+						<option value="">-</option>
+						<option value="ready">ready</option>
+						<option value="implementing">implementing</option>
+						<option value="completed">completed</option>
 					</select>
 				</div>
 			</div>

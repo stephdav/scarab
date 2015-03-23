@@ -47,7 +47,7 @@ function getHigherEstimate() {
 function loadStoriesWithSameEstimate(estimate) {
 	$.getJSON(ajaxPath + '/rest/us/estimate/' + estimate, function(data) {
 		$('#voteResult').empty();
-		var elt = '<li class="list-group-item"><div class="list-table-cell">most recent stories with same estimate (' + estimate + ')</div></li>';
+		var elt = '<li class="list-group-item"><div class="list-table-cell">recent stories with same estimate (' + estimate + ')</div></li>';
 		if (typeof (data) != 'undefined') {
 			if (data.length > 0) {
 				$.each(data, function(i, us) {

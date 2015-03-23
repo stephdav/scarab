@@ -17,6 +17,7 @@ public class UserStory {
 	private String description;
 	private String accCrit;
 	private String accTest;
+	private String status;
 	private Date creationDate;
 	private Date modificationDate;
 	private Integer value;
@@ -72,6 +73,14 @@ public class UserStory {
 
 	public void setAccTest(String accTest) {
 		this.accTest = accTest;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Date getCreationDate() {

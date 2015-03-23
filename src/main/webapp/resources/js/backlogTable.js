@@ -8,6 +8,24 @@ function codeTitleFormatter(value, row, index) {
 	return content;
 }
 
+function statusFormatter(value, row, index) {
+	var content = "";
+	if (typeof (value) != 'undefined') {
+		if (value == 'ready') {
+			content = 'R';
+		} else if (value == 'implementing') {
+			content = 'I';
+		} else if (value == 'completed') {
+			content = 'D';
+		} else {
+			content = '-';
+		}
+	} else {
+		content = '-';
+	}
+	return content;
+}
+
 function dateFormatter(value, row, index) {
 	var content = "";
 	if (typeof (value) != 'undefined' && value != '') {

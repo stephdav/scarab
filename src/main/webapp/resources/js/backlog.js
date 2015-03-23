@@ -1,6 +1,6 @@
 var usAction = 'create';
-var backlogView = 'refinement';
-// var backlogView = 'full';
+//var backlogView = 'refinement';
+var backlogView = 'full';
 
 function initPage() {
 
@@ -12,6 +12,10 @@ function initPage() {
 		showAboutModal('About product backlog', content, 'The Scrum Guide');
 	});
 	
+	$(".btn-estimate-tool").on("click", function() {
+		$('#estimateTool').show();
+	});
+
 	$(".btn-us-create").on("click", function() {
 		createUSForm();
 	});
@@ -120,6 +124,7 @@ function editUSForm(usId) {
 			$("#form-us-value").val(data.value);
 			$("#form-us-estimate").val(data.estimate);
 			$("#form-us-timestamp-creDate").val(data.creationDate);
+			$("#form-us-status").val(data.status);
 			setTextAreaValue('#form-us-description', data.description);
 			setTextAreaValue('#form-us-criteria', data.accCrit);
 			setTextAreaValue('#form-us-test', data.accTest);
@@ -150,6 +155,7 @@ function initUSForm(action, title, btn, nbRows) {
 	$("#form-us-title").val("");
 	$("#form-us-value").val("");
 	$("#form-us-estimate").val("");
+	$("#form-us-status").val("");
 	$('#form-us-description').text("");
 	$('#form-us-criteria').text("");
 	$('#form-us-test').text("");
@@ -183,6 +189,7 @@ function createUS() {
 		test : getTextAreaValue('#form-us-test'),
 		value : $("#form-us-value").val(),
 		estimate : $("#form-us-estimate").val(),
+		status : $("#form-us-status").val(),
 	};
 
 	usCreate(us, function(html) {
@@ -209,6 +216,7 @@ function editUS() {
 		creDate : $("#form-us-timestamp-creDate").val(),
 		value : $("#form-us-value").val(),
 		estimate : $("#form-us-estimate").val(),
+		status : $("#form-us-status").val(),
 	};
 
 	usUpdate(us, function(html) {

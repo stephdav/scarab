@@ -53,6 +53,10 @@ a.scrum-info:hover {
 	font-size: 12px;
 }
 
+.fixed-table-container {
+	margin-bottom: 20px;
+}
+
 .bsTable th {
 	background-color: #ddd;
 }
@@ -61,21 +65,25 @@ a.scrum-info:hover {
 	font-size: 14px;
 }
 
-.bsTable.table-hover tbody tr:hover td,.bsTable.table-hover tbody tr:hover th
+.bsTable.table-hover tbody tr:hover td, .bsTable.table-hover tbody tr:hover th
 	{
 	background-color: #eee;
 }
 
-.colTab5 {
-	width: 5%;
+.colTab50 {
+	width: 50px;
 }
 
-.colTab10 {
-	width: 10%;
+.colTab100 {
+	width: 100px;
+}
+
+.colTab125 {
+	width: 125px;
 }
 
 .colTab20 {
-	width: 20%;
+	/* width: 200px; */
 }
 
 /** ==========================================================================
@@ -112,12 +120,12 @@ li.list-group-item:HOVER .list-table-cell {
 	border-left: 1px solid #fff;
 }
 
-li.list-group-item .list-table-cell:FIRST-CHILD,li.list-group-item:HOVER .list-table-cell:FIRST-CHILD
+li.list-group-item .list-table-cell:FIRST-CHILD, li.list-group-item:HOVER .list-table-cell:FIRST-CHILD
 	{
 	border-left: none;
 }
 
-li.list-group-item.active,li.list-group-item.active:hover,li.list-group-item.active:focus
+li.list-group-item.active, li.list-group-item.active:hover, li.list-group-item.active:focus
 	{
 	z-index: 2;
 	color: #fff;
@@ -144,7 +152,9 @@ li.list-group-item.active,li.list-group-item.active:hover,li.list-group-item.act
 /** ==========================================================================
 	 
 	========================================================================== */
-#estimateTool .table-condensed>thead>tr>th,#estimateTool .table-condensed>tbody>tr>th,#estimateTool .table-condensed>tfoot>tr>th,#estimateTool .table-condensed>thead>tr>td,#estimateTool .table-condensed>tbody>tr>td,#estimateTool .table-condensed>tfoot>tr>td
+#estimateTool .table-condensed>thead>tr>th, #estimateTool .table-condensed>tbody>tr>th,
+	#estimateTool .table-condensed>tfoot>tr>th, #estimateTool .table-condensed>thead>tr>td,
+	#estimateTool .table-condensed>tbody>tr>td, #estimateTool .table-condensed>tfoot>tr>td
 	{
 	padding: 2px;
 }
@@ -163,12 +173,12 @@ li.list-group-item.active,li.list-group-item.active:hover,li.list-group-item.act
 	text-align: center;
 }
 
-.voteTool .vtMinus,.voteTool .vtContent,.voteTool .vtPlus {
+.voteTool .vtMinus, .voteTool .vtContent, .voteTool .vtPlus {
 	display: inline-block;
 	text-align: center;
 }
 
-.voteTool .vtPlus,.voteTool .vtMinus {
+.voteTool .vtPlus, .voteTool .vtMinus {
 	width: 25%;
 	background-color: #eee;
 	cursor: pointer;
