@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="Sopra Group">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico">
 <title>scarab</title>
+<link href="${pageContext.request.contextPath}/resources/images/favicon.png" rel="shortcut icon">
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/scarab.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/sprint.css" rel="stylesheet">
