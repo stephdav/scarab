@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="base" template="/WEB-INF/template/layout.jsp">
+
+		<put-list-attribute name="stylesheets">
+			<add-attribute value="resources/css/bootstrap.min.css" />
+			<add-attribute value="resources/css/font-awesome.min.css" />
+			<add-attribute value="resources/css/sideMenu.css" />
+			<add-attribute value="resources/css/baseweb.css" />
+		</put-list-attribute>
+
+		<put-list-attribute name="javascripts">
+			<add-attribute value="resources/js/libs/jquery-1.11.0.min.js" />
+			<add-attribute value="resources/js/libs/bootstrap.min.js" />
+			<add-attribute value="resources/js/libs/bootstrap-notify.min.js" />
+			<add-attribute value="resources/js/csrf.js" />
+			<add-attribute value="resources/js/common.js" />
+		</put-list-attribute>
+
+	</definition>
+	
+	<definition name="home" extends="baseWithAPI">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/home.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="baseWithAPI" extends="base">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/fnApi.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="projectNew" extends="baseWithAPI">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/projectNew.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="editProject" extends="baseWithAPI">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/editProject.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="tasks" extends="baseWithAPI">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/tasks.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="editTask" extends="baseWithAPI">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/editTask.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="dashboard" extends="baseWithAPI">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/libs/Chart.min.js" />
+			<add-attribute value="resources/js/dashboard.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="admin" extends="baseWithAPI">
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/admin.js" />
+		</put-list-attribute>
+	</definition>
+
+</tiles-definitions>
