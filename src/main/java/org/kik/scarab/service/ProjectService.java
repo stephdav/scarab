@@ -5,14 +5,15 @@ import java.util.List;
 import org.kik.scarab.model.Project;
 import org.kik.scarab.model.Task;
 import org.kik.scarab.model.dashboard.Doughnut;
+import org.kik.scarab.service.exception.FunctionalException;
 
 public interface ProjectService {
 
 	Project getProject(long id);
 
-	Project save(Project user);
+	Project save(Project user) throws FunctionalException;
 
-	void updateProject(Project project);
+	void updateProject(Project project) throws FunctionalException;
 
 	List<Project> getList();
 

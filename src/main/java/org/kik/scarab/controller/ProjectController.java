@@ -6,6 +6,7 @@ import org.kik.scarab.model.Project;
 import org.kik.scarab.model.Task;
 import org.kik.scarab.model.dashboard.Doughnut;
 import org.kik.scarab.service.ProjectService;
+import org.kik.scarab.service.exception.FunctionalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,12 @@ public class ProjectController {
 		HttpStatus status = HttpStatus.CREATED;
 		try {
 			projectSvc.save(project);
+		} catch (FunctionalException fe) {
+			status = HttpStatus.BAD_REQUEST;
+			LOGGER.error(fe.getMessage());
 		} catch (Exception e) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			LOGGER.error("can not create project");
+			LOGGER.error("unexpected error", e);
 		}
 		return new ResponseEntity<String>(status);
 	}
@@ -71,12 +75,20 @@ public class ProjectController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{projectId}", method = RequestMethod.PUT)
-	public ResponseEntity<Task> updateProject(@PathVariable String projectId,
+	public ResponseEntity<String> updateProject(@PathVariable String projectId,
 			@RequestBody Project project) {
 		LOGGER.info("[API] PUT project " + projectId);
-		HttpStatus status = HttpStatus.NO_CONTENT;
-		projectSvc.updateProject(project);
-		return new ResponseEntity<Task>(status);
+		HttpStatus status = HttpStatus.OK;
+		try {
+			projectSvc.updateProject(project);
+		} catch (FunctionalException fe) {
+			status = HttpStatus.BAD_REQUEST;
+			LOGGER.error(fe.getMessage());
+		} catch (Exception e) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			LOGGER.error("unexpected error", e);
+		}
+		return new ResponseEntity<String>(status);
 	}
 
 	/**

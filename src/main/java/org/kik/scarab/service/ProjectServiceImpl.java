@@ -16,6 +16,7 @@ import org.kik.scarab.model.Status;
 import org.kik.scarab.model.Task;
 import org.kik.scarab.model.dashboard.Doughnut;
 import org.kik.scarab.model.dashboard.DoughnutData;
+import org.kik.scarab.service.exception.FunctionalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,27 +72,44 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public Project save(final Project project) {
+	public Project save(final Project project) throws FunctionalException {
+
+		// Check fields
+		if (project.getName() == null || project.getName().isEmpty()) {
+			throw new FunctionalException("Project's name is mandatory.");
+		}
+		if (project.getColumns() == null || project.getColumns().size() < 2) {
+			throw new FunctionalException("There must be at least two columns.");
+		}
+
 		Project p = daoProject.save(project);
-		LOGGER.debug("saved projet " + p.getId());
 
 		for (Status s : p.getColumns()) {
 			s.setProject(p);
 			daoStatus.save(s);
-			LOGGER.debug("saved status " + s.getId());
 		}
 
-		for (Category c : p.getCategories()) {
-			c.setProject(p);
-			daoCategory.save(c);
-			LOGGER.debug("saved category " + c.getId());
+		if (p.getCategories() != null) {
+			for (Category c : p.getCategories()) {
+				c.setProject(p);
+				daoCategory.save(c);
+			}
 		}
 
 		return p;
 	}
 
 	@Override
-	public void updateProject(Project project) {
+	public void updateProject(Project project) throws FunctionalException {
+
+		// Check fields
+		if (project.getName() == null || project.getName().isEmpty()) {
+			throw new FunctionalException("Project's name is mandatory.");
+		}
+		if (project.getColumns() == null || project.getColumns().size() < 2) {
+			throw new FunctionalException("There must be at least two columns.");
+		}
+
 		Project p = daoProject.findOne(project.getId()).get();
 		p.setName(project.getName());
 		p.setDescription(project.getDescription());

@@ -2,6 +2,7 @@
 <%@taglib prefix="c"     uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="form"  uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn"   uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <tiles:insertDefinition name="editTask">
 	<tiles:putAttribute name="menu">
@@ -52,23 +53,25 @@
 					</select>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="taskCategory" class="col-sm-3 control-label">category</label>
-				<div class="col-sm-9">
-					<select id="taskCategory" class="form-control">
-						<c:choose>
-							<c:when test="${task.category == null}"><option value="" selected>-- none --</option></c:when>
-							<c:otherwise><option value="">-- none --</option></c:otherwise>
-						</c:choose>	
-						<c:forEach var="cat" items="${projectCategories}">
+			<c:if test="${fn:length(projectCategories) > 0}">
+				<div class="form-group">
+					<label for="taskCategory" class="col-sm-3 control-label">category</label>
+					<div class="col-sm-9">
+						<select id="taskCategory" class="form-control">
 							<c:choose>
-								<c:when test="${task.category.id == cat.id}"><option value="${cat.id}" selected>${cat.name}</option></c:when>
-								<c:otherwise><option value="${cat.id}">${cat.name}</option></c:otherwise>
+								<c:when test="${task.category == null}"><option value="" selected>-- none --</option></c:when>
+								<c:otherwise><option value="">-- none --</option></c:otherwise>
 							</c:choose>	
-						</c:forEach>
-					</select>
+							<c:forEach var="cat" items="${projectCategories}">
+								<c:choose>
+									<c:when test="${task.category.id == cat.id}"><option value="${cat.id}" selected>${cat.name}</option></c:when>
+									<c:otherwise><option value="${cat.id}">${cat.name}</option></c:otherwise>
+								</c:choose>	
+							</c:forEach>
+						</select>
+					</div>
 				</div>
-			</div>
+			</c:if>
 			<div class="form-group">
 				<label for="taskAssigned" class="col-sm-3 control-label">assigned to</label>
 				<div class="col-sm-9">

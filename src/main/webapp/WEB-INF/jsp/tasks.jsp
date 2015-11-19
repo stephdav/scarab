@@ -84,17 +84,19 @@
 					</select>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="taskCategory" class="col-sm-3 control-label">category</label>
-				<div class="col-sm-9">
-					<select id="taskCategory" class="form-control">
-						<option value="" selected>-- none --</option>
-						<c:forEach var="cat" items="${projectCategories}">
-							<option value="${cat.id}">${cat.name}</option>
-						</c:forEach>
-					</select>
-				</div>
+			<c:if test="${fn:length(projectCategories) > 0}">
+				<div class="form-group">
+					<label for="taskCategory" class="col-sm-3 control-label">category</label>
+					<div class="col-sm-9">
+						<select id="taskCategory" class="form-control">
+							<option value="" selected>-- none --</option>
+							<c:forEach var="cat" items="${projectCategories}">
+								<option value="${cat.id}">${cat.name}</option>
+							</c:forEach>
+						</select>
+					</div>
 			</div>
+			</c:if>
 			<div class="form-group">
 				<label for="taskAssigned" class="col-sm-3 control-label">assigned to</label>
 				<div class="col-sm-9">

@@ -26,7 +26,7 @@ $(document).ready(function() {
 	$('#inputValue').focus();
 
 	$('.submitForm').on('click', function(e) {
-
+		
 		var columns = [];
 		$("[name=column\\[\\]]").each(function(index, element) {
 			columns.push($(element).val());
@@ -53,9 +53,14 @@ function createProject(name, columns, categories) {
 			showAlertSuccess("Project " + name + " created.");
 			goTo("");
 		},
-		function(textStatus, errorThrown) {
-			showAlertError('Failed to create project ' + name + '.');
-			goTo("");
+		function(jqXHR, textStatus, errorThrown) {
+			var errorMessage = 'Can not create project.';
+			if (jqXHR.status == 400) {
+				errorMessage += "<br>Invalid configuration";
+			} else if (jqXHR.status == 500) {
+				errorMessage += "<br>Server error";
+			}
+			showAlertError(errorMessage);
 		});
 }
 

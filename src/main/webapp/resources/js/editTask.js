@@ -29,7 +29,6 @@ function updateTask(id, taskTitle, taskDescription, taskStatus, taskCategory, pr
 		},
 		function(textStatus, errorThrown) {
 			showAlertError('Failed to update task #' + id + '.');
-			goTo("projects/" + projectId + "/board");
 		});
 }
 

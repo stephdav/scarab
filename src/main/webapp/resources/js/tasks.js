@@ -163,7 +163,6 @@ function createTask(projectId, name, description, status, category, assigned) {
 		function(textStatus, errorThrown) {
 			$('#dialogCreateTask').modal('hide');
 			showAlertError("Failed to create task.");
-			updateTasks();
 		});
 }
 

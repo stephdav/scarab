@@ -72,7 +72,7 @@ function apiTasksCreate(projectId, taskTitle, taskDescription, taskStatus, taskC
 	if (taskStatus != "") {
 		data += ', "status": {"id": "' + taskStatus + '"}';
 	}
-	if (taskCategory != "") {
+	if (taskCategory != undefined && taskCategory != "") {
 		data += ', "category": {"id": "' + taskCategory + '"}';
 	}
 	if (assigned != "") {
@@ -101,7 +101,7 @@ function apiTasksUpdate(id, taskTitle, taskDescription, taskStatus, taskCategory
 	if (taskStatus != "") {
 		data += ', "status": {"id": "' + taskStatus + '"}';
 	}
-	if (taskCategory != "") {
+	if (taskCategory != undefined && taskCategory != "") {
 		data += ', "category": {"id": "' + taskCategory + '"}';
 	}
 	if (assigned != "") {
