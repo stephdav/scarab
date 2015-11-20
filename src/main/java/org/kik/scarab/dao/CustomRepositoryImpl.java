@@ -106,6 +106,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 		List<Task> tasks = daoTask.findByProjectId(projectId);
 
+		// analyse temps finis
 		for (CycleTime sct : daoCycleTime.findByTaskProjectId(projectId)) {
 			DoughnutData dd = datas.get(sct.getStatus().getName());
 			if (dd == null) {
@@ -116,9 +117,33 @@ public class CustomRepositoryImpl implements CustomRepository {
 			dd.setTotal(dd.getTotal() + (sct.getSpentTime() / 60));
 		}
 
+		long now = System.currentTimeMillis();
+
+		// Ajout temps en cours
+		for (Task t : tasks) {
+			DoughnutData dd = datas.get(t.getStatus().getName());
+			if (dd == null) {
+				dd = new DoughnutData();
+				dd.setLabel(t.getStatus().getName());
+				datas.put(t.getStatus().getName(), dd);
+			}
+			dd.setTotal(dd.getTotal() + ((now - t.getLastUpdate()) / 60000));
+		}
+
 		long nbTasks = tasks.size();
 		for (DoughnutData dd : datas.values()) {
 			dd.setTotal(dd.getTotal() / nbTasks);
+		}
+
+		// remove empty values
+		List<String> toBeRemoved = new ArrayList<String>();
+		for (Map.Entry<String, DoughnutData> entry : datas.entrySet()) {
+			if (entry.getValue().getTotal() == 0) {
+				toBeRemoved.add(entry.getKey());
+			}
+		}
+		for (String key : toBeRemoved) {
+			datas.remove(key);
 		}
 
 		return new ArrayList<DoughnutData>(datas.values());
