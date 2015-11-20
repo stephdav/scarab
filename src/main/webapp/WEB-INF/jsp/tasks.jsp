@@ -6,9 +6,9 @@
 
 <tiles:insertDefinition name="tasks">
 	<tiles:putAttribute name="menu">
-		<li><a id="btnCreateTask"><span class="fa fa-plus fa-2x"></span></a></li>
-		<li><a href="<c:url value='/projects'/>/${projectId}/dashboard"><span class="fa fa-dashboard fa-2x"></span></a></li>
-		<li><a href="<c:url value='/projects'/>/${projectId}"><span class="fa fa-gear fa-2x"></span></a></li>
+		<li><a id="btnCreateTask"><span class="fa fa-plus fa-2x" title="new task"></span></a></li>
+		<li><a href="<c:url value='/projects'/>/${projectId}/dashboard"><span class="fa fa-dashboard fa-2x" title="analytics"></span></a></li>
+		<li><a href="<c:url value='/projects'/>/${projectId}"><span class="fa fa-gear fa-2x" title="project's options"></span></a></li>
 	</tiles:putAttribute>
 
 	<tiles:putAttribute name="body">

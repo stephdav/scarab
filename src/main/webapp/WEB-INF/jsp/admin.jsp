@@ -4,7 +4,7 @@
 
 <tiles:insertDefinition name="admin">
 	<tiles:putAttribute name="menu">
-		<li><a id="btnCreateUser"><span class="fa fa-user-plus fa-2x"></span></a></li>
+		<li><a id="btnCreateUser"><span class="fa fa-user-plus fa-2x" title="new user"></span></a></li>
 	</tiles:putAttribute>
 
 	<tiles:putAttribute name="body">

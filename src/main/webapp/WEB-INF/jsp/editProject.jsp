@@ -5,7 +5,7 @@
 
 <tiles:insertDefinition name="editProject">
 	<tiles:putAttribute name="menu">
-		<li><a href="<c:url value='/projects'/>/${projectId}/board"><span class="fa fa-table fa-2x"></span></a></li>
+		<li><a href="<c:url value='/projects'/>/${projectId}/board"><span class="fa fa-table fa-2x" title="back to board"></span></a></li>
 	</tiles:putAttribute>
 
 	<tiles:putAttribute name="body">

@@ -54,7 +54,7 @@
 		          		<li><form action="<c:url value="/j_spring_security_logout" />" name="signOut" class="navbar-nav" method="post">
 		          			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		 					<!-- <input type="submit" class="btn btn-default" value="logout" /> -->
-							<a onclick="document.signOut.submit()"><span class="fa fa-sign-out fa-2x"></span></a>
+							<a onclick="document.signOut.submit()"><span class="fa fa-sign-out fa-2x" title="logout"></span></a>
 						</form></li>
 		          	</c:if>
 				</ul>
