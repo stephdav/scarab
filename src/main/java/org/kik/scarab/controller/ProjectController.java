@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.kik.scarab.model.Project;
 import org.kik.scarab.model.Task;
+import org.kik.scarab.model.dashboard.Bar;
 import org.kik.scarab.model.dashboard.Doughnut;
 import org.kik.scarab.service.ProjectService;
 import org.kik.scarab.service.exception.FunctionalException;
@@ -155,6 +156,18 @@ public class ProjectController {
 
 		HttpStatus status = HttpStatus.OK;
 		return new ResponseEntity<List<Doughnut>>(projectSvc.getCycleTime(Long
+				.valueOf(projectId)), status);
+	}
+
+	@RequestMapping(value = "/{projectId}/dashboard/cycleTimeAsBar", method = RequestMethod.GET)
+	public ResponseEntity<Bar> getProjectCycleTimeAsBar(
+			@PathVariable String projectId) {
+
+		LOGGER.info("[API] GET dashboard cycle time data of project "
+				+ projectId);
+
+		HttpStatus status = HttpStatus.OK;
+		return new ResponseEntity<Bar>(projectSvc.getCycleTimeAsBar(Long
 				.valueOf(projectId)), status);
 	}
 

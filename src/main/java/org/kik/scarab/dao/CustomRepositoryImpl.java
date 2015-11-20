@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.kik.scarab.model.CycleTime;
 import org.kik.scarab.model.Task;
-import org.kik.scarab.model.dashboard.DoughnutData;
+import org.kik.scarab.model.dashboard.ChartData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +21,18 @@ public class CustomRepositoryImpl implements CustomRepository {
 	CycleTimeRepository daoCycleTime;
 
 	@Override
-	public List<DoughnutData> getTasksPerCategory(long projectId) {
+	public List<ChartData> getTasksPerCategory(long projectId) {
 
-		Map<String, DoughnutData> datas = new HashMap<String, DoughnutData>();
+		Map<String, ChartData> datas = new HashMap<String, ChartData>();
 
 		List<Task> tasks = daoTask.findByProjectId(projectId);
 
 		for (Task task : tasks) {
-			DoughnutData dd = null;
+			ChartData dd = null;
 			if (task.getCategory() != null) {
 				dd = datas.get(task.getCategory().getName());
 				if (dd == null) {
-					dd = new DoughnutData();
+					dd = new ChartData();
 					dd.setLabel(task.getCategory().getName());
 					datas.put(task.getCategory().getName(), dd);
 				}
@@ -42,47 +42,47 @@ public class CustomRepositoryImpl implements CustomRepository {
 			dd.setTotal(dd.getTotal() + 1);
 		}
 
-		return new ArrayList<DoughnutData>(datas.values());
+		return new ArrayList<ChartData>(datas.values());
 	}
 
 	@Override
-	public List<DoughnutData> getTasksPerStatus(long projectId) {
+	public List<ChartData> getTasksPerStatus(long projectId) {
 
-		Map<String, DoughnutData> datas = new HashMap<String, DoughnutData>();
+		Map<String, ChartData> datas = new HashMap<String, ChartData>();
 
 		List<Task> tasks = daoTask.findByProjectId(projectId);
 
 		for (Task task : tasks) {
 
-			DoughnutData dd = datas.get(task.getStatus().getName());
+			ChartData dd = datas.get(task.getStatus().getName());
 			if (dd == null) {
-				dd = new DoughnutData();
+				dd = new ChartData();
 				dd.setLabel(task.getStatus().getName());
 				datas.put(task.getStatus().getName(), dd);
 			}
 			dd.setTotal(dd.getTotal() + 1);
 		}
 
-		return new ArrayList<DoughnutData>(datas.values());
+		return new ArrayList<ChartData>(datas.values());
 	}
 
 	@Override
-	public List<DoughnutData> getTasksPerUser(long projectId) {
+	public List<ChartData> getTasksPerUser(long projectId) {
 
-		Map<String, DoughnutData> datas = new HashMap<String, DoughnutData>();
+		Map<String, ChartData> datas = new HashMap<String, ChartData>();
 
-		DoughnutData dd0 = new DoughnutData();
+		ChartData dd0 = new ChartData();
 		dd0.setLabel("Non assigné");
 		datas.put("Non assigné", dd0);
 
 		List<Task> tasks = daoTask.findByProjectId(projectId);
 
 		for (Task task : tasks) {
-			DoughnutData dd = null;
+			ChartData dd = null;
 			if (task.getUser() != null) {
 				dd = datas.get(task.getUser().getUsername());
 				if (dd == null) {
-					dd = new DoughnutData();
+					dd = new ChartData();
 					dd.setLabel(task.getUser().getUsername());
 					datas.put(task.getUser().getUsername(), dd);
 				}
@@ -92,7 +92,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 			dd.setTotal(dd.getTotal() + 1);
 		}
 
-		return new ArrayList<DoughnutData>(datas.values());
+		return new ArrayList<ChartData>(datas.values());
 	}
 
 	/**
@@ -100,17 +100,17 @@ public class CustomRepositoryImpl implements CustomRepository {
 	 * @return temps (en minutes) de cycle moyen par status
 	 */
 	@Override
-	public List<DoughnutData> getCycleTimeData(long projectId) {
+	public List<ChartData> getCycleTimeData(long projectId) {
 
-		Map<String, DoughnutData> datas = new HashMap<String, DoughnutData>();
+		Map<String, ChartData> datas = new HashMap<String, ChartData>();
 
 		List<Task> tasks = daoTask.findByProjectId(projectId);
 
 		// analyse temps finis
 		for (CycleTime sct : daoCycleTime.findByTaskProjectId(projectId)) {
-			DoughnutData dd = datas.get(sct.getStatus().getName());
+			ChartData dd = datas.get(sct.getStatus().getName());
 			if (dd == null) {
-				dd = new DoughnutData();
+				dd = new ChartData();
 				dd.setLabel(sct.getStatus().getName());
 				datas.put(sct.getStatus().getName(), dd);
 			}
@@ -121,9 +121,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 		// Ajout temps en cours
 		for (Task t : tasks) {
-			DoughnutData dd = datas.get(t.getStatus().getName());
+			ChartData dd = datas.get(t.getStatus().getName());
 			if (dd == null) {
-				dd = new DoughnutData();
+				dd = new ChartData();
 				dd.setLabel(t.getStatus().getName());
 				datas.put(t.getStatus().getName(), dd);
 			}
@@ -131,21 +131,21 @@ public class CustomRepositoryImpl implements CustomRepository {
 		}
 
 		long nbTasks = tasks.size();
-		for (DoughnutData dd : datas.values()) {
+		for (ChartData dd : datas.values()) {
 			dd.setTotal(dd.getTotal() / nbTasks);
 		}
 
 		// remove empty values
-		List<String> toBeRemoved = new ArrayList<String>();
-		for (Map.Entry<String, DoughnutData> entry : datas.entrySet()) {
-			if (entry.getValue().getTotal() == 0) {
-				toBeRemoved.add(entry.getKey());
-			}
-		}
-		for (String key : toBeRemoved) {
-			datas.remove(key);
-		}
+		// List<String> toBeRemoved = new ArrayList<String>();
+		// for (Map.Entry<String, ChartData> entry : datas.entrySet()) {
+		// if (entry.getValue().getTotal() == 0) {
+		// toBeRemoved.add(entry.getKey());
+		// }
+		// }
+		// for (String key : toBeRemoved) {
+		// datas.remove(key);
+		// }
 
-		return new ArrayList<DoughnutData>(datas.values());
+		return new ArrayList<ChartData>(datas.values());
 	}
 }

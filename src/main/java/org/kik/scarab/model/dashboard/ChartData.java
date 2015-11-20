@@ -1,12 +1,12 @@
 package org.kik.scarab.model.dashboard;
 
-public class DoughnutData {
+public class ChartData {
 
 	private String label;
 
 	private long total;
 
-	public DoughnutData() {
+	public ChartData() {
 		// Empty constructor
 	}
 

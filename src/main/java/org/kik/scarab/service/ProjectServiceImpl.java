@@ -14,8 +14,10 @@ import org.kik.scarab.model.Category;
 import org.kik.scarab.model.Project;
 import org.kik.scarab.model.Status;
 import org.kik.scarab.model.Task;
+import org.kik.scarab.model.dashboard.Bar;
+import org.kik.scarab.model.dashboard.ChartData;
+import org.kik.scarab.model.dashboard.Dataset;
 import org.kik.scarab.model.dashboard.Doughnut;
-import org.kik.scarab.model.dashboard.DoughnutData;
 import org.kik.scarab.service.exception.FunctionalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -165,13 +167,13 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<Doughnut> getCycleTime(long projectId) {
-		List<DoughnutData> data = daoCustom.getCycleTimeData(projectId);
+		List<ChartData> data = daoCustom.getCycleTimeData(projectId);
 
 		String[] colors = { "#FAAA0A", "#41738C", "#31AF69", "#6FD51D" };
 		int idx = 0;
 
 		List<Doughnut> doughnuts = new ArrayList<Doughnut>();
-		for (DoughnutData tc : data) {
+		for (ChartData tc : data) {
 			doughnuts.add(new Doughnut(tc.getTotal(), colors[idx++], "#ccc", tc
 					.getLabel()));
 			if (idx > 3) {
@@ -183,9 +185,26 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
+	public Bar getCycleTimeAsBar(long projectId) {
+
+		List<String> labels = new ArrayList<String>();
+		List<Long> datas = new ArrayList<Long>();
+
+		List<ChartData> data = daoCustom.getCycleTimeData(projectId);
+		for (ChartData tc : data) {
+			labels.add(tc.getLabel());
+			datas.add(tc.getTotal());
+		}
+		List<Dataset> datasets = new ArrayList<Dataset>();
+		datasets.add(new Dataset("My First dataset", "220,220,220", datas));
+
+		return new Bar(labels, datasets);
+	}
+
+	@Override
 	public List<Doughnut> getDashboardData(long projectId, final String field) {
 
-		List<DoughnutData> data = null;
+		List<ChartData> data = null;
 
 		if ("category".equals(field)) {
 			data = daoCustom.getTasksPerCategory(projectId);
@@ -199,7 +218,7 @@ public class ProjectServiceImpl implements ProjectService {
 		int idx = 0;
 
 		List<Doughnut> doughnuts = new ArrayList<Doughnut>();
-		for (DoughnutData tc : data) {
+		for (ChartData tc : data) {
 			doughnuts.add(new Doughnut(tc.getTotal(), colors[idx++], "#ccc", tc
 					.getLabel()));
 			if (idx > 3) {

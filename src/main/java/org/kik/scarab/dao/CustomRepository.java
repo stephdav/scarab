@@ -2,14 +2,14 @@ package org.kik.scarab.dao;
 
 import java.util.List;
 
-import org.kik.scarab.model.dashboard.DoughnutData;
+import org.kik.scarab.model.dashboard.ChartData;
 
 public interface CustomRepository {
-	List<DoughnutData> getCycleTimeData(long projectId);
+	List<ChartData> getCycleTimeData(long projectId);
 
-	List<DoughnutData> getTasksPerCategory(long projectId);
+	List<ChartData> getTasksPerCategory(long projectId);
 
-	List<DoughnutData> getTasksPerStatus(long projectId);
+	List<ChartData> getTasksPerStatus(long projectId);
 
-	List<DoughnutData> getTasksPerUser(long projectId);
+	List<ChartData> getTasksPerUser(long projectId);
 }

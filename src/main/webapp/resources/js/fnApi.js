@@ -157,6 +157,14 @@ function apiProjectDashboardCycleTime(projectId, successCallback, errorCallback)
 	});
 }
 
+function apiProjectDashboardCycleTimeBar(projectId, successCallback, errorCallback) {
+	$.ajax({
+		url : contextPath + "/api/projects/" + projectId + "/dashboard/cycleTimeAsBar",
+		success : successCallback,
+		error : errorCallback
+	});
+}
+
 function apiUserCreate(username, password, isAdmin, successCallback, errorCallback) {
 	var data = '{'
 		+ ' "username": "' + username + '",'
