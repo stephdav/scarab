@@ -52,12 +52,11 @@ function updateProject(id, name, description, columns, categories) {
 	apiProjectsUpdate(
 		id, name, description, columns, categories,
 		function(data) {
-			showAlertSuccess("Project " + name + " created.");
+			showAlertSuccess("Project " + name + " updated.");
 			goTo("projects/" + id + "/board");
 		},
 		function(textStatus, errorThrown) {
-			showAlertError('Failed to create project ' + name + '.');
-			goTo("projects/" + id + "/board");
+			showAlertError('Failed to update project ' + name + '.');
 		});
 }
 

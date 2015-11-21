@@ -76,13 +76,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public Project save(final Project project) throws FunctionalException {
 
-		// Check fields
-		if (project.getName() == null || project.getName().isEmpty()) {
-			throw new FunctionalException("Project's name is mandatory.");
-		}
-		if (project.getColumns() == null || project.getColumns().size() < 2) {
-			throw new FunctionalException("There must be at least two columns.");
-		}
+		checkProject(project);
 
 		Project p = daoProject.save(project);
 
@@ -104,18 +98,87 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void updateProject(Project project) throws FunctionalException {
 
-		// Check fields
-		if (project.getName() == null || project.getName().isEmpty()) {
-			throw new FunctionalException("Project's name is mandatory.");
-		}
-		if (project.getColumns() == null || project.getColumns().size() < 2) {
-			throw new FunctionalException("There must be at least two columns.");
-		}
+		checkProject(project);
 
 		Project p = daoProject.findOne(project.getId()).get();
 		p.setName(project.getName());
 		p.setDescription(project.getDescription());
+
+		updateCategories(project, p);
 		daoProject.save(p);
+	}
+
+	private void checkProject(final Project project) throws FunctionalException {
+		// Check fields
+		if (project.getName() == null || project.getName().isEmpty()) {
+			throw new FunctionalException("Project's name is mandatory.");
+		}
+		if (project.getColumns() == null || project.getColumns().size() < 3) {
+			throw new FunctionalException(
+					"There must be at least three columns.");
+		}
+	}
+
+	/**
+	 * Update dst project with data of src one.
+	 * 
+	 * @param src
+	 * @param dst
+	 * @throws FunctionalException
+	 */
+	private void updateCategories(Project src, Project dst)
+			throws FunctionalException {
+
+		List<Category> delete = new ArrayList<Category>();
+		List<Category> update = new ArrayList<Category>();
+		List<Category> create = new ArrayList<Category>();
+
+		List<Long> dstIds = new ArrayList<Long>();
+
+		List<Category> dstCat = daoCategory.findByProjectId(dst.getId());
+		if (dstCat != null) {
+			for (Category c : dstCat) {
+				dstIds.add(c.getId());
+			}
+		}
+
+		List<Long> srcIds = new ArrayList<Long>();
+		if (src.getCategories() != null) {
+			for (Category c : src.getCategories()) {
+				if (c.getId() == 0) {
+					create.add(c);
+				} else {
+					srcIds.add(c.getId());
+					update.add(c);
+				}
+			}
+		}
+
+		if (dstCat != null) {
+			for (Category c : dstCat) {
+				if (!srcIds.contains(c.getId())) {
+					if (!daoTask.findByCategoryId(c.getId()).isEmpty()) {
+						throw new FunctionalException(
+								"Some tasks belong to category " + c.getName());
+					}
+					delete.add(c);
+				}
+			}
+		}
+
+		for (Category c : create) {
+			c.setProject(dst);
+			daoCategory.save(c);
+		}
+		for (Category c : update) {
+			c.setProject(dst);
+			daoCategory.save(c);
+		}
+		for (Category c : delete) {
+			daoCategory.delete(c);
+		}
+		dst.setCategories(update);
+		dst.getCategories().addAll(update);
 	}
 
 	@Override

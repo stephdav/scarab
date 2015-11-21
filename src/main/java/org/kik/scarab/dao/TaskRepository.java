@@ -7,5 +7,7 @@ import org.kik.scarab.model.Task;
 public interface TaskRepository extends BaseRepository<Task, Long> {
 	List<Task> findByProjectId(long projectId);
 
+	List<Task> findByCategoryId(long categoryId);
+
 	void deleteByProjectId(long projectId);
 }
