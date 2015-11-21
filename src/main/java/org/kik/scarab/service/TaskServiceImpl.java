@@ -1,5 +1,6 @@
 package org.kik.scarab.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.kik.scarab.dao.CategoryRepository;
@@ -55,6 +56,11 @@ public class TaskServiceImpl implements TaskService {
 	public Task getTask(long id) {
 		Task t = daoTask.findOne(id).get();
 		return t;
+	}
+
+	@Override
+	public List<Task> getUserList(long userId) {
+		return daoTask.findByUserId(userId);
 	}
 
 	@Override

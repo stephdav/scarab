@@ -9,5 +9,7 @@ public interface TaskRepository extends BaseRepository<Task, Long> {
 
 	List<Task> findByCategoryId(long categoryId);
 
+	List<Task> findByUserId(long userId);
+
 	void deleteByProjectId(long projectId);
 }

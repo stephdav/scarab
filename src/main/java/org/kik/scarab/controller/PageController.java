@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.kik.scarab.model.Project;
 import org.kik.scarab.model.Task;
+import org.kik.scarab.model.security.ScarabUser;
 import org.kik.scarab.service.ProjectService;
 import org.kik.scarab.service.TaskService;
 import org.kik.scarab.service.UserService;
@@ -43,8 +44,12 @@ public class PageController {
 		LOGGER.debug("[GET] /");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
+		ScarabUser usr = (ScarabUser) auth.getPrincipal();
+
 		ModelAndView model = PageUtils.initModelAndView("home", "welcome "
 				+ auth.getName() + "!");
+		PageUtils.addTaskList(model, svcTask.getUserList(usr.getId()));
+
 		return model;
 	}
 

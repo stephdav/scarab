@@ -1,7 +1,8 @@
 <%@page session="false"%>
+<%@taglib prefix="c"     uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn"    uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="sec"   uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <tiles:insertDefinition name="home">
 
@@ -26,6 +27,18 @@
 					<div class="panel-heading">projects</div>
 					<ul id="projects" class="list-group"></ul>
 				</div>
+			</div>
+			<div class="col-md-6 clearfix">
+				<c:if test="${fn:length(tasks) > 0}">
+					<div class="panel panel-default">
+						<div class="panel-heading">assigned tasks</div>
+						<ul id="tasks" class="list-group">
+							<c:forEach var="t" items="${tasks}">
+								<li class="list-group-item">#${t.id} ${t.title}</li>
+							</c:forEach>
+						</ul>
+					</div>
+				</c:if>
 			</div>
 		</div>
 

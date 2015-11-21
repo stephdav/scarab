@@ -32,6 +32,10 @@ public class PageUtils {
 		mv.addObject("task", task);
 	}
 
+	public static void addTaskList(ModelAndView mv, List<Task> tasks) {
+		mv.addObject("tasks", tasks);
+	}
+
 	public static void addUsersList(ModelAndView mv, List<User> users) {
 		mv.addObject("users", users);
 	}

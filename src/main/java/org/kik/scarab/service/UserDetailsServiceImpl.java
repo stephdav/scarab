@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kik.scarab.dao.UserRepository;
+import org.kik.scarab.model.security.ScarabUser;
 import org.kik.scarab.model.security.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,34 +25,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String userId)
+	public UserDetails loadUserByUsername(final String username)
 			throws UsernameNotFoundException {
 
 		org.kik.scarab.model.User userEntity = userdao
-				.findFirstByUsername(userId);
+				.findFirstByUsername(username);
 		if (userEntity == null) {
-			throw new UsernameNotFoundException("user name not found");
+			throw new UsernameNotFoundException("username not found");
 		}
 
 		return buildUserFromUserEntity(userEntity);
 
 	}
 
-	private User buildUserFromUserEntity(org.kik.scarab.model.User userEntity) {
+	private User buildUserFromUserEntity(
+			final org.kik.scarab.model.User userEntity) {
 
 		// convert model user to spring security user
+		long id = userEntity.getId();
 		String username = userEntity.getUsername();
 		String password = userEntity.getPassword();
-
-		boolean enabled = true;
-		boolean accountNonExpired = true;
-		boolean credentialsNonExpired = true;
-		boolean accountNonLocked = true;
 
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new UserAuthority(userEntity.getRole()));
 
-		return new User(username, password, enabled, accountNonExpired,
-				credentialsNonExpired, accountNonLocked, authorities);
+		return new ScarabUser(id, username, password, authorities);
 	}
 }
