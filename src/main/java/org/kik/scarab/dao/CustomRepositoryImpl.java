@@ -24,6 +24,9 @@ public class CustomRepositoryImpl implements CustomRepository {
 	public List<ChartData> getTasksPerCategory(long projectId) {
 
 		Map<String, ChartData> datas = new HashMap<String, ChartData>();
+		ChartData cd = new ChartData();
+		cd.setLabel("Sans catégorie");
+		datas.put("Sans catégorie", cd);
 
 		List<Task> tasks = daoTask.findByProjectId(projectId);
 
@@ -97,7 +100,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 
 	/**
 	 * @param projectId
-	 * @return temps (en minutes) de cycle moyen par status
+	 * @return temps (en heure) de cycle moyen par status
 	 */
 	@Override
 	public List<ChartData> getCycleTimeData(long projectId) {
@@ -114,7 +117,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				dd.setLabel(sct.getStatus().getName());
 				datas.put(sct.getStatus().getName(), dd);
 			}
-			dd.setTotal(dd.getTotal() + (sct.getSpentTime() / 60));
+			dd.setTotal(dd.getTotal() + (sct.getSpentTime() / 3600));
 		}
 
 		long now = System.currentTimeMillis();
@@ -127,7 +130,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 				dd.setLabel(t.getStatus().getName());
 				datas.put(t.getStatus().getName(), dd);
 			}
-			dd.setTotal(dd.getTotal() + ((now - t.getLastUpdate()) / 60000));
+			dd.setTotal(dd.getTotal() + ((now - t.getLastUpdate()) / 3600000));
 		}
 
 		long nbTasks = tasks.size();
