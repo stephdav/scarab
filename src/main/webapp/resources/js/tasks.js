@@ -27,13 +27,6 @@ $(document).ready(function() {
 		e.stopPropagation();
 		deleteTask($(this).closest('.task').attr('data-task'));
 	});
-	$('#board').on('click','.btnEditTask', function(e) {
-		e.stopPropagation();
-		var projectId = $("#projectId").val();
-		var taskId = $(this).closest('.task').attr('data-task');
-		goTo("projects/" + projectId + "/tasks/" + taskId);
-	});
-
 
 	// ajoute la propriété pour le drop et le transfert de données
 	$.event.props.push('dataTransfer');
@@ -110,7 +103,6 @@ function updateTasks() {
 			elt = '<div class="task clearfix" data-task="' + task.id + '" draggable="true" >';
 			
 			elt += '<div class="pull-right">';
-			elt += ' <button type="button" class="btnEditTask btn btn-xs btn-default"><span class="fa fa-edit" aria-hidden="true"></span></button>';
 			elt += ' <button type="button" class="btnDeleteTask btn btn-xs btn-default"><span class="fa fa-remove" aria-hidden="true"></span></button>';
 			elt += '</div>';
 
@@ -121,7 +113,7 @@ function updateTasks() {
 			} else {
 				cat = "";
 			}
-			elt += '<a>#' + task.id + '</a></div>';
+			elt += '<a href="' + contextPath + '/projects/' + projectId + '/tasks/' + task.id + '">#' + task.id + '</a></div>';
 
 			elt += ' <div class="task-description">' + task.title + '</div>';
 
