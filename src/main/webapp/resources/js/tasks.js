@@ -42,22 +42,26 @@ $(document).ready(function() {
 		dragstart : function(event) { dragZoneStart(this, event); },
 		dragend : function(event) { dragZoneEnd(this, event); }
 	}, '.task');
-	$('.column').on({
+	$('.board-content').on({
 		dragenter : function(event) { event.preventDefault(); dropZoneEnter(this, event); },
 		dragleave : function(event) { event.preventDefault(); dropZoneLeave(this, event); },
 		dragover : function(event) { event.preventDefault(); return false; },
 		dragend : function(event) { event.preventDefault(); dropZoneEnd(this, event); },
 		drop : function(event) { event.preventDefault(); dropZoneDrop(this, event); },
-	}, '.dropzone');
+	}, '.column');
 
 	updateTasks();
 	adaptColumnWidth();
 });
 
+var dragCategory = 0;
 function dragZoneStart(obj, event) {
 	var data = $(obj).attr('data-task');
 	event.dataTransfer.setData("text", data);
 	event.dataTransfer.effectAllowed = "move";
+	
+	dragCategory = $(obj).closest('.column').attr('data-category');
+
 	$(obj).addClass('dragPending');
 }
 
@@ -67,14 +71,21 @@ function dragZoneEnd(obj, event) {
 
 function dropZoneDrop(obj, event) {
 	var id = event.dataTransfer.getData("text");
+	var cat = $(obj).closest('.column').attr('data-category');
 	var status = $(obj).closest('.column').attr('data-status');
 	dropZoneLeave(obj);
-	updateTaskStatus(id, status);
+	if (dragCategory==cat) {
+		updateTaskStatus(id, status);
+	}
 }
 
 function dropZoneEnter(obj, event) {
-	$(obj).addClass('dragAllowed');
-	animateObj(obj,50);
+	var cat = $(obj).closest('.column').attr('data-category');
+	if (dragCategory==cat) {
+		$(obj).addClass('dragAllowed');
+	} else {
+		$(obj).addClass('dragNotAllowed');
+	}
 }
 
 function dropZoneEnd(obj, event) {
@@ -83,17 +94,7 @@ function dropZoneEnd(obj, event) {
 
 function dropZoneLeave(obj, event) {
 	$(obj).removeClass('dragAllowed');
-	if ($(obj).hasClass('last-dropzone')) {
-		animateObj(obj, 50);
-	} else {
-		animateObj(obj, 10);
-	}
-}
-
-function animateObj(obj, objSize){
-	$(obj).stop().animate({
-		height: objSize
-	}, 200);
+	$(obj).removeClass('dragNotAllowed');
 }
 
 function updateTasks() {
@@ -136,10 +137,6 @@ function updateTasks() {
 
 			elt += '</div>';
 			$('.column[data-category="' + cat +'"][data-status="' + task.status.id+'"]').append(elt);
-			$('.column[data-category="' + cat +'"][data-status="' + task.status.id+'"]').append('<div class="dropzone"/>');
-		});
-		$('.column').each(function(index) {
-			$(this).find('.dropzone:last-child').addClass('last-dropzone');
 		});
 		adaptColumnHeight();
 	});
@@ -148,7 +145,6 @@ function updateTasks() {
 function initColumns() {
 	$('.column').each(function(index) {
 		$(this).empty();
-		$(this).append('<div class="dropzone">');
 	});
 }
 
@@ -191,15 +187,16 @@ function deleteTask(id) {
 }
 
 function adaptColumnHeight() {
+
 	$(".board-content").each(function(bordIdx, board) {
-		var count = 0;
+		var count = 1;
 		$(board).find(".column").each(function(index, element) {
 			var nbTasks = $(element).find('.task').length;
 			if (nbTasks > count) {
 				count = nbTasks;
 			}
 		});
-		var size = count * 85 + 50;
+		var size = count * 85 + 10;
 		$(board).find(".column").css('height', size+'px');
 	});
 }

@@ -57,10 +57,13 @@ body {
 
 .board-column {
 	min-height: 1px;
-	padding: 0 5px;
 	float: left;
 	border-left: 1px dashed black;
 	border-right: 1px dashed black;
+}
+
+.column {
+	padding: 5px;
 }
 
 .board-column:first-of-type {
@@ -82,17 +85,9 @@ body {
 	text-align: center;
 }
 
-.dropzone {
-	height: 10px;
-	border-radius: 10px;
-}
-
-.last-dropzone {
-	height: 50px;
-}
-
 .task {
 	position: relative;
+	margin: 5px;
 	padding: 5px;
 	height: 75px;
 	border: 1px solid black;
@@ -153,15 +148,9 @@ body {
 	user-select: none;
 }
 
-.dragPending {
-	border: 2px solid #000;
-}
-
-.dragAllowed {
-	background-color: #eee;
-	border: 2px dashed black;
-	margin: 5px 0;
-}
+.dragPending {border: 2px solid #000;}
+.dragAllowed {background-color: #CEFFBA;}
+.dragNotAllowed { background-color: #FFBABA;}
 
 /** THEME */
 
