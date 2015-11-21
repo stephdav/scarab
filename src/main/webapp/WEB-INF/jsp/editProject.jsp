@@ -47,7 +47,7 @@
 						<div class="col-sm-9">
 							<c:forEach var="col" items="${project.columns}">
 					    		<div class="input-group input-group-option">
-					    			<input type="text" name="column[]" class="form-control" value="${col.name}" placeholder="enter a new column name">
+					    			<input type="text" name="column[]" class="form-control" value="${col.name}" data-col="${col.id}" placeholder="enter a new column name">
 					    			<span class="input-group-btn input-group-addon-remove">
 										<button class="btn btn-default" type="button"><span class="fa fa-close"></span></button>
 									</span>
@@ -68,7 +68,7 @@
 						<div class="col-sm-9">
 							<c:forEach var="cat" items="${project.categories}">
 					    		<div class="input-group input-group-option">
-					    			<input type="text" name="category[]" class="form-control" value="${cat.name}" placeholder="enter a new category name">
+					    			<input type="text" name="category[]" class="form-control" value="${cat.name}" data-cat="${cat.id}" placeholder="enter a new category name">
 					    			<span class="input-group-btn input-group-addon-remove">
 										<button class="btn btn-default" type="button"><span class="fa fa-close"></span></button>
 									</span>

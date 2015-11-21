@@ -16,13 +16,14 @@ function apiProjectsCreate(projectName, columns, categories, successCallback, er
 	});
 }
 
-function apiProjectsUpdate(id, projectName, projectId, columns, categories, successCallback, errorCallback) {
+function apiProjectsUpdate(id, projectName, description, columns, categories, successCallback, errorCallback) {
 
 	var data = '{';
-	data += ' "projectId": "' + projectId + '"';
+	data += ' "id": "' + id + '"';
 	data += ', "name": "' + projectName + '"';
-	data += getElementsAsArray(columns, "columns");
-	data += getElementsAsArray(categories, "categories");
+	data += ', "description": "' + description + '"';
+	data += ', \"columns\": ' + JSON.stringify(columns);
+	data += ', \"categories\": ' + JSON.stringify(categories);
 	data +=' }';
 
 	$.ajax({
