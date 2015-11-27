@@ -40,7 +40,7 @@ public class PageController {
 	UserService svcUser;
 
 	@RequestMapping("/")
-	public ModelAndView welcome() {
+	public ModelAndView home() {
 		LOGGER.debug("[GET] /");
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();

@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	$("#taskDescription").text(replaceAll($("#taskDesc").val(), '<br>', '\n'));
+	
 	$('#taskTitle').focus();
 
 	$('.submitForm').on('click', function(e) {

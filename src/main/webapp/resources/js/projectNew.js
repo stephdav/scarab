@@ -37,7 +37,7 @@ $(document).ready(function() {
 			categories.push($(element).val());
 		});
 
-		createProject($('#inputValue').val(), columns, categories);
+		createProject($('#inputValue').val(), columns, categories, replaceAll($("#projectDescription").val(), '\n', '<br>'));
 	});
 
 	$('.cancelForm').on('click', function(e) {
@@ -46,9 +46,9 @@ $(document).ready(function() {
 
 });
 
-function createProject(name, columns, categories) {
+function createProject(name, columns, categories, description) {
 	apiProjectsCreate(
-		name, columns, categories,
+		name, columns, categories, description,
 		function(data) {
 			showAlertSuccess("Project " + name + " created.");
 			goTo("");

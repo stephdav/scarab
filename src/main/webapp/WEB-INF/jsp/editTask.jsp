@@ -17,6 +17,7 @@
 
 	<input id="projectId" type="hidden" value="${projectId}">
 	<input id="taskId" type="hidden" value="${task.id}">
+	<input id="taskDesc" type="hidden" value="${task.description}">
 
 	<form class="form-horizontal">
 		<div class="col-sm-6">
@@ -29,7 +30,7 @@
 			<div class="form-group">
 				<label for="taskDescription" class="col-sm-3 control-label">description</label>
 				<div class="col-sm-9">
-					<textarea id="taskDescription" class="form-control" rows="3" placeholder="task's description">${task.description}</textarea>
+					<textarea id="taskDescription" class="form-control" rows="3" placeholder="task's description"></textarea>
 				</div>
 			</div>
 			<div class="form-group">

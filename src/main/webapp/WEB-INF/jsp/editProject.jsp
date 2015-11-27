@@ -15,6 +15,7 @@
 	</div>
 
 	<input id="projectId" type="hidden" value="${projectId}">
+	<input id="projectDesc" type="hidden" value="${project.description}">
 
 	<form class="form-horizontal">
 		<div class="row">

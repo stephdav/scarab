@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	$("#projectDescription").text(replaceAll($("#projectDesc").val(), '<br>', '\n'));
+
 	$('div.form-group-options').on('focus', 'div.input-group-option:last-child input', function(){
 		var sInputGroupHtml = $(this).parent().html();
 		var sInputGroupClasses = $(this).parent().attr('class');

@@ -1,6 +1,9 @@
-function apiProjectsCreate(projectName, columns, categories, successCallback, errorCallback) {
+function apiProjectsCreate(projectName, columns, categories, description, successCallback, errorCallback) {
 
 	var data = '{ "name": "' + projectName + '"';
+	if (description != "") {
+		data += ', "description": "' + description + '"';
+	}
 	data += getElementsAsArray(columns, "columns");
 	data += getElementsAsArray(categories, "categories");
 	data +=' }';
@@ -21,7 +24,9 @@ function apiProjectsUpdate(id, projectName, description, columns, categories, su
 	var data = '{';
 	data += ' "id": "' + id + '"';
 	data += ', "name": "' + projectName + '"';
-	data += ', "description": "' + description + '"';
+	if (description != "") {
+		data += ', "description": "' + description + '"';
+	}
 	data += ', \"columns\": ' + JSON.stringify(columns);
 	data += ', \"categories\": ' + JSON.stringify(categories);
 	data +=' }';
