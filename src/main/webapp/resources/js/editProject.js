@@ -21,7 +21,7 @@ $(document).ready(function() {
 			var colName = $(element).val();
 			if (colName != "") {
 				var colId = $(element).attr('data-col');
-				var col = { id: colId, name: colName}
+				var col = { id: colId, name: colName};
 				columns.push(col);
 			}
 		});

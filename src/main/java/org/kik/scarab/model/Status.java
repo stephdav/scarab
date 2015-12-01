@@ -23,6 +23,9 @@ public class Status {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
+	@Column(name = "STATUS_ORDER", nullable = false)
+	private int order;
+
 	@ManyToOne
 	@JoinColumn(name = "PROJECT_ID", nullable = false)
 	private Project project;
@@ -31,9 +34,10 @@ public class Status {
 		// Empty constructor
 	}
 
-	public Status(long id, final String name) {
+	public Status(long id, final String name, int order) {
 		this.id = id;
 		this.name = name;
+		this.order = order;
 	}
 
 	public long getId() {
@@ -50,6 +54,14 @@ public class Status {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
 	}
 
 	public Project getProject() {

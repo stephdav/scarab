@@ -4,7 +4,7 @@ function apiProjectsCreate(projectName, columns, categories, description, succes
 	if (description != "") {
 		data += ', "description": "' + description + '"';
 	}
-	data += getElementsAsArray(columns, "columns");
+	data += ', \"columns\": ' + JSON.stringify(columns);
 	data += getElementsAsArray(categories, "categories");
 	data +=' }';
 

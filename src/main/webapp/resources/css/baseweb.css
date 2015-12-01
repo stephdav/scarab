@@ -49,6 +49,44 @@ body {
 	font-size: 18px;
 }
 
+/** === project === */
+
+#dnd {
+	position: relative;
+	display: table;
+	margin-bottom: 3px;
+	border-collapse: separate;
+}
+
+.p, .b {
+	display: table-cell;
+	margin: 0;
+	padding: 5px;
+	height: 36px;
+	border: 1px solid #ccc;
+	border-radius: 24px;
+	background-color: #fff;
+	overflow: hidden;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 24px;
+}
+
+.b {
+	width: 36px;
+	border-radius: 4px;
+}
+
+.d {
+	display: table-cell;
+	margin: 0;
+	padding: 0;
+	height: 36px;
+	width: 10px;
+	background-color: #fff;
+}
+
+
 /** === tasks === */
 .board-header {
 	border-bottom: 1px solid black;
