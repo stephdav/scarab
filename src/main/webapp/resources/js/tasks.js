@@ -28,6 +28,36 @@ $(document).ready(function() {
 		deleteTask($(this).closest('.task').attr('data-task'));
 	});
 
+//	var dragCategory = 0;
+//	myFeature.init({
+//		dndContainer : '.board-content',
+//		dragSelector : '.task',
+//		dropSelector : '.column',
+//		draggingClass : 'dragPending',
+//		onStart : function(obj, event) {
+//			dragCategory = $(obj).closest('.column').attr('data-category');
+//		},
+//		onEnter : function(obj, event) {
+//			var cat = $(obj).closest('.column').attr('data-category');
+//			if (dragCategory==cat) {
+//				$(obj).addClass('dragAllowed');
+//			} else {
+//				$(obj).addClass('dragNotAllowed');
+//			}
+//		},
+//		onLeave : function(obj, event) {
+//			$(obj).removeClass('dragAllowed');
+//			$(obj).removeClass('dragNotAllowed');
+//		},
+//		onDrop : function(obj, event, id) {
+//			var cat = $(obj).closest('.column').attr('data-category');
+//			var status = $(obj).closest('.column').attr('data-status');
+//			if (dragCategory==cat) {
+//				updateTaskStatus(id, status);
+//			}
+//		},
+//	});
+
 	// ajoute la propriété pour le drop et le transfert de données
 	$.event.props.push('dataTransfer');
 	

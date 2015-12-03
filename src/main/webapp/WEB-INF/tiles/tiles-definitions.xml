@@ -38,6 +38,7 @@
 	<definition name="projectNew" extends="baseWithAPI">
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="resources/js/projectNew.js" />
+			<add-attribute value="resources/js/dragAndDrop.js" />
 		</put-list-attribute>
 	</definition>
 

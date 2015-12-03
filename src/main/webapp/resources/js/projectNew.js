@@ -25,17 +25,6 @@ $(document).ready(function() {
 
 	$('#inputValue').focus();
 
-	$('#dnd').on('click', '.btn.remove-p', function(){
-		$(this).parent().remove();
-		initDnd();
-	});
-
-	$('#dnd').on('click', '.b', function(){
-		var idx = $("#dnd .p").length;
-		$('#dnd').append("<div class=\"p\" id=\"obj"+idx+"\" draggable=\"true\">NEW STEP</div>");
-		initDnd();
-	});
-
 	$('.submitForm').on('click', function(e) {
 		
 		var columns = [];
@@ -62,66 +51,45 @@ $(document).ready(function() {
 	// === drag and drop ===
 	
 	initDnd();
-	// ajoute la propriété pour le drop et le transfert de données
-	$.event.props.push('dataTransfer');
-	$('#dnd').on({
-		dragstart : function(event) { dragZoneStart(this, event); },
-		dragend : function(event) { dragZoneEnd(this, event); }
-	}, '.p');
-	$('#dnd').on({
-		dragenter : function(event) { event.preventDefault(); dropZoneEnter(this, event); },
-		dragleave : function(event) { event.preventDefault(); dropZoneLeave(this, event); },
-		dragover : function(event) { event.preventDefault(); return false; },
-		dragend : function(event) { event.preventDefault(); dropZoneEnd(this, event); },
-		drop : function(event) { event.preventDefault(); dropZoneDrop(this, event); },
-	}, '.d');
-
 });
 
 function initDnd() {
+	dndFeature.init({
+		dndContainer : '#dnd',
+		dragSelector : '.p',
+		dropSelector : '.d',
+		draggingClass : 'dragPending',
+		onEnter : function(obj, event) {grow(obj, "100px");},
+		onLeave : function(obj, event) {grow(obj, "10px");},
+		onDrop : function(obj, event, id) {$('#'+id).insertAfter($(obj)); refreshDndContainer();},
+	});
+
+	refreshDndContainer();
+	
+	$('#dnd').on('click', '.btn.remove-p', function(){
+		$(this).parent().remove();
+		refreshDndContainer();
+	});
+	
+	$('#dnd').on('click', '.b', function(){
+		var idx = $("#dnd .p").length;
+		$('#dnd').append("<div class=\"p\" id=\"obj"+idx+"\" draggable=\"true\">NEW STEP</div>");
+		refreshDndContainer();
+	});	
+}
+
+function refreshDndContainer() {
 	// remove drop zones and buttons
 	$('.d').remove();
 	$('.b').remove();
 	$('.p .btn').remove();
-	// add fist drop zone
-	// $('#dnd').prepend("<div class='d'></div>");
 	// add drop zone after each draggable element
 	$("<div class='d'></div>").insertAfter('.p');
 	// add button at end of line
-	$('#dnd').append("<div class=\"b\" ><span class=\"fa fa-plus\"></span></div>");
+	$('#dnd').append("<div class='b'><span class='fa fa-plus'></span></div>");
 	// add edit and remove buttons
-	$('.p').append("<div class=\"btn btn-sm remove-p pull-right\" ><span class=\"fa fa-close\"></span></div>");
-	$('.p').prepend("<div class=\"btn btn-sm edit-p pull-left\" ><span class=\"fa fa-edit\"></span></div>");
-}
-
-function dragZoneStart(obj, event) {
-	var data = $(obj).attr('id');
-	event.dataTransfer.setData("text", data);
-	event.dataTransfer.effectAllowed = "move";
-	$(obj).addClass('dragPending');
-}
-
-function dragZoneEnd(obj, event) {
-	$(obj).removeClass('dragPending');
-}
-
-function dropZoneDrop(obj, event) {
-	var id = event.dataTransfer.getData("text");
-	$('#'+id).insertAfter($(obj));
-	dropZoneLeave(obj);
-	initDnd();
-}
-
-function dropZoneEnter(obj, event) {
-	grow(obj, "50px");
-}
-
-function dropZoneEnd(obj, event) {
-	dropZoneLeave(obj);
-}
-
-function dropZoneLeave(obj, event) {
-	grow(obj, "10px");
+	$('.p').append("<div class='btn btn-sm remove-p pull-right'><span class='fa fa-close'></span></div>");
+	$('.p').prepend("<div class='btn btn-sm edit-p pull-left'><span class='fa fa-edit'></span></div>");
 }
 
 function grow(obj, size) {
