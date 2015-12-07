@@ -28,96 +28,43 @@ $(document).ready(function() {
 		deleteTask($(this).closest('.task').attr('data-task'));
 	});
 
-//	var dragCategory = 0;
-//	myFeature.init({
-//		dndContainer : '.board-content',
-//		dragSelector : '.task',
-//		dropSelector : '.column',
-//		draggingClass : 'dragPending',
-//		onStart : function(obj, event) {
-//			dragCategory = $(obj).closest('.column').attr('data-category');
-//		},
-//		onEnter : function(obj, event) {
-//			var cat = $(obj).closest('.column').attr('data-category');
-//			if (dragCategory==cat) {
-//				$(obj).addClass('dragAllowed');
-//			} else {
-//				$(obj).addClass('dragNotAllowed');
-//			}
-//		},
-//		onLeave : function(obj, event) {
-//			$(obj).removeClass('dragAllowed');
-//			$(obj).removeClass('dragNotAllowed');
-//		},
-//		onDrop : function(obj, event, id) {
-//			var cat = $(obj).closest('.column').attr('data-category');
-//			var status = $(obj).closest('.column').attr('data-status');
-//			if (dragCategory==cat) {
-//				updateTaskStatus(id, status);
-//			}
-//		},
-//	});
-
-	// ajoute la propriété pour le drop et le transfert de données
-	$.event.props.push('dataTransfer');
-	
-	$('.column').on({
-		dragstart : function(event) { dragZoneStart(this, event); },
-		dragend : function(event) { dragZoneEnd(this, event); }
-	}, '.task');
-	$('.board-content').on({
-		dragenter : function(event) { event.preventDefault(); dropZoneEnter(this, event); },
-		dragleave : function(event) { event.preventDefault(); dropZoneLeave(this, event); },
-		dragover : function(event) { event.preventDefault(); return false; },
-		dragend : function(event) { event.preventDefault(); dropZoneEnd(this, event); },
-		drop : function(event) { event.preventDefault(); dropZoneDrop(this, event); },
-	}, '.column');
+	initDnd();
 
 	updateTasks();
 	adaptColumnWidth();
 });
 
-var dragCategory = 0;
-function dragZoneStart(obj, event) {
-	var data = $(obj).attr('data-task');
-	event.dataTransfer.setData("text", data);
-	event.dataTransfer.effectAllowed = "move";
-	
-	dragCategory = $(obj).closest('.column').attr('data-category');
-
-	$(obj).addClass('dragPending');
-}
-
-function dragZoneEnd(obj, event) {
-	$(obj).removeClass('dragPending');
-}
-
-function dropZoneDrop(obj, event) {
-	var id = event.dataTransfer.getData("text");
-	var cat = $(obj).closest('.column').attr('data-category');
-	var status = $(obj).closest('.column').attr('data-status');
-	dropZoneLeave(obj);
-	if (dragCategory==cat) {
-		updateTaskStatus(id, status);
-	}
-}
-
-function dropZoneEnter(obj, event) {
-	var cat = $(obj).closest('.column').attr('data-category');
-	if (dragCategory==cat) {
-		$(obj).addClass('dragAllowed');
-	} else {
-		$(obj).addClass('dragNotAllowed');
-	}
-}
-
-function dropZoneEnd(obj, event) {
-	dropZoneLeave(obj);
-}
-
-function dropZoneLeave(obj, event) {
-	$(obj).removeClass('dragAllowed');
-	$(obj).removeClass('dragNotAllowed');
+function initDnd() {
+	var dragCategory = 0;
+	dndFeature.init({
+		attributeSelector : 'data-task',
+		dndContainer : '.board-content',
+		dragSelector : '.task',
+		dropSelector : '.column',
+		draggingClass : 'dragPending',
+		onStart : function(obj, event) {
+			dragCategory = $(obj).closest('.column').attr('data-category');
+		},
+		onEnter : function(obj, event) {
+			var cat = $(obj).closest('.column').attr('data-category');
+			if (dragCategory==cat) {
+				$(obj).addClass('dragAllowed');
+			} else {
+				$(obj).addClass('dragNotAllowed');
+			}
+		},
+		onLeave : function(obj, event) {
+			$(obj).removeClass('dragAllowed');
+			$(obj).removeClass('dragNotAllowed');
+		},
+		onDrop : function(obj, event, id) {
+			var cat = $(obj).closest('.column').attr('data-category');
+			var status = $(obj).closest('.column').attr('data-status');
+			if (dragCategory==cat) {
+				updateTaskStatus(id, status);
+			}
+		},
+	});
 }
 
 function updateTasks() {
@@ -146,7 +93,6 @@ function updateTasks() {
 			elt += '<a href="' + contextPath + '/projects/' + projectId + '/tasks/' + task.id + '">#' + task.id + '</a></div>';
 
 			elt += ' <div class="task-description">' + task.title + '</div>';
-
 			
 			elt += '<div class="task-category clearfix">';
 			if (task.description != null && task.description !== undefined && task.description != "" ) {

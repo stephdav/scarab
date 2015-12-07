@@ -2,6 +2,7 @@
 var dndFeature = {
 	init : function(settings) {
 		dndFeature.config = {
+			attributeSelector : 'id',
 			dndContainer : '.board',
 			dragSelector : '.task',
 			dropSelector : '.column',
@@ -37,7 +38,7 @@ var dndFeature = {
 	},
 	
 	dragZoneStart : function(obj, event) {
-		var data = $(obj).attr('id');
+		var data = $(obj).attr(dndFeature.config.attributeSelector);
 		event.dataTransfer.setData("text", data);
 		event.dataTransfer.effectAllowed = "move";
 		$(obj).addClass(dndFeature.config.draggingClass);
