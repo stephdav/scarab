@@ -70,7 +70,7 @@ public class PageController {
 	public ModelAndView editProjectPage(@PathVariable String id) {
 		LOGGER.debug("[GET] /projects/{}", id);
 		Project project = svcProject.getProject(Long.valueOf(id));
-		ModelAndView model = PageUtils.initModelAndView("editProject",
+		ModelAndView model = PageUtils.initModelAndView("projectEdit",
 				"edit project");
 		PageUtils.addProjectInfo(model, project);
 		return model;

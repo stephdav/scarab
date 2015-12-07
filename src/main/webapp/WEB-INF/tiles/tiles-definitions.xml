@@ -42,9 +42,9 @@
 		</put-list-attribute>
 	</definition>
 
-	<definition name="editProject" extends="baseWithAPI">
+	<definition name="projectEdit" extends="baseWithAPI">
 		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="resources/js/editProject.js" />
+			<add-attribute value="resources/js/projectEdit.js" />
 		</put-list-attribute>
 	</definition>
 

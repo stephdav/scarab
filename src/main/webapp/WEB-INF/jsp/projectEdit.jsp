@@ -3,7 +3,7 @@
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="form"  uri="http://www.springframework.org/tags/form"%>
 
-<tiles:insertDefinition name="editProject">
+<tiles:insertDefinition name="projectEdit">
 	<tiles:putAttribute name="menu">
 		<li><a href="<c:url value='/projects'/>/${projectId}/board"><span class="fa fa-table fa-2x" title="back to board"></span></a></li>
 	</tiles:putAttribute>
