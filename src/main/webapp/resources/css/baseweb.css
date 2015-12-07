@@ -58,7 +58,7 @@ body {
 	border-collapse: separate;
 }
 
-.p, .b {
+.statusLabel, .btnAddStatus {
 	display: table-cell;
 	margin: 0;
 	padding: 5px;
@@ -72,12 +72,12 @@ body {
 	line-height: 24px;
 }
 
-.b {
+.btnAddStatus {
 	width: 36px;
 	border-radius: 4px;
 }
 
-.d {
+.dz {
 	display: table-cell;
 	margin: 0;
 	padding: 0;
@@ -85,7 +85,6 @@ body {
 	width: 10px;
 	background-color: #fff;
 }
-
 
 /** === tasks === */
 .board-header {

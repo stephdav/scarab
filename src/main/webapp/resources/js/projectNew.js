@@ -1,10 +1,11 @@
 $(document).ready(function() {
-//	$('div.form-group-options').on('focus', 'div.input-group-option:last-child input', function(){
-//		var sInputGroupHtml = $(this).parent().html();
-//		var sInputGroupClasses = $(this).parent().attr('class');
-//		$(this).parent().parent().append('<div class="'+sInputGroupClasses+'">'+sInputGroupHtml+'</div>');
-//	});
-	
+
+	$('div.form-group-options').on('focus', 'div.input-group-option:last-child input', function(){
+		var sInputGroupHtml = $(this).parent().html();
+		var sInputGroupClasses = $(this).parent().attr('class');
+		$(this).parent().parent().append('<div class="'+sInputGroupClasses+'">'+sInputGroupHtml+'</div>');
+	});
+
 	$('div.form-group-options').on('click', '.input-group-addon-remove', function(){
 		$(this).parent().remove();
 	});
@@ -12,7 +13,7 @@ $(document).ready(function() {
 	$('#inputValue').val("");
 	
 	var defaultColumns = [ "BACKLOG", "TODO", "PENDING", "DONE" ];
-	$("#dnd .p").each(function(index, element) {
+	$("#dnd .statusLabel").each(function(index, element) {
 		$(element).attr('id', 'obj'+index);
 		$(element).attr('draggable', 'true');
 		$(element).text(defaultColumns[index]);
@@ -28,7 +29,7 @@ $(document).ready(function() {
 	$('.submitForm').on('click', function(e) {
 		
 		var columns = [];
-		$("#dnd .p").each(function(index, element) {
+		$("#dnd .statusLabel").each(function(index, element) {
 			var colName = $(element).text();
 			if (colName != "") {
 				var col = { name: colName, order: index+1};
@@ -48,16 +49,21 @@ $(document).ready(function() {
 		goTo("");
 	});
 
+	$('#editColumnModal .btnUpdate').on('click', function(e) {
+		updateCol();
+	});
+
 	// === drag and drop ===
 	
 	initDnd();
 });
 
+var colIdToUpdate="";
 function initDnd() {
 	dndFeature.init({
 		dndContainer : '#dnd',
-		dragSelector : '.p',
-		dropSelector : '.d',
+		dragSelector : '.statusLabel',
+		dropSelector : '.dz',
 		draggingClass : 'dragPending',
 		onEnter : function(obj, event) {grow(obj, "100px");},
 		onLeave : function(obj, event) {grow(obj, "10px");},
@@ -70,26 +76,40 @@ function initDnd() {
 		$(this).parent().remove();
 		refreshDndContainer();
 	});
+
+	$('#dnd').on('click', '.btn.edit-p', function(){
+		var colName=$(this).closest('.statusLabel').text();
+		colIdToUpdate=$(this).closest('.statusLabel').attr('id');
+		$('#inputWkfLbl').val(colName);
+		$('#inputWkfLbl').focus();
+		$('#editColumnModal').modal('show');
+	});
 	
-	$('#dnd').on('click', '.b', function(){
-		var idx = $("#dnd .p").length;
-		$('#dnd').append("<div class=\"p\" id=\"obj"+idx+"\" draggable=\"true\">NEW STEP</div>");
+	$('#dnd').on('click', '.btnAddStatus', function(){
+		var idx = $("#dnd .statusLabel").length;
+		$('#dnd').append("<div class=\"statusLabel\" id=\"obj"+idx+"\" draggable=\"true\">NEW STEP</div>");
 		refreshDndContainer();
 	});	
 }
 
+function updateCol(){
+	$('#'+colIdToUpdate).text($('#inputWkfLbl').val());
+	$('#editColumnModal').modal('hide');
+	refreshDndContainer();
+}
+
 function refreshDndContainer() {
 	// remove drop zones and buttons
-	$('.d').remove();
-	$('.b').remove();
-	$('.p .btn').remove();
+	$('.dz').remove();
+	$('.btnAddStatus').remove();
+	$('.statusLabel .btn').remove();
 	// add drop zone after each draggable element
-	$("<div class='d'></div>").insertAfter('.p');
+	$("<div class='dz'></div>").insertAfter('.statusLabel');
 	// add button at end of line
-	$('#dnd').append("<div class='b'><span class='fa fa-plus'></span></div>");
+	$('#dnd').append("<div class='btnAddStatus'><span class='fa fa-plus'></span></div>");
 	// add edit and remove buttons
-	$('.p').append("<div class='btn btn-sm remove-p pull-right'><span class='fa fa-close'></span></div>");
-	$('.p').prepend("<div class='btn btn-sm edit-p pull-left'><span class='fa fa-edit'></span></div>");
+	$('.statusLabel').append("<div class='btn btn-sm remove-p pull-right'><span class='fa fa-close'></span></div>");
+	$('.statusLabel').prepend("<div class='btn btn-sm edit-p pull-left'><span class='fa fa-edit'></span></div>");
 }
 
 function grow(obj, size) {
