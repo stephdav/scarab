@@ -5,7 +5,7 @@ function apiProjectsCreate(projectName, columns, categories, description, succes
 		data += ', "description": "' + description + '"';
 	}
 	data += ', \"columns\": ' + JSON.stringify(columns);
-	data += getElementsAsArray(categories, "categories");
+	data += ', \"categories\": ' + JSON.stringify(categories);
 	data +=' }';
 
 	$.ajax({

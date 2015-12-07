@@ -39,7 +39,11 @@ $(document).ready(function() {
 
 		var categories = [];
 		$("[name=category\\[\\]]").each(function(index, element) {
-			categories.push($(element).val());
+			var catName = $(element).val();
+			if (catName != "") {
+				var cat = { name: catName };
+				categories.push(cat);
+			}
 		});
 
 		createProject($('#inputValue').val(), columns, categories, replaceAll($("#projectDescription").val(), '\n', '<br>'));
