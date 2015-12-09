@@ -10,7 +10,7 @@
 			<add-attribute value="resources/css/bootstrap.min.css" />
 			<add-attribute value="resources/css/font-awesome.min.css" />
 			<add-attribute value="resources/css/sideMenu.css" />
-			<add-attribute value="resources/css/baseweb.css" />
+			<add-attribute value="resources/css/scarab.css" />
 		</put-list-attribute>
 
 		<put-list-attribute name="javascripts">

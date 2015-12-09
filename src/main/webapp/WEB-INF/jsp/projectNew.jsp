@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div class="panel panel-default">
+			<div class="panel panel-default" style="min-height:216px">
 				<div class="panel-heading">task properties</div>
 				<div class="panel-body form-horizontal">
 					<div class="form-group form-group-options">
