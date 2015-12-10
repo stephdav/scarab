@@ -12,7 +12,7 @@
 	<groupId>org.kik</groupId>
 	<artifactId>scarab</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>Scarab Web Application</name>
 	<description>My Agile webApp</description>
 
