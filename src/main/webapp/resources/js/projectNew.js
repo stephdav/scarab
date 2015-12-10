@@ -10,7 +10,7 @@ $(document).ready(function() {
 		$(this).parent().remove();
 	});
 
-	$('#inputValue').val("");
+	$('#projectName').val("");
 	
 	var defaultColumns = [ "BACKLOG", "TODO", "PENDING", "DONE" ];
 	$("#dnd .statusLabel").each(function(index, element) {
@@ -24,29 +24,30 @@ $(document).ready(function() {
 		$(element).val(defaultCategory[index]);
 	});
 
-	$('#inputValue').focus();
+	$('#projectName').focus();
 
 	$('.submitForm').on('click', function(e) {
-		
-		var columns = [];
-		$("#dnd .statusLabel").each(function(index, element) {
-			var colName = $(element).text();
-			if (colName != "") {
-				var col = { name: colName, order: index+1};
-				columns.push(col);
-			}
-		});
+		if ($('#newProjectForm').valid()) {
+			var columns = [];
+			$("#dnd .statusLabel").each(function(index, element) {
+				var colName = $(element).text();
+				if (colName != "") {
+					var col = { name: colName, order: index+1};
+					columns.push(col);
+				}
+			});
 
-		var categories = [];
-		$("[name=category\\[\\]]").each(function(index, element) {
-			var catName = $(element).val();
-			if (catName != "") {
-				var cat = { name: catName };
-				categories.push(cat);
-			}
-		});
+			var categories = [];
+			$("[name=category\\[\\]]").each(function(index, element) {
+				var catName = $(element).val();
+				if (catName != "") {
+					var cat = { name: catName };
+					categories.push(cat);
+				}
+			});
 
-		createProject($('#inputValue').val(), columns, categories, replaceAll($("#projectDescription").val(), '\n', '<br>'));
+			createProject($('#projectName').val(), columns, categories, replaceAll($("#projectDescription").val(), '\n', '<br>'));
+		}
 	});
 
 	$('.cancelForm').on('click', function(e) {
@@ -60,6 +61,16 @@ $(document).ready(function() {
 	// === drag and drop ===
 	
 	initDnd();
+	
+	$('#newProjectForm').validate({
+		rules: {
+			// no quoting necessary
+			projectName: {required: true}
+		},
+		messages: {
+			projectName: "you must specify a name for your project"
+		}
+	});
 });
 
 var colIdToUpdate="";

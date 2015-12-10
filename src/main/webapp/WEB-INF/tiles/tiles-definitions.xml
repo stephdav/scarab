@@ -37,6 +37,7 @@
 
 	<definition name="projectNew" extends="baseWithAPI">
 		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/libs/jquery.validate.min.js" />
 			<add-attribute value="resources/js/projectNew.js" />
 			<add-attribute value="resources/js/dndPlugin.js" />
 		</put-list-attribute>

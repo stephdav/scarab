@@ -12,22 +12,22 @@
 	<div class="titlebar">
 		<div class="titlebar-item titlebar-primary titlebar-title">new project</div>
 	</div>
-
+<form id="newProjectForm">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">description</div>
 				<div class="panel-body form-horizontal">
 					<div class="form-group">
-						<label for="inputValue" class="col-md-2 control-label">name</label>
+						<label for="projectName" class="col-md-2 control-label">name</label>
 						<div class="col-md-10">
-							<input type="text" class="form-control" id="inputValue" placeholder="project's name">
+							<input type="text" id="projectName" name="projectName" class="form-control" placeholder="project's name">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="projectDescription" class="col-md-2 control-label">description</label>
 						<div class="col-md-10">
-							<textarea id="projectDescription" class="form-control" rows="3" placeholder="project's description"></textarea>
+							<textarea id="projectDescription" name="projectDescription" class="form-control" rows="3" placeholder="project's description"></textarea>
 						</div>
 					</div>
 				</div>
@@ -91,6 +91,7 @@
 			</div>
 		</div>
 	</div>
+</form>
 
 <div id="editColumnModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
 	<div class="modal-dialog">
