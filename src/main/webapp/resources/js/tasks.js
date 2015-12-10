@@ -36,7 +36,7 @@ $(document).ready(function() {
 
 function initDnd() {
 	var dragCategory = 0;
-	dndFeature.init({
+	$('.board-content').dnd({
 		attributeSelector : 'data-task',
 		dndContainer : '.board-content',
 		dragSelector : '.task',

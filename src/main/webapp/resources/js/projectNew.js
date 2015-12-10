@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 var colIdToUpdate="";
 function initDnd() {
-	dndFeature.init({
+	$('#dnd').dnd({
 		dndContainer : '#dnd',
 		dragSelector : '.statusLabel',
 		dropSelector : '.dz',
@@ -73,6 +73,16 @@ function initDnd() {
 		onLeave : function(obj, event) {grow(obj, "10px");},
 		onDrop : function(obj, event, id) {$('#'+id).insertAfter($(obj)); refreshDndContainer();},
 	});
+
+//	dndFeature.init({
+//		dndContainer : '#dnd',
+//		dragSelector : '.statusLabel',
+//		dropSelector : '.dz',
+//		draggingClass : 'dragPending',
+//		onEnter : function(obj, event) {grow(obj, "100px");},
+//		onLeave : function(obj, event) {grow(obj, "10px");},
+//		onDrop : function(obj, event, id) {$('#'+id).insertAfter($(obj)); refreshDndContainer();},
+//	});
 
 	refreshDndContainer();
 	

@@ -38,7 +38,7 @@
 	<definition name="projectNew" extends="baseWithAPI">
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="resources/js/projectNew.js" />
-			<add-attribute value="resources/js/dragAndDrop.js" />
+			<add-attribute value="resources/js/dndPlugin.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -51,7 +51,7 @@
 	<definition name="tasks" extends="baseWithAPI">
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="resources/js/tasks.js" />
-			<add-attribute value="resources/js/dragAndDrop.js" />
+			<add-attribute value="resources/js/dndPlugin.js" />
 		</put-list-attribute>
 	</definition>
 
