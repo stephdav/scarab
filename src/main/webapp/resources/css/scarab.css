@@ -148,9 +148,13 @@ form .error {
 	border: 1px solid black;
 	border-radius: 10px;
 	background-color: #fff;
-	overflow: hidden;
+	/* overflow: hidden; */
 }
 
+.task .pull-right>.dropdown-menu {
+    top: 0;
+    left: 100%;
+}
 .task-title {
 	overflow: hidden;
 	font-weight: bold;

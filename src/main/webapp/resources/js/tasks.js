@@ -79,8 +79,8 @@ function updateTasks() {
 
 			elt = '<div class="task clearfix" data-task="' + task.id + '" draggable="true" >';
 			
-			elt += '<div class="pull-right">';
-			elt += ' <button type="button" class="btnDeleteTask btn btn-xs btn-default"><span class="fa fa-remove" aria-hidden="true"></span></button>';
+			elt += '<div class="dropdown pull-right">';
+			elt += '<button class="btn btn-xs btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1"><li><a class="btnDeleteTask">remove</a></li></ul>';
 			elt += '</div>';
 
 			elt += '<div class="task-title">';

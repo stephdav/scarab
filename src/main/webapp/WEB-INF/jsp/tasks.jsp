@@ -95,7 +95,7 @@
 							</c:forEach>
 						</select>
 					</div>
-			</div>
+				</div>
 			</c:if>
 			<div class="form-group">
 				<label for="taskAssigned" class="col-sm-3 control-label">assigned to</label>
