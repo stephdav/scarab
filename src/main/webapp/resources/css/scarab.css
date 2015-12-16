@@ -67,29 +67,31 @@ form .error {
 	vertical-align:middle;
 	margin: 0;
 	padding: 5px;
-	height: 36px;
+	height: 28px;
 	border: 1px solid #ccc;
-	border-radius: 24px;
+	border-radius: 16px;
 	background-color: #fff;
 	text-align: center;
-	line-height: 24px;
+	line-height: 16px;
+	font-size: 12px;
 }
 
-.statusLabel{
-	padding:5px 29px;
+.statusLabel {
+	padding: 5px 21px;
 }
 
 .statusLabel .btn-sm {
 	position: relative;
-	padding:5px;
-	left:-24px;
+	padding: 1px;
+	left: -16px;
 }
+
 .statusLabel .btn-sm.remove-p {
-	left:24px;
+	left: 16px;
 }
 
 .btnAddStatus {
-	width: 36px;
+	width: 28px;
 	border-radius: 4px;
 }
 
@@ -97,7 +99,7 @@ form .error {
 	display: table-cell;
 	margin: 0;
 	padding: 5px;
-	height: 36px;
+	height: 28px;
 	width: 10px;
 	background-color: #fff;
 }

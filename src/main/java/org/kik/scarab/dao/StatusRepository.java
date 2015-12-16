@@ -7,5 +7,7 @@ import org.kik.scarab.model.Status;
 public interface StatusRepository extends BaseRepository<Status, Long> {
 	List<Status> findByProjectId(long projectId);
 
+	List<Status> findByProjectIdOrderByRankAsc(long projectId);
+
 	void deleteByProjectId(long projectId);
 }

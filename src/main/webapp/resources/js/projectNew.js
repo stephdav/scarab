@@ -32,7 +32,7 @@ $(document).ready(function() {
 			$("#dnd .statusLabel").each(function(index, element) {
 				var colName = $(element).text();
 				if (colName != "") {
-					var col = { name: colName, order: index+1};
+					var col = { name: colName, rank: index+1};
 					columns.push(col);
 				}
 			});

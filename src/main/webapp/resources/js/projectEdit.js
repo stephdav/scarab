@@ -22,10 +22,9 @@ $(document).ready(function() {
 				var colName = $(element).text();
 				if (colName != "") {
 					var colId = $(element).attr('data-col');
+					var col = { name: colName, rank: index+1};
 					if (colId != "") {
-						var col = { id: colId, name: colName, order: index+1};
-					} else {
-						var col = { name: colName, order: index+1};
+						col.id=colId;
 					}
 					columns.push(col);
 				}

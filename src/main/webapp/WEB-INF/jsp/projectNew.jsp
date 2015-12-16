@@ -84,10 +84,8 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-group">
-				<div class="col-md-offset-1 col-md-11">
-			        <button type="button" class="cancelForm btn btn-default">cancel</button>
-					<button type="button" class="submitForm btn btn-primary">create</button>
-				</div>
+		        <button type="button" class="cancelForm btn btn-default">cancel</button>
+				<button type="button" class="submitForm btn btn-primary">create</button>
 			</div>
 		</div>
 	</div>
