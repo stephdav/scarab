@@ -12,6 +12,7 @@
 	<div class="titlebar">
 		<div class="titlebar-item titlebar-primary titlebar-title">new project</div>
 	</div>
+
 <form id="newProjectForm">
 	<div class="row">
 		<div class="col-md-6">
@@ -79,7 +80,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<div class="row">
 		<div class="col-md-12">

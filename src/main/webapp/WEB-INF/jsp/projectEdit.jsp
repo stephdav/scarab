@@ -17,56 +17,35 @@
 	<input id="projectId" type="hidden" value="${projectId}">
 	<input id="projectDesc" type="hidden" value="${project.description}">
 
-	<form class="form-horizontal">
-		<div class="row">
-			<div class="col-sm-6">
-				<fieldset>
+<form id="editProjectForm">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">description</div>
+				<div class="panel-body form-horizontal">
 					<div class="form-group">
-						<label for="projectName" class="col-sm-3 control-label">name</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="projectName" value="${project.name}" placeholder="project's name">
+						<label for="projectName" class="col-md-2 control-label">name</label>
+						<div class="col-md-10">
+							<input type="text" id="projectName" name="projectName" value="${project.name}" class="form-control" placeholder="project's name">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="projectDescription" class="col-sm-3 control-label">description</label>
-						<div class="col-sm-9">
-							<textarea id="projectDescription" class="form-control" rows="10" placeholder="project's description"></textarea>
+						<label for="projectDescription" class="col-md-2 control-label">description</label>
+						<div class="col-md-10">
+							<textarea id="projectDescription" name="projectDescription" class="form-control" rows="3" placeholder="project's description"></textarea>
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-9">
-					        <button type="button" class="cancelForm btn btn-default">cancel</button>
-							<button type="button" class="submitForm btn btn-primary">update</button>
-						</div>
-					</div>
-				</fieldset>
+				</div>
 			</div>
-			<div class="col-sm-6">
-				<fieldset>
-			        <div class="form-group form-group-options">
-						<label class="col-sm-3 control-label">columns</label>
-						<div class="col-sm-9">
-							<c:forEach var="col" items="${project.columns}">
-					    		<div class="input-group input-group-option">
-					    			<input type="text" name="column[]" class="form-control" value="${col.name}" data-col="${col.id}" placeholder="enter a new column name">
-					    			<span class="input-group-btn input-group-addon-remove">
-										<button class="btn btn-default" type="button"><span class="fa fa-close"></span></button>
-									</span>
-					    		</div>
-							</c:forEach>
-				    		<div class="input-group input-group-option">
-				    			<input type="text" name="column[]" class="form-control" placeholder="enter a new column name">
-				    			<span class="input-group-btn input-group-addon-remove">
-									<button class="btn btn-default" type="button"><span class="fa fa-close"></span></button>
-								</span>
-				    		</div>
-				    	</div>
-			    	</div>
-				</fieldset>
-				<fieldset>
-			        <div class="form-group form-group-options">
-						<label class="col-sm-3 control-label">categories</label>
-						<div class="col-sm-9">
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default" style="min-height:216px">
+				<div class="panel-heading">task properties</div>
+				<div class="panel-body form-horizontal">
+					<div class="form-group form-group-options">
+						<label class="col-md-2 control-label">categories</label>
+						<div class="col-md-10">
 							<c:forEach var="cat" items="${project.categories}">
 					    		<div class="input-group input-group-option">
 					    			<input type="text" name="category[]" class="form-control" value="${cat.name}" data-cat="${cat.id}" placeholder="enter a new category name">
@@ -81,11 +60,60 @@
 									<button class="btn btn-default" type="button"><span class="fa fa-close"></span></button>
 								</span>
 				    		</div>
-				    	</div>
-			    	</div>
-				</fieldset>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</form>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">workflow</div>
+				<div class="panel-body">
+					<div id="dnd">
+						<c:forEach var="col" items="${project.columns}">
+							<div class="statusLabel" data-col="${col.id}">${col.name}</div>
+						</c:forEach>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<div class="col-md-offset-1 col-md-11">
+			        <button type="button" class="cancelForm btn btn-default">cancel</button>
+					<button type="button" class="submitForm btn btn-primary">update</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<div id="editColumnModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header"><h4 class="modal-title">update status label</h4></div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputWkfLbl" class="col-sm-3 control-label">workflow step</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputWkfLbl">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
+				<button type="button" class="btn btn-primary btnUpdate">update</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 	</tiles:putAttribute>
 </tiles:insertDefinition>

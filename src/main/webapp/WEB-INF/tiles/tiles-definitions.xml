@@ -45,7 +45,9 @@
 
 	<definition name="projectEdit" extends="baseWithAPI">
 		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="resources/js/libs/jquery.validate.min.js" />
 			<add-attribute value="resources/js/projectEdit.js" />
+			<add-attribute value="resources/js/dndPlugin.js" />
 		</put-list-attribute>
 	</definition>
 
