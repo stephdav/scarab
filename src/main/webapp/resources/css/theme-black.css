@@ -1,0 +1,129 @@
+/**
+
+bg: #000 #333
+color: #ddd #eee
+border: #999
+*/
+
+/** THEME */
+body {
+	color: #ddd;
+	background-color: #000;
+}
+
+.navbar-default {
+	background-color: #000;
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: #ddd;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus
+	{
+	color: #fff;
+}
+
+.list-group-item {
+	background-color: transparent;
+}
+
+.panel {
+	background-color: #000;
+}
+
+.panel-default {
+	border-color: #999;
+}
+
+.panel-default>.panel-heading {
+	color: #ddd;
+	background-color: #333;
+}
+
+/** === side menu === */
+.side-menu {
+	background-color: #000;
+	border-right: 1px solid #999;
+}
+
+.side-menu .navbar-header {
+	border-bottom: 1px solid #999;
+}
+
+.side-menu .navbar-nav .active a {
+	border-right: 5px solid #999;
+}
+
+.side-menu .navbar-nav li {
+	border-bottom: 1px solid #999;
+}
+
+.side-menu form a {
+	color: #eee;
+}
+
+@media ( max-width : 768px) {
+	.side-menu {
+		border-bottom: 1px solid #999;
+	}
+	.side-menu-container>.navbar-nav {
+		border-right: 1px solid #999;
+		background-color: #000;
+	}
+	.navbar-toggle {
+		background-color: #333;
+	}
+	.navbar-header {
+		background-color: #000;
+	}
+}
+
+/** === titlebar === */
+.titlebar {
+	color: #ddd;
+}
+
+.titlebar a {
+	color: #ddd;
+}
+/** === project === */
+form .error {
+	color: #a94442;
+}
+
+.statusLabel, .btnAddStatus {
+	background-color: #000;
+	border: 1px solid #999;
+}
+
+/** === tasks === */
+.board-header {
+	border-bottom: 1px solid #999;
+}
+
+.board-column {
+	border-left: 1px dashed #999;
+	border-right: 1px dashed #999;
+}
+
+.board-content {
+	border-bottom: 1px dashed #999;
+}
+
+.task {
+	border: 1px solid #999;
+	background-color: #000;
+}
+
+.dragPending {
+	border: 2px solid #999;
+}
+
+.dragAllowed {
+	background-color: #CEFFBA;
+}
+
+.dragNotAllowed {
+	background-color: #FFBABA;
+}
